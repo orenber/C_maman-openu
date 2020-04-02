@@ -2,8 +2,8 @@
 #include <string.h>
 
 
-char* subString(char string[], int position, int length);
-int matchScore(char text[], char patern[]);
+char* sub_string(char string[], int position, int length);
+int match_score(char text[], char patern[]);
 int Match(char text[], char patern[]);
 
 
@@ -38,8 +38,8 @@ int Match(char text[],char patern[]) {
 
 	for (int i = 0; i <= loop_size; ++i) {
 		
-		sampleStr = subString(text, i, strlen(patern));
-		score_Unmatch = matchScore(sampleStr,patern);
+		sampleStr = sub_string(text, i, strlen(patern));
+		score_Unmatch = match_score(sampleStr,patern);
 		if (score_Unmatch < last_minimum){
 			last_minimum = score_Unmatch;
 			index_minimum = i;
@@ -58,7 +58,7 @@ int Match(char text[],char patern[]) {
 }
 
 
-int matchScore(char text[], char patern[]) {
+int match_score(char text[], char patern[]) {
 
 	int score_Unmatch = 0;
 	for (int j = 0; j <= strlen(patern); ++j) {
@@ -73,7 +73,7 @@ int matchScore(char text[], char patern[]) {
 
 
 
-char* subString(char string[], int position, int length) {
+char* sub_string(char string[], int position, int length) {
 	int c = 0;
 	char sub[1000];
 
