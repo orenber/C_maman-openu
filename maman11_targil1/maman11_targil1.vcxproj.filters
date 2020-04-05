@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="targil2.c">
+    <ClCompile Include="..\Maman\targil1.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

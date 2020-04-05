@@ -1,8 +1,27 @@
+// ***********************************************************************
+// Assembly         : 
+// Author           : orenber
+// Created          : 03-25-2020
+//
+// Last Modified By : orenber
+// Last Modified On : 04-03-2020
+// ***********************************************************************
+// <copyright file="targil1.c" company="">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 #include <stdio.h>
 #include <string.h>
 
+/// <summary>
+/// Enum __unnamed_enum_0039_1
+/// </summary>
 typedef enum
 {
+	/// <summary>
+	/// The false
+	/// </summary>
 	FALSE = 0, TRUE = 1
 
 }BOOL;
@@ -10,12 +29,16 @@ typedef enum
 char* f_sequence(char string[]);
 char* direction_dictionary(char flag[], BOOL real);
 
+/// <summary>
+/// Mains this instance.
+/// </summary>
+/// <returns>int.</returns>
 int main()
 {
 	char *direction = "";
 	char text[20];
 	printf("Please insert text :\n");
-	scanf("%s", text);
+	gets(text);
 	direction = f_sequence(text);
 	printf("the text series is %s", direction);
 	getchar();
@@ -23,6 +46,11 @@ int main()
 	return 0;
 }
 
+/// <summary>
+/// fs the sequence.
+/// </summary>
+/// <param name="string">The string.</param>
+/// <returns>char *.</returns>
 char* f_sequence(char string[]) {
 	char *direction = "up",
 		*previos_direction = "un_order",
@@ -72,6 +100,12 @@ char* f_sequence(char string[]) {
 	return string_direction;
 }
 
+/// <summary>
+/// Directions the dictionary.
+/// </summary>
+/// <param name="flag">The flag.</param>
+/// <param name="real">The real.</param>
+/// <returns>char *.</returns>
 char* direction_dictionary(char flag[], BOOL real) {
 	char direction[20] = "";
 	strcat(direction, flag);
