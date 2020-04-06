@@ -25,7 +25,7 @@ int match(char text[], char pattern[]);
 /// <returns>int.</returns>
 int main() {
 	
-	int index;/* the best index position match between the text to the pattern */
+	int index;/* the best index position match between the pattern to the text */
 	char text[100], /*text string */
 		pattern[20]; /* pattern string */
 
@@ -56,7 +56,7 @@ first it cut the text string to sub string in the same length as the pattern str
 than it call the match_score function
 that give score for the match between the text sub string to the pattern string, 
 this procedure go on for every sub string in the text from index 0 to loop_size,
-the function return the minimum match score 
+the function return the index position  of the best minimum match score 
 (the score scale is: 0 for perfect match, pattern length - worst match). */
 /// </summary>
 /// <param name="text">The text string .</param>
@@ -70,7 +70,7 @@ int match(char text[], char pattern[]) {
 		index_match_position = 0,/*index best match position*/
 		loop_size = (int)strlen(text) - pattern_length; /*loop size iteration*/
 
-	char sub_string[20];
+	char sub_string[20]; /*partial string of text string */
 
 	for (int i = 0; i <= loop_size; ++i) {
 		//sub string 
