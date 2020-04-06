@@ -51,12 +51,13 @@ int main() {
 
 /// <summary>
 /// Matches the specified text.
-/* this function match the text string  to the pattern string,
+/* this function match the patten string  to the text string,
 first it cut the text string to sub string in the same length as the pattern string 
 than it call the match_score function
-that give score for the match between the text sub string to the pattern string 
+that give score for the match between the text sub string to the pattern string, 
 this procedure go on for every sub string in the text from index 0 to loop_size,
-the function return the minimum match score  */
+the function return the minimum match score 
+(the score scale is: 0 for perfect match, pattern length - worst match). */
 /// </summary>
 /// <param name="text">The text string .</param>
 /// <param name="pattern">The pattern string .</param>
@@ -64,10 +65,10 @@ the function return the minimum match score  */
 int match(char text[], char pattern[]) {
 	
 	int score_match,/* score for the match between the pattern to text*/
-		pattern_length = strlen(pattern), /*pattern string length*/
+		pattern_length = (int)strlen(pattern), /*pattern string length*/
 		best_min_score = pattern_length, /*min score for all the subs string */
 		index_match_position = 0,/*index best match position*/
-		loop_size = strlen(text) - pattern_length; /*loop size iteration*/
+		loop_size = (int)strlen(text) - pattern_length; /*loop size iteration*/
 
 	char sub_string[20];
 
@@ -111,8 +112,10 @@ int match(char text[], char pattern[]) {
 /// <returns>int. return the un match score  </returns>
 int match_score(char text[], char pattern[]) {
 
-	int score_un_match = 0;/* score for the match between the pattern to text*/
-	for (int j = 0; j <= strlen(pattern); ++j) {
+	int score_un_match = 0,/* score for the match between the pattern to text*/
+		pattern_length = (int)strlen(pattern); /*pattern string length*/
+	
+	for (int j = 0; j <= pattern_length; ++j) {
 
 		if (text[j]!=pattern[j]) {
 			score_un_match++;
