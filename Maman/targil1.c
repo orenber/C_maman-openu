@@ -45,8 +45,8 @@ void direction_dictionary(DIRECTION flag, BOOL real, char* str);
 /// <returns>int.</returns>
 int main()
 {
-    char str_direction[30]="" ;/* string direction*/
-	char text[100]; /* text input */
+    char str_direction[30]="" ,/* string direction*/
+	     text[100]; /* text input */
 
 	printf("Please insert text :\n");
 	fgets(text,(int)strlen(text), stdin);
@@ -165,6 +165,7 @@ void direction_dictionary(DIRECTION dir, BOOL monotonic,char *string_direction) 
 	else if (dir == CENTER) {
 		strcpy(string_direction, "ascending order");
 	}
-	
+
+	return;
 }
 
