@@ -30,12 +30,12 @@ int main() {
 		pattern[20]; /* pattern string */
 
 	printf("Please insert text:\n");
-	fgets(text,strlen(text),stdin);
+	fgets(text,(int)strlen(text),stdin);
 	/* remove the \n trail char*/
 	text[strlen(text) - 1] = '\0';
 	printf("Please insert pattern:\n");
 
-	fgets(pattern,strlen(pattern),stdin);
+	fgets(pattern,(int)strlen(pattern),stdin);
 	/* remove the \n trail char*/
 	pattern[strlen(pattern) - 1] = '\0';
 
