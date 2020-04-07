@@ -126,10 +126,10 @@ void f_sequence(char text[], char *string_direction) {
 		previous_direction = direction;
 
 	}
-	if (strcmp(string_direction, "un_order") != 0) {
+	 
 		direction_dictionary(direction, is_monotonic, string_direction);
-	}
-
+ 
+		return;
 }
 
 /// <summary>
@@ -140,7 +140,12 @@ void f_sequence(char text[], char *string_direction) {
 /// <param name="DIRECTION">The dir.</param>
 /// <param name="monotonic">The monotonic.</param>
 void direction_dictionary(DIRECTION dir, BOOL monotonic,char *string_direction) {
- 
+  
+	if (strcmp(string_direction, "un_order") == 0)
+	{
+		return;
+	}
+
 	if (dir == DOWN) {
 		if (monotonic == TRUE) {
 			strcat(string_direction, "monotonic descending order");
