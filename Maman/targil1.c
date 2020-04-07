@@ -36,8 +36,8 @@ typedef enum
 	UP=1,DOWN=-1,CENTER=0
 }DIRECTION;
 
-char* f_sequence(char string[]);
-char* direction_dictionary(DIRECTION flag, BOOL real);
+void f_sequence(char text[],char* str);
+void direction_dictionary(DIRECTION flag, BOOL real, char* str);
 
 /// <summary>
 /// Mains this instance.
@@ -45,16 +45,17 @@ char* direction_dictionary(DIRECTION flag, BOOL real);
 /// <returns>int.</returns>
 int main()
 {
-	char *string_direction ="";
-	char text[30];
+    char str_direction[30]="" ;/* string direction*/
+	char text[100]; /* text input */
+
 	printf("Please insert text :\n");
 	fgets(text,(int)strlen(text), stdin);
 	/* remove the \n trail char*/
 	text[strlen(text) - 1] = '\0';
 
-	string_direction = f_sequence(text);
-	
-	printf("the text series is :%s", string_direction);
+	f_sequence(text, str_direction);
+	printf("the string is in: %s ", str_direction);
+
 	
 	getchar();
 
@@ -73,39 +74,43 @@ int main()
  
  it Checks the direction of each letter pair
  relative to the previous letter pair 
+ for the whole string 
 */
 /// </summary>
 /// <param name="text">The text.</param>
-/// <returns>char *.</returns>
-char* f_sequence(char text[]) {
-	DIRECTION direction,
-		previous_direction= CENTER;
-	BOOL Monotonic = TRUE;
-	char *string_direction = "",
-		*str1 = "", *str2 = "";
-	int text_length = (int)strlen(text);
+
+void f_sequence(char text[], char *string_direction) {
+
+	DIRECTION direction,/* direction of pair char */
+		previous_direction= CENTER; /* direction of previous pair char*/
+	BOOL is_monotonic = TRUE;/*is the string is monotonic seris? */
+
+	int text_length = (int)strlen(text); /* text length */
 
 
 	for (int i = 1; i < text_length; ++i) {
-		    str1 = text[i - 1],
-			str2 = text[i];
+		  
 
-		if (str1>str2) {
+		if (text[i - 1]>text[i]) {
 			direction = DOWN;
 			if (previous_direction==UP) {
-				string_direction = "un_order";
+				strcpy(string_direction,"un_order");
+				/* in the case the string is un order
+				their is no need for more search - get out*/
 				break;
 			}
 		}
-		else if (str1 < str2) {
+		else if (text[i - 1] < text[i]) {
 			direction = UP;
 			if (previous_direction==DOWN) {
-				string_direction = "un_order";
+				strcpy(string_direction,"un_order");
+				/* in the case the string is un order
+				their is no need for more search - get out*/
 				break;
 			}
 		}
-		else if (str1 == str2) {
-			Monotonic = FALSE;
+		else if (text[i - 1] == text[i]) {
+			is_monotonic = FALSE;
 			if (previous_direction==DOWN) {
 				direction = DOWN;
 			}
@@ -122,41 +127,39 @@ char* f_sequence(char text[]) {
 
 	}
 	if (strcmp(string_direction, "un_order") != 0) {
-		string_direction = direction_dictionary(direction, Monotonic);
+		direction_dictionary(direction, is_monotonic, string_direction);
 	}
-	return string_direction;
+
 }
 
 /// <summary>
 /* Directions  dictionary.
 	this function get the Direction of the last pair letters direction
-	and real parameter and return the whole string direction */
+	and monotonic parameter and return the whole string direction */
 /// </summary>
 /// <param name="DIRECTION">The dir.</param>
 /// <param name="monotonic">The monotonic.</param>
-/// <returns>char * string direction.</returns>
-char* direction_dictionary(DIRECTION dir, BOOL monotonic) {
-	char string_direction[30] = "";
+void direction_dictionary(DIRECTION dir, BOOL monotonic,char *string_direction) {
+ 
 	if (dir == DOWN) {
 		if (monotonic == TRUE) {
-			strcat(string_direction, "Monotonic descending order");
+			strcat(string_direction, "monotonic descending order");
 		}
 		else {
-			strcat(string_direction, "Descending order");
+			strcat(string_direction, "descending order");
 		}
 	}
 	else if (dir == UP) {
 		if (monotonic == TRUE) {
-			strcat(string_direction, "Monotonic ascending order");
+			strcat(string_direction, "monotonic ascending order");
 		}
 		else {
-			strcat(string_direction, "Ascending order");
+			strcat(string_direction, "ascending order");
 		}
 	}
 	else if (dir == CENTER) {
-		strcat(string_direction, "Ascending order");
+		strcat(string_direction, "ascending order");
 	}
-
-	return string_direction;
+	
 }
 
