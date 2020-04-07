@@ -32,8 +32,8 @@ typedef enum
 
 typedef enum
 {
+    UP=1, DOWN=-1, CENTER=0
 
-	UP=1,DOWN=-1,CENTER=0
 }DIRECTION;
 
 void f_sequence(char text[],char* str);
@@ -148,22 +148,22 @@ void direction_dictionary(DIRECTION dir, BOOL monotonic,char *string_direction) 
 
 	if (dir == DOWN) {
 		if (monotonic == TRUE) {
-			strcat(string_direction, "monotonic descending order");
+			strcpy(string_direction, "monotonic descending order");
 		}
 		else {
-			strcat(string_direction, "descending order");
+			strcpy(string_direction, "descending order");
 		}
 	}
 	else if (dir == UP) {
 		if (monotonic == TRUE) {
-			strcat(string_direction, "monotonic ascending order");
+			strcpy(string_direction, "monotonic ascending order");
 		}
 		else {
-			strcat(string_direction, "ascending order");
+			strcpy(string_direction, "ascending order");
 		}
 	}
 	else if (dir == CENTER) {
-		strcat(string_direction, "ascending order");
+		strcpy(string_direction, "ascending order");
 	}
 	
 }
