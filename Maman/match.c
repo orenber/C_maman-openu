@@ -15,7 +15,7 @@ text and pattern , it Returns the index location from which the best match occur
 
 #include <stdio.h>
 #include <string.h>
-
+#define MAX 100
 
 int match_score(char text[], char pattern[]);
 int match(char text[], char pattern[]);
@@ -30,8 +30,8 @@ int match(char text[], char pattern[]);
 int main() {
 	
 	int index;/* the best index position match between the pattern to the text */
-	char text[100], /*text string */
-		pattern[20]; /* pattern string */
+	char text[MAX], /*text string */
+		pattern[MAX]; /* pattern string */
 
 	printf("Please insert text:\n");
 	fgets(text,(int)strlen(text),stdin);
@@ -75,7 +75,7 @@ int match(char text[], char pattern[]) {
 		index_match_position = 0,/* index best match position */
 		loop_size = (int)strlen(text) - pattern_length; /*loop size iteration*/
 
-	char sub_string[20]; /* partial string of text string */
+	char sub_string[MAX]; /* partial string of text string */
 	int i;
 
 	for (i = 0; i <= loop_size; ++i) {

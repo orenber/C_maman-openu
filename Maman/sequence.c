@@ -24,7 +24,7 @@
 
 #include <stdio.h>
 #include <string.h>
-
+#define MAX 100
  
 typedef enum
 {
@@ -48,11 +48,15 @@ void direction_dictionary(DIRECTION flag, BOOL real, char* str);
  */
 int main()
 {
-    char str_direction[30]="" ,/* string direction*/
-	     text[100]; /* text input */
+    char str_direction[MAX]="" ,/* string direction*/
+	     text[MAX]; /* text input */
+	int c;
 
 	printf("Please insert text :\n");
 	fgets(text,(int)strlen(text), stdin);
+	while ((c = getchar()) != '\n' && c != EOF);
+
+
 	/* remove the \n trail char*/
 	text[strlen(text) - 1] = '\0';
 
