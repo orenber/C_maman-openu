@@ -1,25 +1,27 @@
-// ***********************************************************************
-// Assembly         : 
-// Author           : Oren Berkovitch
-// Created          : 03-25-2020
-//
-// Last Modified By : Oren Berkovitch
-// Last Modified On : 04-03-2020
-// ***********************************************************************
-// <copyright file="targil1.c" company="">
-//     Copyright (c) . All rights reserved.
-// </copyright>
-// <summary>
-/* this program get string from the user and check 
+/***********************************************************************
+ Assembly         : 
+ Author           : Oren Berkovitch
+ Created          : 03-25-2020
+
+ Last Modified By : Oren Berkovitch
+ Last Modified On : 04-03-2020
+ ***********************************************************************
+ <copyright file="sequence.c" company="">
+     Copyright (c) . All rights reserved.
+ </copyright>
+ <summary>
+ this program get string from the user and check 
  if the ascii latter that contain the string is in:
 1.  Ascending order
 2.  Monotonic ascending order
 3.  Descending order
 4.  Monotonic descending order
 5.  Un order
+
+</summary>
+ ***********************************************************************
 */
-//</summary>
-// ***********************************************************************
+
 #include <stdio.h>
 #include <string.h>
 
@@ -39,10 +41,11 @@ typedef enum
 void f_sequence(char text[],char* str);
 void direction_dictionary(DIRECTION flag, BOOL real, char* str);
 
-/// <summary>
-/// Mains this instance.
-/// </summary>
-/// <returns>int.</returns>
+/* <summary>
+ Mains this instance.
+ </summary>
+ <returns>int.</returns>
+ */
 int main()
 {
     char str_direction[30]="" ,/* string direction*/
@@ -62,9 +65,9 @@ int main()
 	return 0;
 }
 
-/// <summary>
-/// fs sequence.
-/* this function check the the direction of the string
+/* <summary>
+ fs sequence.
+ this function check the the direction of the string
  if the ascii latter that contain the string is in:
 1.  Ascending order
 2.  Monotonic ascending order
@@ -75,10 +78,10 @@ int main()
  it Checks the direction of each letter pair
  relative to the previous letter pair 
  for the whole string 
-*/
-/// </summary>
-/// <param name="text">The text.</param>
 
+ </summary>
+ <param name="text">The text.</param>
+*/
 void f_sequence(char text[], char *string_direction) {
 
 	DIRECTION direction,/* direction of pair char */
@@ -86,9 +89,9 @@ void f_sequence(char text[], char *string_direction) {
 	BOOL is_monotonic = TRUE;/*is the string is monotonic seris? */
 
 	int text_length = (int)strlen(text); /* text length */
+	int i;
 
-
-	for (int i = 1; i < text_length; ++i) {
+	for ( i = 1; i < text_length; ++i) {
 		  
 
 		if (text[i - 1]>text[i]) {
@@ -132,13 +135,14 @@ void f_sequence(char text[], char *string_direction) {
 		return;
 }
 
-/// <summary>
-/* Directions  dictionary.
+/* <summary>
+ Directions  dictionary.
 	this function get the Direction of the last pair letters direction
-	and monotonic parameter and return the whole string direction */
-/// </summary>
-/// <param name="DIRECTION">The dir.</param>
-/// <param name="monotonic">The monotonic.</param>
+	and monotonic parameter and return the whole string direction 
+ </summary>
+    <param name="DIRECTION">The dir.</param>
+    <param name="monotonic">The monotonic.</param>
+*/
 void direction_dictionary(DIRECTION dir, BOOL monotonic,char *string_direction) {
   
 	if (strcmp(string_direction, "un_order") == 0)
