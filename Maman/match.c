@@ -69,20 +69,20 @@ the function return the index position  of the best minimum match score
  */
 int match(char text[], char pattern[]) {
 	
-	int score_match,/* score for the match between the pattern to text*/
-		pattern_length = (int)strlen(pattern), /*pattern string length*/
-		best_min_score = pattern_length, /*min score for all the subs string */
-		index_match_position = 0,/*index best match position*/
+	int score_match,/* score for the match between the pattern to text */
+		pattern_length = (int)strlen(pattern), /*pattern string length */
+		best_min_score = pattern_length, /* min score for all the subs string */
+		index_match_position = 0,/* index best match position */
 		loop_size = (int)strlen(text) - pattern_length; /*loop size iteration*/
 
-	char sub_string[20]; /*partial string of text string */
+	char sub_string[20]; /* partial string of text string */
 	int i;
 
 	for (i = 0; i <= loop_size; ++i) {
-		//sub string 
+		/* sub string */
 		strncpy(sub_string,text+ i, pattern_length) ;
 
-		// give score for the match
+		/* give score for the match */
 		score_match = match_score(sub_string, pattern);
 
 		if (score_match < best_min_score){
