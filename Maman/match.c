@@ -32,11 +32,11 @@ int main() {
 	int index;/* the best index position match between the pattern to the text */
 	char text[MEM], /*text string */
 		pattern[MEM], /* pattern string */
-	    input = "";/* input user*/
+	    *input = "";/* input user*/
 
 
 	printf("Wellcome !!! \nPress q and Enter to quit\n");
-	while (input != EOF) {
+	while (input != NULL) {
 
 		printf("\n\nPlease insert text: ");
 		input = fgets(text,MEM,stdin);
@@ -55,7 +55,7 @@ int main() {
 		index = match(text, pattern);
 
 		printf("\n\nThe best pattern match is in the index %d", index);
-	    getchar();
+	    
 	}
 	return 0;
 

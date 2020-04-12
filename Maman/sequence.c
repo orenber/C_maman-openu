@@ -48,9 +48,10 @@ void direction_dictionary(DIRECTION flag, BOOL real, char* str);
  */
 int main()
 {
-    char str_direction[MEM]="" ,/* string direction*/
-	     text[MEM], /* text input */
-		 input = "";
+	char str_direction[MEM] = "",/* string direction*/
+		text[MEM]; /* text input */
+		int input =0; 
+
 	printf("Wellcome !!! \nPress q and Enter to quit\n");
 	while (input!=EOF) {
 
