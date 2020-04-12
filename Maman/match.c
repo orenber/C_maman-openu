@@ -15,7 +15,7 @@ text and pattern , it Returns the index location from which the best match occur
 
 #include <stdio.h>
 #include <string.h>
-#define MAX 100
+#define MEM 100 /* max array storage*/
 
 int match_score(char text[], char pattern[]);
 int match(char text[], char pattern[]);
@@ -30,22 +30,22 @@ int match(char text[], char pattern[]);
 int main() {
 	
 	int index;/* the best index position match between the pattern to the text */
-	char text[MAX], /*text string */
-		pattern[MAX]; /* pattern string */
+	char text[MEM], /*text string */
+		pattern[MEM]; /* pattern string */
 
 	printf("Please insert text:\n");
 	fgets(text,(int)strlen(text),stdin);
 	/* remove the \n trail char*/
-	text[strlen(text) - 1] = '\0';
+	strtok(text,"\n");
 	printf("Please insert pattern:\n");
 
 	fgets(pattern,(int)strlen(pattern),stdin);
 	/* remove the \n trail char*/
-	pattern[strlen(pattern) - 1] = '\0';
+	strtok(pattern,"\n");
 
 	index = match(text, pattern);
 
-	printf("the best string match is in the place %d", index);
+	printf("the best string match is in the index %d", index);
 	getchar();
 
 	return 0;
@@ -75,7 +75,7 @@ int match(char text[], char pattern[]) {
 		index_match_position = 0,/* index best match position */
 		loop_size = (int)strlen(text) - pattern_length; /*loop size iteration*/
 
-	char sub_string[MAX]; /* partial string of text string */
+	char sub_string[MEM]; /* partial string of text string */
 	int i;
 
 	for (i = 0; i <= loop_size; ++i) {
@@ -122,7 +122,7 @@ int match_score(char text[], char pattern[]) {
 	int score_un_match = 0,/* score for the match between the pattern to text*/
 		pattern_length = (int)strlen(pattern); /*pattern string length*/
 	int j;
-	for ( j = 0; j <= pattern_length; ++j) {
+	for ( j = 0; j < pattern_length; ++j) {
 
 		if (text[j]!=pattern[j]) {
 			score_un_match++;

@@ -24,7 +24,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#define MAX 100
+#define MEM 100 /* max array storage*/
  
 typedef enum
 {
@@ -48,17 +48,15 @@ void direction_dictionary(DIRECTION flag, BOOL real, char* str);
  */
 int main()
 {
-    char str_direction[MAX]="" ,/* string direction*/
-	     text[MAX]; /* text input */
-	int c;
+    char str_direction[MEM]="" ,/* string direction*/
+	     text[MEM]; /* text input */
+	
 
 	printf("Please insert text :\n");
 	fgets(text,(int)strlen(text), stdin);
-	while ((c = getchar()) != '\n' && c != EOF);
-
 
 	/* remove the \n trail char*/
-	text[strlen(text) - 1] = '\0';
+	strtok(text,"\n");
 
 	f_sequence(text, str_direction);
 	printf("the string is in: %s ", str_direction);
