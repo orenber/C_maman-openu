@@ -32,22 +32,27 @@ int main() {
 	int index;/* the best index position match between the pattern to the text */
 	char text[MEM], /*text string */
 		pattern[MEM]; /* pattern string */
+	char input ="";
+	while (input != EOF) {
 
-	printf("Please insert text:\n");
-	fgets(text,(int)strlen(text),stdin);
-	/* remove the \n trail char*/
-	strtok(text,"\n");
-	printf("Please insert pattern:\n");
+		printf("\n press q for quit\n");
+		printf("\nPlease insert text: ");
+		input = scanf("%s",&text);
+		printf("\ntext is: %s ",text);
 
-	fgets(pattern,(int)strlen(pattern),stdin);
-	/* remove the \n trail char*/
-	strtok(pattern,"\n");
+		if (strcmp(text, "q") == 0) {
+			break;
+		}
 
-	index = match(text, pattern);
+		printf("\nPlease insert pattern: ");
+		scanf("%s", &pattern);
+		printf("\npattern is: %s ", pattern);
 
-	printf("the best string match is in the index %d", index);
-	getchar();
+		index = match(text, pattern);
 
+		printf("\nthe best string match is in the index %d", index);
+	    getchar();
+	}
 	return 0;
 
 }

@@ -49,21 +49,23 @@ void direction_dictionary(DIRECTION flag, BOOL real, char* str);
 int main()
 {
     char str_direction[MEM]="" ,/* string direction*/
-	     text[MEM]; /* text input */
+	     text[MEM], /* text input */
+		 input = "";
 	
+	while (input!=EOF) {
 
-	printf("Please insert text :\n");
-	fgets(text,(int)strlen(text), stdin);
+		printf("\n press q for quit\n");
+		printf("\n Please insert text :");
+		input = scanf("%s",text);
+		if (strcmp(text, "q") == 0) {
+			break;
+		}
 
-	/* remove the \n trail char*/
-	strtok(text,"\n");
+		f_sequence(text, str_direction);
+		printf("\n the string '%s' is in: %s ",text, str_direction);
 
-	f_sequence(text, str_direction);
-	printf("the string is in: %s ", str_direction);
-
-	
-	getchar();
-
+		getchar();
+	}
 	return 0;
 }
 
@@ -86,10 +88,11 @@ int main()
 */
 void f_sequence(char text[], char *string_direction) {
 
+	strcpy(string_direction, ""); /*initialze string*/
 	DIRECTION direction,/* direction of pair char */
 		previous_direction= CENTER; /* direction of previous pair char*/
 	BOOL is_monotonic = TRUE;/*is the string is monotonic seris? */
-
+   
 	int text_length = (int)strlen(text); /* text length */
 	int i;
 
