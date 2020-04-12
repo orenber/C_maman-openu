@@ -35,7 +35,7 @@ int main() {
 	    input = "";/* input user*/
 
 
-	printf("Wellcome !!! \n\Press q and Enter to quit\n");
+	printf("Wellcome !!! \nPress q and Enter to quit\n");
 	while (input != EOF) {
 
 		printf("\n\nPlease insert text: ");
