@@ -51,18 +51,18 @@ int main()
     char str_direction[MEM]="" ,/* string direction*/
 	     text[MEM], /* text input */
 		 input = "";
-	
+	printf("Wellcome !!! \n\Press q and Enter to quit\n");
 	while (input!=EOF) {
 
-		printf("\n press q for quit\n");
-		printf("\n Please insert text :");
+		
+		printf("\n\nPlease insert text :");
 		input = scanf("%s",text);
 		if (strcmp(text, "q") == 0) {
 			break;
 		}
 
 		f_sequence(text, str_direction);
-		printf("\n the string '%s' is in: %s ",text, str_direction);
+		printf("\n The string '%s' is in: %s ",text, str_direction);
 
 		getchar();
 	}
