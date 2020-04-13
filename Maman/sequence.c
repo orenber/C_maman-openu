@@ -52,7 +52,7 @@ int main()
 		text[MEM]; /* text input */
 		int input =0; 
 
-	printf("Wellcome !!! \nPress q and Enter to quit\n");
+    printf("Welcome !!! \nPress q and Enter to quit\n");
 	while (input!=EOF) {
 
 		
