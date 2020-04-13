@@ -24,7 +24,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#define MEM 100 /* max array storage*/
+#define MEM 101 /* max array storage*/
  
 typedef enum
 {
@@ -42,7 +42,7 @@ void f_sequence(char text[],char* str);
 void direction_dictionary(DIRECTION flag, BOOL real, char* str);
 
 /* <summary>
- Mains this instance.
+ main function - user friendly interface.
  </summary>
  <returns>int.</returns>
  */
@@ -85,23 +85,25 @@ int main()
  for the whole string 
 
  </summary>
- <param name="text">The text.</param>
+ <param name="text">The text input.</param>
+ <param name="*string_direction">string_direction.</param>
 */
 void f_sequence(char text[], char *string_direction) {
-
-	strcpy(string_direction, ""); /*initialze string*/
-	DIRECTION direction,/* direction of pair char */
-		previous_direction= CENTER; /* direction of previous pair char*/
-	BOOL is_monotonic = TRUE;/*is the string is monotonic seris? */
-   
+	
 	int text_length = (int)strlen(text); /* text length */
 	int i;
 
+	strcpy(string_direction, ""); /*initialize string*/
+	DIRECTION current_direction,/* direction of pair char */
+		previous_direction= CENTER; /* direction of previous pair char*/
+	BOOL is_monotonic = TRUE;/*is the string is monotonic Series? */
+	
+	
 	for ( i = 1; i < text_length; ++i) {
 		  
 
 		if (text[i - 1]>text[i]) {
-			direction = DOWN;
+			current_direction = DOWN;
 			if (previous_direction==UP) {
 				strcpy(string_direction,"un_order");
 				/* in the case the string is un order
@@ -110,7 +112,7 @@ void f_sequence(char text[], char *string_direction) {
 			}
 		}
 		else if (text[i - 1] < text[i]) {
-			direction = UP;
+			current_direction = UP;
 			if (previous_direction==DOWN) {
 				strcpy(string_direction,"un_order");
 				/* in the case the string is un order
@@ -121,22 +123,22 @@ void f_sequence(char text[], char *string_direction) {
 		else if (text[i - 1] == text[i]) {
 			is_monotonic = FALSE;
 			if (previous_direction==DOWN) {
-				direction = DOWN;
+				current_direction = DOWN;
 			}
 			else if (previous_direction==UP) {
-				direction = UP;
+				current_direction = UP;
 			}
 			else {
 
-				direction = CENTER;
+				current_direction = CENTER;
 			}
 		}
 
-		previous_direction = direction;
+		previous_direction = current_direction;
 
 	}
 	 
-		direction_dictionary(direction, is_monotonic, string_direction);
+		direction_dictionary(current_direction, is_monotonic, string_direction);
  
 		return;
 }
@@ -146,10 +148,12 @@ void f_sequence(char text[], char *string_direction) {
 	this function get the Direction of the last pair letters direction
 	and monotonic parameter and return the whole string direction 
  </summary>
-    <param name="DIRECTION">The dir.</param>
-    <param name="monotonic">The monotonic.</param>
+    <param name="dir">The direction of the last pair chars.</param>
+    <param name="is_monotonic">is the string is monotonic.</param>
+	<param name="*string_direction">string direction.</param>
+
 */
-void direction_dictionary(DIRECTION dir, BOOL monotonic,char *string_direction) {
+void direction_dictionary(DIRECTION dir, BOOL is_monotonic,char *string_direction) {
   
 	if (strcmp(string_direction, "un_order") == 0)
 	{
@@ -157,7 +161,7 @@ void direction_dictionary(DIRECTION dir, BOOL monotonic,char *string_direction) 
 	}
 
 	if (dir == DOWN) {
-		if (monotonic == TRUE) {
+		if (is_monotonic == TRUE) {
 			strcpy(string_direction, "monotonic descending order");
 		}
 		else {
@@ -165,7 +169,7 @@ void direction_dictionary(DIRECTION dir, BOOL monotonic,char *string_direction) 
 		}
 	}
 	else if (dir == UP) {
-		if (monotonic == TRUE) {
+		if (is_monotonic == TRUE) {
 			strcpy(string_direction, "monotonic ascending order");
 		}
 		else {

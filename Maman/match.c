@@ -15,14 +15,14 @@ text and pattern , it Returns the index location from which the best match occur
 
 #include <stdio.h>
 #include <string.h>
-#define MEM 100 /* max array storage*/
+#define MEM 101 /* max array storage*/
 
 int match_score(char text[], char pattern[]);
 int match(char text[], char pattern[]);
 
 
 /* <summary>
- Mains this instance.
+main function - user friendly interface.
  </summary>
  <returns>int.</returns>
  */
@@ -40,7 +40,7 @@ int main() {
 
 		printf("\n\nPlease insert text: ");
 		input = fgets(text,MEM,stdin);
-		strtok(text, "\n");/* remove trail /n*/
+		strtok(text, "\n");/* remove trail \n*/
 		printf("\ntext is: %s ",text);
 
 		if (strcmp(text, "q") == 0) {
@@ -49,7 +49,7 @@ int main() {
 
 		printf("\n\nPlease insert pattern: ");
 		fgets(pattern, MEM,stdin);
-		strtok(pattern, "\n");/* remove trail /n*/
+		strtok(pattern, "\n");/* remove trail \n*/
 		printf("\npattern is: %s ", pattern);
 
 		index = match(text, pattern);
