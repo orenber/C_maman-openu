@@ -15,7 +15,7 @@ text and pattern , it Returns the index location from which the best match occur
 
 #include <stdio.h>
 #include <string.h>
-#define MEM 101 /* max array storage*/
+#define MEM 101 /* array storage*/
 
 int match_score(char text[], char pattern[]);
 int match(char text[], char pattern[]);

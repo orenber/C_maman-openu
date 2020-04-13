@@ -24,7 +24,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#define MEM 101 /* max array storage*/
+#define MEM 101 /* array storage*/
  
 typedef enum
 {
