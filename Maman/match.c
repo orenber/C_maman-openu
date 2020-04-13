@@ -41,7 +41,7 @@ int main() {
 		printf("\n\nPlease insert text: ");
 		input = fgets(text,MEM,stdin);
 		strtok(text, "\n");/* remove trail \n*/
-		printf("\ntext is: %s ",text);
+		printf("\nText is: %s ",text);
 
 		if (strcmp(text, "q") == 0) {
 			break;
@@ -50,7 +50,7 @@ int main() {
 		printf("\n\nPlease insert pattern: ");
 		fgets(pattern, MEM,stdin);
 		strtok(pattern, "\n");/* remove trail \n*/
-		printf("\npattern is: %s ", pattern);
+		printf("\nPattern is: %s ", pattern);
 
 		index = match(text, pattern);
 
