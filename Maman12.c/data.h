@@ -3,7 +3,7 @@
 #include <string.h>
 
 
-#define N 1
+#define N 6
 typedef enum
 {
 	FALSE = 0, TRUE = 1
@@ -16,7 +16,7 @@ typedef BOOL adjmat[N][N];
 matrix_equal - assign the same value (BOOL)  for etch element in the matrix
 </summary>
 */
-void matrix_equal(BOOL *mat, BOOL number);
+void matrix_equal(adjmat mat, BOOL number);
 
 /* <summary>
 print_matrix -print matrix in any size

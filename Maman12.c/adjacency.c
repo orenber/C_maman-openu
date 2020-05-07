@@ -1,7 +1,7 @@
 /* ***********************************************************************
 Assembly         :
 Author           : Oren Berkovitch
-ID:              : 043189281
+
 Created          : 06-05-2020
 
 Last Modified By : Oren Berkovitch
@@ -30,10 +30,10 @@ int main(){
 	adjmat matrix; 
 	int input=0,
         parent, child;
-	char str_parent[2],
-		 str_child[2];
+	char str_parent[3],
+		 str_child[3];
 
-    matrix_equal(&matrix,FALSE);
+    matrix_equal(matrix,FALSE);
 	build_matrix(matrix);
 	printf("\n\n________________________\nSearch the path..\n"
 		"print -1 -1 for Exit");
@@ -42,14 +42,14 @@ int main(){
 		printf("\n\nPlease insert parent :");
 		scanf("%d", &parent);
 		/*convert int to string*/
-		sprintf(str_parent, "%d", parent);
-		printf("\nSelected parent : %s", str_parent);
+		sprintf(str_parent, "%2d", parent);
+		printf("Selected parent : %s", str_parent);
 
-		printf("\nPlease insert child :");
+		printf("\n\nPlease insert child :");
 		input = scanf("%d", &child);
 		/*convert int to string*/
 		sprintf(str_child, "%d", child);
-		printf("\nSelected child : %s", str_child);
+		printf("Selected child : %s", str_child);
 
 		if ((parent == -1) && (child==-1))
 		{
@@ -57,12 +57,12 @@ int main(){
 		}
 		    
 		BOOL result = path(matrix, parent, child);
-		printf(result ? "true,"
-			"ther is a path between the parent to the child" :
-			"false, ther is no path ");
+		printf(result ? "\ntrue,"
+			"\nTher is a path between the parent to the child" :
+			"false, \nTher is no path ");
 		
 	}
-	getchar();
+
 	return 0;
 }
 
@@ -154,14 +154,17 @@ void print_matrix(adjmat mat) {
 matrix_equal - assign the same value (BOOL)  for etch element in the matrix
 </summary>
 */
-void matrix_equal(BOOL *mat, BOOL number) {
+void matrix_equal(adjmat mat, BOOL number) {
 	/* calculate size of array */
-	int index = N * N; /* index matrix */
-	for (; index >= 0; index--) 
+	int col = N, 
+		row = N; /* index matrix */
+	for (col = 0; col < N; col++)
 	{
-		mat[index] = number;
-	} 
-
+		for (row = 0; row < N;row++)
+		{
+			mat[col][row] = number;
+		}
+	}
 	return ;
 }
 
@@ -189,12 +192,14 @@ BOOL path(adjmat mat,int parent,int child) {
 		 // seek parent 
 			if (mat[row][col] == TRUE) 
 			{   	
-				printf("%d\n", row);
+				printf("%d->", row);
 
 				if (row == parent) {
+					printf("%d", parent);
 					// found parent!!
 					isParentFound = TRUE;
 					return isParentFound;
+
 				}
 				else
 				{
