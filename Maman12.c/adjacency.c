@@ -61,7 +61,7 @@ int main(){
 			break;
 		}
 		    
-		BOOL result = path(matrix, parent, child);
+		result = path(matrix, parent, child);
 		printf(result ? "\ntrue,"
 			"\nTher is a path between the child %d to the parent %d" :
 			"\nfalse, \nTher is no path between the child %d to the parent %d",child,parent);
