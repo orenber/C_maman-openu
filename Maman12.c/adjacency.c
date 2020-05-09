@@ -207,8 +207,8 @@ BOOL path(adjmat mat,int parent,int child) {
 		return isParentFound;
 	}
 
-	 while (row != N - 1){
-		for (row = 0; row < N; ++row) {	
+	 while (row != N ){ 
+		for (row = 0; row < N; row++) {	
 		 /* seek parent */
 			if (mat[row][col] == TRUE) {   	
 				if (row == parent) {
