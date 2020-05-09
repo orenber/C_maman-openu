@@ -36,7 +36,7 @@ int main(){
 	int input=0, /* input from the user scanf */ 
         parent, /* leaf in the tree that connect to child leaf*/
 		child; /* leaf in the tree*/
-
+	BOOL result = FALSE;
 	/*assign matrix equal to false (zeros) */
     matrix_equal(matrix,FALSE);
 	
@@ -195,38 +195,39 @@ otherwise output is FALSE.
 </output>
 */
 BOOL path(adjmat mat,int parent,int child) {
-	
-	BOOL isParentFound = FALSE; /* is there is path between the child and the parent?*/
 	int row = 0, /* row index*/
 		col = child; /*coulum index*/
+	BOOL isParentFound = FALSE; /* is there is path between the child and the parent?*/
+
 
 	printf("\n%d->", child);
 	if((parent == child)&&(parent<N)&&(parent >= 0)){
 		printf("%d", parent);
 		isParentFound = TRUE;
-		return isParentFound;
+	
 	}
+	else {
 
-	 while (row != N ){ 
-		for (row = 0; row < N; row++) {	
-		 /* seek parent */
-			if (mat[row][col] == TRUE) {   	
-				if (row == parent) {
-					printf("%d", parent);
-					/* found parent!!*/
-					isParentFound = TRUE;
-					return isParentFound;
+		while (row != N) {
+			for (row = 0; row < N; row++) {
+				/* seek parent */
+				if (mat[row][col] == TRUE) {
+					if (row == parent) {
+						printf("%d", parent);
+						/* found parent!!*/
+						isParentFound = TRUE;
+						return isParentFound;
+					}
+					else {
+						printf("%d->", row);
+						col = row;
+						break;
+					}
 				}
-				else{
-					printf("%d->", row);
-					col = row;
-					break;
-				}
- 			}
-		
+
+			};
 		};
-	};
-    
+	}
 	 
 
 	return isParentFound;
