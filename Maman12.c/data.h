@@ -3,7 +3,7 @@
 #include <string.h>
 
 
-#define N 5 /* dimention */
+#define N 11 /* dimention */
 typedef enum /* boolen type*/
 {
 	FALSE = 0, TRUE = 1

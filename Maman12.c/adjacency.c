@@ -94,7 +94,7 @@ void build_matrix(adjmat mat) {
 
 	printf("\nPlease choose one main parent from the range [0-%1d] :", N - 1);
 	scanf("%d", &main_parent); 
-	printf("\n");
+	printf("\nMain parent: %d selected.\n",main_parent);
 
 	for (col = 0; col < N; col++) {
         if (col == main_parent){
@@ -105,7 +105,7 @@ void build_matrix(adjmat mat) {
 			printf("\nfor the given child: %1d \n"
 				"Please choose one parent from the range [0-%1d] : ",col , N-1);
 		    scanf("%d",&row);
-			printf("\n");
+			printf("\nfor the given child (column): %d parent (row) %d selected.\n\n",col,row);
 			/*assign value*/
 			mat[row][col] = TRUE;
 		}
