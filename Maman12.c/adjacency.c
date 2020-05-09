@@ -32,7 +32,7 @@ main function - user friendly interface.
 */
 int main(){
     
-	adjmat matrix; /* boolean Adjacency matrix */
+	adjmat matrix; /* boolean adjacency matrix */
 	int input=0, /* input from the user scanf */ 
         parent, /* leaf in the tree that connect to child leaf*/
 		child; /* leaf in the tree*/
@@ -43,7 +43,8 @@ int main(){
 	/* build matrix by the user*/
 	build_matrix(matrix);
 
-	printf("\n\n_____________________________\nSearch the path..\n"
+	printf("\n\n_____________________________\nSearch the path. " 
+		"check if there is path between the child to the parent \n"
 		"\nPrint -1 Enter -1 Enter for Exit");
 	
 	while (input != EOF){
@@ -62,8 +63,8 @@ int main(){
 		    
 		BOOL result = path(matrix, parent, child);
 		printf(result ? "\ntrue,"
-			"\nTher is a path between the child to the parent" :
-			"\nfalse, \nTher is no path ");
+			"\nTher is a path between the child %d to the parent %d" :
+			"\nfalse, \nTher is no path between the child %d to the parent %d",child,parent);
 		
 	}
 
@@ -206,13 +207,13 @@ BOOL path(adjmat mat,int parent,int child) {
 		return isParentFound;
 	}
 
-	for (col; col < N; ) {
+	 while (row != N - 1){
 		for (row = 0; row < N; ++row) {	
-		 // seek parent 
+		 /* seek parent */
 			if (mat[row][col] == TRUE) {   	
 				if (row == parent) {
 					printf("%d", parent);
-					// found parent!!
+					/* found parent!!*/
 					isParentFound = TRUE;
 					return isParentFound;
 				}
@@ -222,12 +223,11 @@ BOOL path(adjmat mat,int parent,int child) {
 					break;
 				}
  			}
-			else if (row == N-1){
-				// done searching ,parent not found
-				return isParentFound;
-			};
+		
 		};
 	};
+    
+	 
 
 	return isParentFound;
 }

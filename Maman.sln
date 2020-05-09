@@ -7,9 +7,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "maman11_targil2", "Maman\Ma
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "maman11_targil1", "maman11_targil1\maman11_targil1.vcxproj", "{8D450CFA-D1B1-4C26-B77C-994566D2EFC8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Maman12", "Maman12.c\Maman12.c.vcxproj", "{07E68A1A-B6C0-48BB-B130-AACC8AAF0E80}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "maman12", "Maman12.c\Maman12.c.vcxproj", "{07E68A1A-B6C0-48BB-B130-AACC8AAF0E80}"
 EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
