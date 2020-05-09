@@ -206,6 +206,9 @@ BOOL path(adjmat mat,int parent,int child) {
 		isParentFound = TRUE;
 	
 	}
+	else if ((child>=N)||(parent>=N)) {
+		isParentFound = FALSE;
+	}
 	else {
 
 		while (row != N) {
