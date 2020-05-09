@@ -86,9 +86,9 @@ void build_matrix(adjmat mat) {
 		row, /*row matrix index*/
 		main_parent; /* tree main parent*/
 		
-	printf("\nWelcome !!!\n\nThis is your adjacency matrix, please "
-		     "feel free to fill the indexes\n" 
-		     "for every child match the appropriate parent\n\n");
+	printf("\nWelcome !!!\n\nThis is your adjacency matrix in size %d x %d,\n"
+	         "please, fill the indexes, " 
+		     "for every child match the appropriate parent.\n\n", N, N);
 		
 	print_matrix(mat);
 
