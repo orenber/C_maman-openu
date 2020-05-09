@@ -1,9 +1,8 @@
-
 #include <stdio.h>
 #include <string.h>
 
 
-#define N 11 /* dimention */
+#define N 11
 typedef enum /* boolen type*/
 {
 	FALSE = 0, TRUE = 1

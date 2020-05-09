@@ -1,24 +1,19 @@
 /* ***********************************************************************
 Assembly         :
 Author           : Oren Berkovitch
-
 Created          : 06-05-2020
-
 Last Modified By : Oren Berkovitch
 Last Modified On : 06-05-2020
 ***********************************************************************
 <summary> 
 this programe have two part :
-
 1.the user assign value to boolean matrix in size NxN
 the user will be asked who is the main parent,
 than the user will match for each child leaf his parent.
-
 2. the user ask for parent and child input and call to the path function that will search
 if there is path between the child to the parent,
 in the case there is path the output return TRUE,
 or there isn't the output return FALSE.
-
 </summary>
 **********************************************************************
 */
@@ -68,6 +63,7 @@ int main(){
 		
 	}
 
+        printf("\nGoodby, have anice day! ;-)\n");
 	return 0;
 }
 
@@ -235,3 +231,9 @@ BOOL path(adjmat mat,int parent,int child) {
 
 	return isParentFound;
 }
+
+
+
+
+
+ 
