@@ -1,7 +1,7 @@
 #include "complex.h"
 
 
-complex read_comp(complex comp, int real, int img) {
+complex read_comp(complex comp, double real, double img) {
 	comp.real = real;
 	comp.img = img;
 	return comp;
@@ -9,8 +9,8 @@ complex read_comp(complex comp, int real, int img) {
 
 void print_comp(complex comp) {
 
-	print("%1d+i(%1d)", comp.real, comp.img);
-	return;
+	printf("%1f+(%1f)i", comp.real, comp.img);
+	return ;
 }
 
 complex add_comp(complex comp1, complex comp2) {
@@ -29,7 +29,7 @@ complex sub_comp(complex comp1, complex comp2) {
 	return result;
 }
 
-complex mult_comp_real(complex comp1, int real) {
+complex mult_comp_real(complex comp1, double real) {
 	complex result;
 
 	result.real = real*comp1.real ;
@@ -37,7 +37,7 @@ complex mult_comp_real(complex comp1, int real) {
 	return result;
 }
 
-complex mult_comp_img(complex comp1, int img) {
+complex mult_comp_img(complex comp1, double img) {
 	complex result;
 
 	result.real = comp1.img*img*-1 ;
@@ -53,10 +53,11 @@ complex mult_comp_comp(complex comp1, complex comp2) {
 	return result;
 }
 
-unsigned int abs_comp(complex comp1) {
+double abs_comp(complex comp1) {
 	
-	unsigned int absValue;
-	absValue = sqrt(comp1.real^2 -comp1.img^2,2);
+	double absValue;
+	
+	absValue = sqrt(pow(comp1.real, 2) - pow(comp1.img,2));
 	
 	return absValue;
 }
