@@ -1,10 +1,10 @@
 #include "complex.h"
 
 
-Complex* read_comp(Complex comp, double real, double img) {
+Complex read_comp(Complex comp, double real, double img) {
 	comp.real = real;
 	comp.img = img;
-	return &comp;
+	return comp;
 }
 
 void print_comp(Complex comp) {
@@ -97,6 +97,13 @@ Complex getComplex(char complexName) {
 
 }
 
+const char *command_leagal[9] = {
+	"read_comp","print_comp","add_comp","sub_comp",
+	"mult_comp_real" ,  "mult_comp_img" ,  "mult_comp_comp",
+	"abs_comp", "stop"
+};
+
+const char *Complex_leagal[6] = {"A","B","C","D","E","F" };
 
 
 
