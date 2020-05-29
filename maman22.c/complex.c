@@ -97,13 +97,16 @@ Complex getComplex(char complexName) {
 
 }
 
-const char *command_leagal[9] = {
+
+
+const char *command_leagal[LEN_COMMAND] = {
 	"read_comp","print_comp","add_comp","sub_comp",
 	"mult_comp_real" ,  "mult_comp_img" ,  "mult_comp_comp",
 	"abs_comp", "stop"
 };
 
-const char *Complex_leagal[6] = {"A","B","C","D","E","F" };
+const char *Complex_leagal[LEN_Complex] = {"A","B","C","D","E","F"};
 
+const char seperator[] = ", \t\r\n";
 
 

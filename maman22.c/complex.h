@@ -6,10 +6,13 @@
 #include <ctype.h>
 
 
+#define LEN_COMMAND 9
+#define LEN_Complex 6
+#define MEM 101
 
-
-const char *command_leagal[9];
-const char *Complex_leagal[6];
+const char *command_leagal[LEN_COMMAND];
+const char *Complex_leagal[LEN_Complex];
+const char seperator[6];
 
 typedef struct {
 	double real;
@@ -75,15 +78,15 @@ void abs_comp_from_user(char seperator[]);
 
 Complex getComplex(char complexName);
 
-Bool assert_command(char real_command[], char *expected_command[], char messege[]);
+Bool assert_command(char real_command[], char *expected_command[], int length, char messege[]);
 
-Bool assert_input(int get_input, int expected_input);
+Bool assert_input(char seperator[], int expected_input);
 
 Bool assert_Complex_type(char Complex_type[]);
 
 Bool assert_number(char numberStr[]);
 
-Bool assert_comma(char comma);
+Bool assert_comma(char sentence[]);
 
 
 
