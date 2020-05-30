@@ -1,10 +1,25 @@
 #include "complex.h"
 
+struct {
+	char name;
+	Complex *comp;
+}compexDictionary[] = {
+	{ 'A',&A },{ 'B',&B },{ 'C',&C },{ 'D',&D },{ 'E',&E },{ 'F',&F }
+};
 
-Complex read_comp(Complex comp, double real, double img) {
-	comp.real = real;
-	comp.img = img;
-	return comp;
+Complex* read_comp(char complexName, double real, double img) {
+	 
+	int i;
+	for (i = 0; LEN_Complex > i; i++) {
+		if (compexDictionary[i].name == complexName) {
+			compexDictionary[i].comp->real = real;
+			compexDictionary[i].comp->img = img;
+			return compexDictionary[i].comp;
+			
+		}
+	}
+
+	 
 }
 
 void print_comp(Complex comp) {
@@ -63,37 +78,15 @@ double abs_comp(Complex comp1) {
 }
 
 
-Complex getComplex(char complexName) {
-
-	Complex comp;
-
-	switch (complexName) {
-
-	case 'A':
-		comp = A;
-		break;
-
-	case 'B':
-		comp = B;
-		break;
-
-	case 'C':
-		comp = C;
-		break;
-
-	case 'D':
-		comp = D;
-		break;
-
-	case 'E':
-		comp = E;
-		break;
-
-	case 'F':
-		comp = F;
-		break;
+Complex* getComplexVar(char complexName) {
+	
+	int i;
+	for (i = 0; LEN_Complex > i; i++) {
+		if (compexDictionary[i].name == complexName) {
+			return compexDictionary[i].comp;
+		 }
 	}
-	return comp;
+		
 
 }
 
@@ -105,7 +98,7 @@ const char *command_leagal[LEN_COMMAND] = {
 	"abs_comp", "stop"
 };
 
-const char *Complex_leagal[LEN_Complex] = {"A","B","C","D","E","F"};
+const char *Complex_leagal[LEN_Complex] = { "A","B","C","D","E","F" };
 
 const char seperator[] = ", \t\r\n";
 

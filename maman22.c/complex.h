@@ -27,14 +27,10 @@ typedef enum {
 }Bool;
 
 
-/*struct {
-	char name;
-	Complex *comp;
-}compexDictionary[] = {
-	{'A',&A},{'B',&B },{ 'C',&C },{'D',&D },{ 'E',&E },{ 'F',&F }
-};*/
 
-Complex read_comp(Complex comp, double real, double img);
+
+
+Complex* read_comp(char complexName, double real, double img);
 
 void print_comp(Complex comp);
 
@@ -76,7 +72,7 @@ void abs_comp_from_user(char seperator[]);
 
 
 
-Complex getComplex(char complexName);
+Complex* getComplexVar(char complexName);
 
 Bool assert_command(char real_command[], char *expected_command[], int length, char messege[]);
 
@@ -90,7 +86,7 @@ Bool assert_comma(char sentence[], int comma_sum);
 
 int char_apperance(char word[], char token);
 
-void removeSubstring(char *s, const char *toremove);
+void removeSubstring(char *s,  char *toremove);
 
 
 
