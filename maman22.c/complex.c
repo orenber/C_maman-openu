@@ -24,7 +24,7 @@ Complex* read_comp(char complexName, double real, double img) {
 
 void print_comp(Complex comp) {
 
-	printf("%1f + (%1f)i\n", comp.real, comp.img);
+	printf("%.2f + (%.2f)i\n", comp.real, comp.img);
 	return ;
 }
 
@@ -68,11 +68,11 @@ Complex mult_comp_comp(Complex comp1, Complex comp2) {
 	return result;
 }
 
-double abs_comp(Complex comp1) {
+double abs_comp(Complex comp) {
 	
 	double absValue;
 	
-	absValue = sqrt(pow(comp1.real, 2) - pow(comp1.img,2));
+	absValue = sqrt(pow(comp.real, 2) + pow(comp.img,2));
 	
 	return absValue;
 }
