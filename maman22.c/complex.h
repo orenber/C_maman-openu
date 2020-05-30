@@ -28,8 +28,6 @@ typedef enum {
 
 
 
-
-
 Complex* read_comp(char complexName, double real, double img);
 
 void print_comp(Complex comp);

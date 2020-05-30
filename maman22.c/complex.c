@@ -4,7 +4,7 @@ struct {
 	char name;
 	Complex *comp;
 }compexDictionary[] = {
-	{ 'A',&A },{ 'B',&B },{ 'C',&C },{ 'D',&D },{ 'E',&E },{ 'F',&F }
+	{ 'A',&A },{ 'B',&B },{ 'C',&C },{ 'D',&D },{ 'E',&E },{ 'F',&F },{'#',NULL}
 };
 
 Complex* read_comp(char complexName, double real, double img) {
@@ -19,6 +19,7 @@ Complex* read_comp(char complexName, double real, double img) {
 		}
 	}
 
+	return compexDictionary[LEN_Complex].comp;
 	 
 }
 
@@ -87,7 +88,7 @@ Complex* getComplexVar(char complexName) {
 		 }
 	}
 		
-
+	return compexDictionary[LEN_Complex].comp;
 }
 
 
