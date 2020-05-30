@@ -86,9 +86,11 @@ Bool assert_Complex_type(char Complex_type[]);
 
 Bool assert_number(char numberStr[]);
 
-Bool assert_comma(char sentence[]);
+Bool assert_comma(char sentence[], int comma_sum);
 
+int char_apperance(char word[], char token);
 
+void removeSubstring(char *s, const char *toremove);
 
 
 
