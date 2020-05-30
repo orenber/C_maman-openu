@@ -48,25 +48,27 @@ double abs_comp(Complex comp1);
 
 Bool stop(char command[]);
 
-void setCommand(char command[], char seperator[]);
+void setCommand(char command[], char input_string[]);
 
-void read_comp_from_user(char seperator[]);
+void read_comp_from_user(char input_string[]);
 
-void print_comp_from_user(char seperator[]);
+void print_comp_from_user(char input_string[]);
 
-void add_comp_from_user(char seperator[]);
+void add_comp_from_user(char input_string[]);
 
-void sub_comp_from_user(char seperator[]);
+void sub_comp_from_user(char input_string[]);
 
-void mult_comp_real_from_user(char seperator[]);
+void mult_comp_real_from_user(char input_string[]);
 
-void mult_comp_img_from_user(char seperator[]);
+void mult_comp_img_from_user(char input_string[]);
 
-void mult_comp_comp_from_user(char seperator[]);
+void mult_comp_comp_from_user(char input_string[]);
 
-void abs_comp_from_user(char seperator[]);
+void abs_comp_from_user(char input_string[]);
 
-void abs_comp_from_user(char seperator[]);
+void abs_comp_from_user(char input_string[]);
+
+void stop_from_user(char input_string[]);
 
 
 
