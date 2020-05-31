@@ -1,27 +1,14 @@
+
 #include "complex.h"
 
-struct {
-	char name;
-	Complex *comp;
-}compexDictionary[] = {
-	{ 'A',&A },{ 'B',&B },{ 'C',&C },{ 'D',&D },{ 'E',&E },{ 'F',&F },{'#',NULL}
-};
 
-/* <summary> read compex name and write the complex var , return complex pointer*/
-Complex* read_comp(char complexName, double real, double img) {
-	 
-	int i;
-	for (i = 0; LEN_Complex > i; i++) {
-		if (compexDictionary[i].name == complexName) {
-			compexDictionary[i].comp->real = real;
-			compexDictionary[i].comp->img = img;
-			return compexDictionary[i].comp;
-			
-		}
-	}
 
-	return compexDictionary[LEN_Complex].comp;
+ /*<summary> read compex name and write the complex var , return complex pointer*/
+Complex* read_comp(Complex *complexvar, double real, double img) {
 	 
+		 complexvar->real = real;
+		 complexvar->img = img;
+		 return complexvar;
 }
 
 /* <summary> print complex number*/
@@ -95,18 +82,6 @@ Bool stop(char command[]) {
 	return state;
 };
 
-/* get complex name and return complex pointer to the complex varible*/
-Complex* getComplexVar(char complexName) {
-	
-	int i;
-	for (i = 0; LEN_Complex > i; i++) {
-		if (compexDictionary[i].name == complexName) {
-			return compexDictionary[i].comp;
-		 }
-	}
-		
-	return compexDictionary[LEN_Complex].comp;
-}
 
 /* all legal command*/
 const char *command_leagal[LEN_COMMAND] = {

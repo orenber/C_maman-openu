@@ -19,7 +19,7 @@ typedef struct {
 	double img;
 }Complex;
 
-Complex A, B, C, D, E, F;
+
 
 
 typedef enum {
@@ -28,7 +28,7 @@ typedef enum {
 
 
 
-Complex* read_comp(char complexName, double real, double img);
+Complex* read_comp(Complex *complexvar, double real, double img);
 
 void print_comp(Complex comp);
 
@@ -44,6 +44,7 @@ Complex mult_comp_comp(Complex comp1, Complex comp2);
 
 double abs_comp(Complex comp1);
 
+Complex* getComplexVar(char complexName);
 
 
 Bool stop(char command[]);
@@ -72,9 +73,8 @@ Bool stop(char command[]);
 
 
 
-Complex* getComplexVar(char complexName);
 
-Bool assert_command(char real_command[], char *expected_command[], int length, char messege[]);
+Bool assert_command(char real_command[], char *expected_command[], int  length, char messege[]);
 
 Bool assert_nargin(char seperator[], int expected_input);
 
