@@ -76,7 +76,7 @@ Complex* getComplexVar(char complexName);
 
 Bool assert_command(char real_command[], char *expected_command[], int length, char messege[]);
 
-Bool assert_input(char seperator[], int expected_input);
+Bool assert_nargin(char seperator[], int expected_input);
 
 Bool assert_Complex_type(char Complex_type[]);
 
@@ -86,7 +86,7 @@ Bool assert_comma(char sentence[], int comma_sum);
 
 int char_apperance(char word[], char token);
 
-void removeSubstring(char *s,  char *toremove);
+void remove_substring(char *s,  char *toremove);
 
 
 
