@@ -68,7 +68,7 @@ void abs_comp_from_user(char input_string[]);
 
 void abs_comp_from_user(char input_string[]);
 
-void stop_from_user(char input_string[]);
+Bool stop(char command[]);
 
 
 
