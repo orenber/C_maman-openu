@@ -74,7 +74,7 @@ Bool stop(char command[]);
 
 
 
-Bool assert_command(char real_command[], char *expected_command[], int  length, char messege[]);
+Bool assert_command(char real_command[],const char *expected_command[], int  length, char messege[]);
 
 Bool assert_nargin(char seperator[], int expected_input);
 
