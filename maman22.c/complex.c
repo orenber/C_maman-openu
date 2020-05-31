@@ -7,6 +7,7 @@ struct {
 	{ 'A',&A },{ 'B',&B },{ 'C',&C },{ 'D',&D },{ 'E',&E },{ 'F',&F },{'#',NULL}
 };
 
+/* <summary> read compex name and write the complex var , return complex pointer*/
 Complex* read_comp(char complexName, double real, double img) {
 	 
 	int i;
@@ -23,12 +24,14 @@ Complex* read_comp(char complexName, double real, double img) {
 	 
 }
 
+/* <summary> print complex number*/
 void print_comp(Complex comp) {
 
 	printf("%.2f + (%.2f)i\n", comp.real, comp.img);
 	return ;
 }
 
+/* <summary> add two complex number and return complex number result*/
 Complex add_comp(Complex comp1, Complex comp2) {
 	Complex result;
 
@@ -37,6 +40,7 @@ Complex add_comp(Complex comp1, Complex comp2) {
 	return result;
 }
 
+/* <summary> substruct one complex number from another and return complex number result*/
 Complex sub_comp(Complex comp1, Complex comp2) {
 	Complex result;
 
@@ -45,6 +49,7 @@ Complex sub_comp(Complex comp1, Complex comp2) {
 	return result;
 }
 
+/* <summary> multiple complex number with real number and return complex number result*/
 Complex mult_comp_real(Complex comp1, double real) {
 	Complex result;
 
@@ -53,6 +58,7 @@ Complex mult_comp_real(Complex comp1, double real) {
 	return result;
 }
 
+/* <summary> multiple complex number with imagenary number and return complex number result*/
 Complex mult_comp_img(Complex comp1, double img) {
 	Complex result;
 
@@ -61,6 +67,7 @@ Complex mult_comp_img(Complex comp1, double img) {
 	return result;
 }
 
+/* <summary> multiple one complex number with another complex number and return complex result*/
 Complex mult_comp_comp(Complex comp1, Complex comp2) {
 	Complex result;
 
@@ -69,6 +76,7 @@ Complex mult_comp_comp(Complex comp1, Complex comp2) {
 	return result;
 }
 
+/* <summary> return complex number abselute number */
 double abs_comp(Complex comp) {
 	
 	double absValue;
@@ -78,6 +86,7 @@ double abs_comp(Complex comp) {
 	return absValue;
 }
 
+/* stop thg main function - create flag state True/False*/
 Bool stop(char command[]) {
 
 	Bool state;
@@ -86,6 +95,7 @@ Bool stop(char command[]) {
 	return state;
 };
 
+/* get complex name and return complex pointer to the complex varible*/
 Complex* getComplexVar(char complexName) {
 	
 	int i;
@@ -98,15 +108,17 @@ Complex* getComplexVar(char complexName) {
 	return compexDictionary[LEN_Complex].comp;
 }
 
-
+/* all legal command*/
 const char *command_leagal[LEN_COMMAND] = {
 	"read_comp","print_comp","add_comp","sub_comp",
 	"mult_comp_real" ,  "mult_comp_img" ,  "mult_comp_comp",
 	"abs_comp", "stop"
 };
 
+/* all legal complex name*/
 const char *Complex_leagal[LEN_Complex] = {"A","B","C","D","E","F" };
 
+/* seperator for parsing text*/
 const char seperator[] = ", \t\r\n";
 
 
