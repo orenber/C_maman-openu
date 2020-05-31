@@ -80,7 +80,7 @@ Bool stop(char command[]) {
 	state = (strcmp(command, "stop") == 0) ? True : False;
 
 	return state;
-};
+}
 
 
 /* all legal command*/
@@ -95,5 +95,3 @@ const char *Complex_leagal[LEN_Complex] = {"A","B","C","D","E","F" };
 
 /* seperator for parsing text*/
 const char seperator[] = ", \t\r\n";
-
-

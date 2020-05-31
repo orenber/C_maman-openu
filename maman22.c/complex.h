@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include <stdio.h>
@@ -74,7 +75,7 @@ Bool stop(char command[]);
 
 
 
-Bool assert_command(char real_command[],const char *expected_command[], int  length, char messege[]);
+Bool assert_command(char real_command[], const char *expected_command[], int  length, char messege[]);
 
 Bool assert_nargin(char seperator[], int expected_input);
 
@@ -87,6 +88,3 @@ Bool assert_comma(char sentence[], int comma_sum);
 int char_apperance(char word[], char token);
 
 void remove_substring(char *s,  char *toremove);
-
-
-
