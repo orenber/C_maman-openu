@@ -265,3 +265,5 @@ __pycache__/
 /maman12/stdafx.cpp
 /maman12
 /Maman12.c/Maman12.c.vcxproj.filters
+/maman23/maman23.vcxproj.filters
+*.filters
