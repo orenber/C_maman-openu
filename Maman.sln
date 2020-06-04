@@ -7,11 +7,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "maman11_targil2", "Maman\Ma
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "maman11_targil1", "maman11_targil1\maman11_targil1.vcxproj", "{8D450CFA-D1B1-4C26-B77C-994566D2EFC8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "maman23", "maman231\maman231.vcxproj", "{CE8847A1-232F-4FFF-A878-D45B6AD1CA45}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "maman23", "maman23\maman23.vcxproj", "{CE8847A1-232F-4FFF-A878-D45B6AD1CA45}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "maman22", "Project1\Project1.vcxproj", "{0F7F168D-E9D9-49DE-B0CA-B42152027331}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "maman22", "maman22\maman22.vcxproj", "{0F7F168D-E9D9-49DE-B0CA-B42152027331}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "maman12", "Project2\Project2.vcxproj", "{EB9241BA-E4E2-452E-B934-DC2BA0F7231F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "maman12", "maman12\maman12.vcxproj", "{EB9241BA-E4E2-452E-B934-DC2BA0F7231F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -18,9 +18,15 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="maman23.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="data_info.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{F21BBBFB-761F-4B23-892B-57F9F4552717}</ProjectGuid>
+    <ProjectGuid>{CE8847A1-232F-4FFF-A878-D45B6AD1CA45}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>maman23</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
