@@ -97,6 +97,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -119,6 +120,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="match.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="match\makefile" />
+    <None Include="match\test" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="match\Screenshot output match test .png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
