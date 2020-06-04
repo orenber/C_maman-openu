@@ -259,11 +259,6 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
-/maman12/maman12.cpp
-*.vcxproj
-/maman12/maman12.vcxproj.filters
-/maman12/stdafx.cpp
-/maman12
-/Maman12.c/Maman12.c.vcxproj.filters
-/maman23/maman23.vcxproj.filters
+
+
 *.filters
