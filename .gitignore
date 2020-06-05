@@ -6,6 +6,8 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.vcxproj
+
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -233,7 +235,7 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
-*.vcxproj
+
 # Visual Studio LightSwitch build output
 **/*.HTMLClient/GeneratedArtifacts
 **/*.DesktopClient/GeneratedArtifacts

@@ -3,6 +3,7 @@
   
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define MEM 30
 
@@ -30,3 +31,15 @@ char number_string[] - the word number- exp :sixteen , seventeen etc.
 </input>
 </summary>*/
 void dictionary_twenties(char number, char number_string[]);
+/* <summary>
+read_file - read file line by line to string array
+<input>
+char fileName[] - file name 
+char number_list[] - file text read
+</input>
+</summary>*/
+BOOL read_file(char fileName[], char number_list[]);
+
+
+
+ 
