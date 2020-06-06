@@ -40,6 +40,8 @@ char number_list[] - file text read
 </summary>*/
 BOOL read_file(char fileName[], char number_list[]);
 
+void write_file(char fileName[], char word[]);
+
 
 
  
