@@ -6,6 +6,7 @@
 #include <stdlib.h>
 
 #define MEM 30
+#define BUFFERSIZE 255
 
 typedef enum
 {
