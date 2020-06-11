@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 #define MEM 30
-#define BUFFERSIZE 355
+#define BUFFERSIZE 101
 
 typedef enum
 {
@@ -55,11 +55,17 @@ char word[] - file text to write
 BOOL - output - return if file exist
 </output>
 </summary>*/
-BOOL write_file(char fileName[], char word[]);
-
-int count_digit(char digit_num[]);
-
-BOOL file_exists(const char *fname);
+BOOL write_file(char fileName[], char word[], char write_type[]);
+/* <summary>
+file_exists - chack if the file name exist
+<input>
+const char *file_name - file name to check
+</input>
+<output>
+BOOL - output - return if file exist
+</output>
+</summary>*/
+BOOL file_exists(const char *file_name);
 
 
 

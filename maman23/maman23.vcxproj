@@ -33,7 +33,6 @@
     <ClInclude Include="data_info.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="number.txt" />
     <Text Include="number_read.txt" />
     <Text Include="number_write.txt" />
   </ItemGroup>
