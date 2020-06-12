@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 	char number_digits[BUFFERSIZE] ;     /* digit number string*/
 	char *output="";                     /* output from the user */
 	char *number_list = "  ";            /* number digit left after cleaning the sepeator*/	
-	char file_to_read[MEM] = "",         /* file name that i read from*/
+    char file_to_read[MEM] = "",         /* file name that i read from*/
 		 file_to_write[MEM] = "";        /* file name that i write to*/
 	BOOL is_file_read_exist = False,     /* is the file that i read from exist?*/
 		 is_file_write_exist = False;    /* is the file that i write to exist?*/
@@ -41,9 +41,6 @@ int main(int argc, char* argv[])
 	const char seperator[] = ", \t\r\n"; /* seperator for parsing text*/
 	int  nargin = argc;                  /* number of input in */
 
-	
-
-	
 	/* check file name inputs */
 	if ((nargin > 1)&&(argv[1]!=NULL)){
 		strcpy(file_to_read ,argv[1]);
@@ -110,7 +107,7 @@ int main(int argc, char* argv[])
 
 	}
 
-	
+	 
 		return 0;
 }
 
@@ -326,19 +323,19 @@ const char *file_name - file name to check
 BOOL - output - return if file exist
 </output>
 </summary>*/
-BOOL file_exists(const char *fname)
+BOOL file_exists(char *fname)
 {
 	FILE *file;
 	BOOL state;
-	if ((file = fopen(fname, "r")))
+	if (file = fopen(fname, "r"))
 	{
 		fclose(file);
 		state = True;
 	}
 	else {
 		state = False;
+		fprintf(stderr, strcat(fname," file not exist - Error!\n"));
+	
 	}
 	return state;
 }
-
-

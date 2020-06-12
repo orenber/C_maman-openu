@@ -53,7 +53,7 @@ const char *file_name - file name to check
 BOOL - output - return if file exist
 </output>
 </summary>*/
-BOOL file_exists(const char *file_name);
+BOOL file_exists(char *file_name);
 
 
 
