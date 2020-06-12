@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 	char number_digits[BUFFERSIZE] ;     /* digit number string*/
 	char *output="";                     /* output from the user */
 	char *number_list = "  ";            /* number digit left after cleaning the sepeator*/	
-    char file_to_read[MEM] = "",         /* file name that i read from*/
+        char file_to_read[MEM] = "",         /* file name that i read from*/
 		 file_to_write[MEM] = "";        /* file name that i write to*/
 	BOOL is_file_read_exist = False,     /* is the file that i read from exist?*/
 		 is_file_write_exist = False;    /* is the file that i write to exist?*/
@@ -323,19 +323,25 @@ const char *file_name - file name to check
 BOOL - output - return if file exist
 </output>
 </summary>*/
-BOOL file_exists(char *fname)
+BOOL file_exists(char fileName[])
 {
 	FILE *file;
 	BOOL state;
-	if (file = fopen(fname, "r"))
+    
+
+	if ((file = fopen(fileName, "r")))
 	{
 		fclose(file);
 		state = True;
 	}
 	else {
 		state = False;
-		fprintf(stderr, strcat(fname," file not exist - Error!\n"));
+		
+		fprintf(stderr,"%s",fileName);
+		fprintf(stderr,"-file not exist - Error!\n");
 	
 	}
 	return state;
 }
+
+
