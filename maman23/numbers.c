@@ -28,11 +28,11 @@ char* argv[] - file names string array
 */
 int main(int argc, char* argv[])
 {
-	char number_word[MEM] = "";          /* word number*/   
-	char number_digits[BUFFERSIZE] ;     /* digit number string*/
+	char number_word[BUFFERSIZE] = "";          /* word number*/
+	char number_digits[BUFFERSIZE]="" ;     /* digit number string*/
 	char *output="";                     /* output from the user */
 	char *number_list = "  ";            /* number digit left after cleaning the sepeator*/	
-    char file_to_read[MEM] = "",         /* file name that i read from*/
+        char file_to_read[MEM] = "",         /* file name that i read from*/
 		 file_to_write[MEM] = "";        /* file name that i write to*/
 	BOOL is_file_read_exist = False,     /* is the file that i read from exist?*/
 		 is_file_write_exist = False;    /* is the file that i write to exist?*/
@@ -41,16 +41,30 @@ int main(int argc, char* argv[])
 	const char seperator[] = ", \t\r\n"; /* seperator for parsing text*/
 	int  nargin = argc;                  /* number of input in */
 
+
+	if (nargin > 3) {
+		/* in the case ther is more than 2 agument
+		in the command line - trow error*/
+		fprintf(stderr, "Error using Numbers -"
+			"Too many input comand line arguments: \n");
+		fprintf(stderr,"%s\t%s\t%s\t", argv[1], argv[2], argv[3]);
+		exit(1);
+	}
+
 	/* check file name inputs */
-	if ((nargin > 1)&&(argv[1]!=NULL)){
+	if ((nargin >= 2)&&(argv[1]!=NULL)){
 		strcpy(file_to_read ,argv[1]);
 		/* check if the file read exist*/
 		is_file_read_exist = file_exists(file_to_read);
 		if (is_file_read_exist==True){
 		filePointer = fopen(file_to_read, "r");
 		}
+		else if (is_file_read_exist == False) {
+			/* if the file not exist the programe shoude stop*/
+			exit(1);
+		}
 	}
-	if (nargin > 2) {
+	if (nargin == 3) {
 		strcpy(file_to_write, argv[2]);
 		/* check if the file write exist */
 		is_file_write_exist = file_exists(file_to_write);
@@ -58,14 +72,21 @@ int main(int argc, char* argv[])
 			/* clean page*/
 			write_file(file_to_write,"", "w");
 		}
+		else if (is_file_write_exist == False) {
+			/* if the file not exist the programe shoude stop*/
+			exit(1);
+		}
 	}
-	
+
+
+
 	if (is_file_write_exist==False){
  	
 	printf("-------------Welcome !!! number to word converter --------------\n"
 		   " press q and Enter to quite\n");
 	}
-	
+	 
+ 
 	while (output != NULL)
 	{
 		
@@ -94,7 +115,7 @@ int main(int argc, char* argv[])
 
 			if (is_file_write_exist == False) {
 				/* print to the screen*/
-				printf("%s", strcat(number_word,"\n"));
+				fprintf(stdout,"%s", strcat(number_word,"\n"));
 			}
 			else if (is_file_write_exist == True) {
 				/*print to the file*/
@@ -302,8 +323,8 @@ BOOL write_file(char fileName[],  char word[],char write_type[]) {
 	if (filePointer == NULL)
 	{
 		is_file_exist = False;
-		fprintf(stderr, "file not exist\n");
-		printf("Error!");
+		fprintf(stderr, "file not exist\n Error!");
+		
 		exit(1);
 	}
 
@@ -323,19 +344,25 @@ const char *file_name - file name to check
 BOOL - output - return if file exist
 </output>
 </summary>*/
-BOOL file_exists(char *fname)
+BOOL file_exists(char fileName[])
 {
 	FILE *file;
 	BOOL state;
-	if (file = fopen(fname, "r"))
+    
+
+	if ((file = fopen(fileName, "r")))
 	{
 		fclose(file);
 		state = True;
 	}
 	else {
 		state = False;
-		fprintf(stderr, strcat(fname," file not exist - Error!\n"));
+		
+		fprintf(stderr,"%s",fileName);
+		fprintf(stderr,"-file not exist - Error!\n");
 	
 	}
 	return state;
 }
+
+
