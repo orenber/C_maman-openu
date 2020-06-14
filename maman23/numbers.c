@@ -18,6 +18,7 @@ the input  can come from file or from kebord
 
 #include "data_info.h"
 
+
 /* <summary>
 main function - user friendly interface.
 <input>

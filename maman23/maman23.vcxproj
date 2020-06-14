@@ -38,6 +38,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="makefile" />
+    <None Include="test1" />
+    <None Include="test2_output" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Screenshot input_from_keyboard.png" />
+    <Image Include="Screenshot read_2_write.png" />
+    <Image Include="Screenshot read_to_write_file.png" />
+    <Image Include="Screenshot_file_write_not_exist.png" />
+    <Image Include="Screenshot_get_to_many_comman_line_argument.png" />
+    <Image Include="Screenshot_number_read.png" />
+    <Image Include="Screenshot_read_file_not_exist.png" />
+    <Image Include="Screenshot_test1.png" />
+    <Image Include="Screenshot_to_many_command_line_argument.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
