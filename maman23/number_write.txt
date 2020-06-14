@@ -1,16 +1,27 @@
 
-zero
+eleven
+twenty five
+thirty 
+eleven
+fifty five
+sixty six
+seventy 
 one
 two
 three
-four
 five
+seventy seven
+fifty five
 six
+forty four
+twenty two
+ninety nine
+fifty five
+ten
+four
 seven
 eight
 nine
-ten
-eleven
 twelve
 thirteen
 fourteen
@@ -25,5 +36,39 @@ twenty two
 twenty three
 twenty four
 twenty five
-six
-six
+twenty six
+twenty seven
+twenty eight
+twenty nine
+forty three
+forty five
+forty six
+forty seven
+forty eight
+forty nine
+fifty 
+fifty one
+fifty two
+fifty three
+fifty four
+fifty five
+fifty six
+fifty seven
+fifty eight
+fifty nine
+sixty 
+sixty one
+sixty two
+sixty three
+sixty four
+sixty five
+eighty two
+ninety two
+ninety three
+ninety four
+ninety five
+ninety six
+ninety seven
+ninety eight
+ninety nine
+zero

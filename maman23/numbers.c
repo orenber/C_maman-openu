@@ -1,3 +1,4 @@
+
 /* ***********************************************************************
 Assembly         :
 Author           : Oren Berkovitch
@@ -28,26 +29,30 @@ char* argv[] - file names string array
 */
 int main(int argc, char* argv[])
 {
-	char number_word[BUFFERSIZE] = "";          /* word number*/
-	char number_digits[BUFFERSIZE]="" ;     /* digit number string*/
+	char number_word[BUFFERSIZE] = "";   /* word number*/
+	char number_digits[BUFFERSIZE]="" ;  /* digit number string*/
 	char *output="";                     /* output from the user */
 	char *number_list = "  ";            /* number digit left after cleaning the sepeator*/	
         char file_to_read[MEM] = "",         /* file name that i read from*/
-		 file_to_write[MEM] = "";        /* file name that i write to*/
+		 file_to_write[MEM] = "";    /* file name that i write to*/
 	BOOL is_file_read_exist = False,     /* is the file that i read from exist?*/
-		 is_file_write_exist = False;    /* is the file that i write to exist?*/
+		 is_file_write_exist = False;/* is the file that i write to exist?*/
 	FILE* filePointer;
 	
 	const char seperator[] = ", \t\r\n"; /* seperator for parsing text*/
 	int  nargin = argc;                  /* number of input in */
-
+        int i;
 
 	if (nargin > 3) {
 		/* in the case ther is more than 2 agument
 		in the command line - trow error*/
-		fprintf(stderr, "Error using Numbers -"
-			"Too many input comand line arguments: \n");
-		fprintf(stderr,"%s\t%s\t%s\t", argv[1], argv[2], argv[3]);
+		fprintf(stderr, "Error using Numbers - expect at most 2 argument-"
+			"get too many input comand line arguments: \n");
+		
+                for(i=1;nargin>i;i++){
+			fprintf(stderr,"%s\t,", argv[i]);
+		}
+		printf("\n");
 		exit(1);
 	}
 
@@ -89,9 +94,9 @@ int main(int argc, char* argv[])
  
 	while (output != NULL)
 	{
-		
+		 
 		if (is_file_read_exist == False) {
-			printf(">>");
+			(nargin==1)?printf(">>"):0;
 			/* get the input from the keybord*/
 			output = fgets(number_digits, BUFFERSIZE, stdin);
 		}
@@ -364,5 +369,3 @@ BOOL file_exists(char fileName[])
 	}
 	return state;
 }
-
-
