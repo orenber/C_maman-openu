@@ -37,6 +37,7 @@
     <Text Include="number_write.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\Desktop\maman\Answers1+2.docx" />
     <None Include="makefile" />
     <None Include="test1" />
     <None Include="test2_output" />
