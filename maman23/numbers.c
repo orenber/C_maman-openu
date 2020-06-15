@@ -133,8 +133,10 @@ int main(int argc, char* argv[])
 
 
 	}
+	if (is_file_read_exist == True) {
 
-	 
+		fclose(filePointer);
+	}
 		return 0;
 }
 
