@@ -2,7 +2,7 @@
 
 
 int main()
-{
+{  
 
 	int *result;
 	int digits = 4;
