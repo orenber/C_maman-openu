@@ -3,7 +3,8 @@
 #include<stdlib.h>
 #include<string.h>
 
-
+#define MEM 30
+#define BUFFERSIZE 101
 #define LENGTH(x)  (sizeof(x) / sizeof((x)[0]))
 
 typedef enum {
