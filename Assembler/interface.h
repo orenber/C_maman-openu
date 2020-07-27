@@ -7,6 +7,11 @@
 #define BUFFERSIZE 101
 #define LENGTH(x)  (sizeof(x) / sizeof((x)[0]))
 
+const char *function_legal[];
+const char *flag_legal[];
+const char seperator[];
+
+
 typedef enum {
 	False = 0, True = 1
 }BOOL;
@@ -26,3 +31,9 @@ BOOL file_exists(char fileName[]);
 BOOL write_file(char fileName[], char word[], char write_type[]);
 
 BOOL assert_number(char numberStr[]);
+
+BOOL assert_command(char real_command[], const char *legal_command[], int  length, char error_messege[]);
+
+void flag_manger(char flag[]);
+
+void func_manger(char func[]);

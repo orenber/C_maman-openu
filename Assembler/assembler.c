@@ -1,5 +1,5 @@
 #include "interface.h"
-
+void command_manager(char command[]);
 
 int main(int argc, char* argv[])
 {  
@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
 		 is_file_write_exist = False;    /* is the file that i write to exist?*/
 	FILE* filePointer;
 
-	const char seperator[] = ", \t\r\n"; /* seperator for parsing text*/
+	
 	int  nargin = argc;                  /* number of input in */
 	int i;
 
@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
 		printf("%s", line_read);
 		/* get the input from the file - read line by line*/
 		output = fgets(line_read, BUFFERSIZE, filePointer);
-	
+		command_manager(output);
 	} while (output != NULL);
 
 
@@ -41,6 +41,49 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
+
+void command_manager(char command[]) {
+	
+	 char *command_section = " ";
+	 BOOL isFlag, isFunction;
+     /* parse the command into 3 category */
+	 command_section = strtok(command, seperator);
+	 /* ist aflag? */
+	 isFlag = assert_command(command_section,&flag_legal,8,"");
+	 if (isFlag)
+	 {
+		 flag_manger(command_section);
+	 }
+	 else
+	 {
+		 isFunction = assert_command(command_section, &function_legal,16, "");
+		 if (isFunction) {
+			 func_manger(command_section);
+		 }
+	 }
+	 printf("%s",command_section);
+}
+
+void flag_manger(char flag[]) {
+
+	printf("\nthis is aflag: %s\n", flag);
+
+}
+
+
+void func_manger(char func[]) {
+
+	printf("\nthis is function: %s\n", func);
+
+}
+
+
+
+
+
+
+
+
 
 
 

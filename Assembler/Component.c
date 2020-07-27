@@ -1,9 +1,6 @@
 #include "interface.h"
 
 
-
-
-
 char mov[3], sub[3], not[3],
 jmp[3], red[3], cmp[3], lea[3] ,
 inc[3], bne[3], pnr[3], add[3],
@@ -21,4 +18,26 @@ struct {
     { "red",&red },{ "prn",&pnr },{ "rts",&rts },
     { "stop",&stop },{ '#',NULL }
 };
+
+
+/* all legal function*/
+const char *function_legal[] = {
+  "mov","cmp","add",
+  "sub","lea","clr",
+  "not","inc","dec",
+  "jmp","bne","jsr",
+  "red","prn","rts","stop"
+};
+
+/* all legal flags*/
+const char *flag_legal[] = {
+	"LIST","MAIN","LOOP",
+	"END","STR","LIST",
+	".entry",".extern"
+};
+const char seperator[] = ", \t\r\n"; /* seperator for parsing text*/
+
+
+
+
 

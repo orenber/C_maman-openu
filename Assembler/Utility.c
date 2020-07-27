@@ -75,6 +75,31 @@ BOOL assert_number(char numberStr[]) {
 	return is_number;
 }
 
+/* <summary> assert_command - check if the command function call is legal
+real_command - string from user,
+legal command - all the legel command available,
+length - amount number of the legal command,
+error_messege - error messege in case the assert command return False.
+.</summary> */
+BOOL assert_command(char real_command[], const char *legal_command[], int  length, char error_messege[]) {
+
+	BOOL is_validate_assertion = False; /* check if command validate*/
+	int i;
+	
+	for (i = 0; length>i; i++) {
+		if (strcmp(legal_command[i], real_command) == 0) {
+			is_validate_assertion = True;
+			break;
+		}
+	}
+
+	if (is_validate_assertion == False) {
+		printf("%s", error_messege);
+	}
+
+	return is_validate_assertion;
+}
+
 BOOL write_file(char fileName[], char word[], char write_type[]) {
 
 	FILE *filePointer;
