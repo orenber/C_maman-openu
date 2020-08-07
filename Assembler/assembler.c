@@ -1,7 +1,7 @@
 #include "interface.h"
 
-void command_manager(char command[]);
-void func_manger(char func[], struct operationFunc *opcodeFunc);
+
+
 
 int main(int argc, char* argv[])
 {  

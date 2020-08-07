@@ -56,4 +56,9 @@ BOOL assert_command(char real_command[], const char *legal_command[], int  lengt
 
 void flag_manger(char flag[]);
 
-void func_manger(char func[]);
+void command_manager(char command[]);
+
+void table_funct_opcode(char func[], struct operationFunc *opcodeFunc);
+
+void push(char sorceCode[], struct operationFunc *opcodeFunc);
+
