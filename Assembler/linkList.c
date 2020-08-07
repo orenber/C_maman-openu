@@ -19,9 +19,9 @@ void push(char sorceCode[] ,struct operationFunc *opcodeFunc)
 	struct addressTable * newNode = (struct addressTable *) malloc(sizeof(struct addressTable));
 
 	// Assign data to new node in stack
-	newNode->address[5] = size++;
-	newNode->binaryMachineCode[] = opcodeFunc->opcode;
-	newNode->sourceCode[] = sorceCode;
+	newNode->address[5] = size;
+	newNode->binaryMachineCode[5] = opcodeFunc->opcode;
+	newNode->sourceCode[5] = sorceCode;
 	// Next element after new node should be current top element
 	newNode->next = top;
 
