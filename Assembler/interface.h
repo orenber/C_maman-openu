@@ -6,10 +6,30 @@
 #define MEM 30
 #define BUFFERSIZE 101
 #define LENGTH(x)  (sizeof(x) / sizeof((x)[0]))
+#define CAPACITY 10000  // Stack maximum capacity
 
 const char *function_legal[];
 const char *flag_legal[];
 const char seperator[];
+
+struct operationFunc {
+	char name[4];
+	int funct;
+	int opcode;
+};
+
+struct flagTable {
+	char simebol[4];
+	int value;
+	struct flagTable *next;
+}*top;
+
+struct addressTable{
+	char address[6];
+	char sourceCode[30];
+	int binaryMachineCode[27];
+	struct addressTable *next;
+}*top;
 
 
 typedef enum {
