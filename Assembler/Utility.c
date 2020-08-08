@@ -16,6 +16,18 @@ void array2string(int arrayNumber[], char* stringArray) {
 
 };
 
+int *  arrayAssign(int *arrtoChange[], int *subArray[],int initial_index, int final_index) {
+	int i, j = 0; 
+
+	for (i = initial_index, j = 0; final_index >= i; ++i, j++) {
+		arrtoChange[i] = subArray[j];
+
+	};
+
+	return *(arrtoChange);
+
+}
+
 int * decimal2binaryArray(int decimalNumber, int digits) {
 
 
@@ -35,6 +47,23 @@ int * decimal2binaryArray(int decimalNumber, int digits) {
 	return arr;
 
 }
+
+/* <summary> remove_substring - remove sub string from main string.
+text - main string..</summary> */
+void remove_substring(char *text, char *sub_string) {
+	char *match;                       /* sub sting match*/
+	int len = (int)strlen(sub_string); /* length of sub string*/
+
+	if (len != 0) {
+		while ((match = strstr(text, sub_string))) {
+			*match = '\0';
+			strcat(text, match + len);
+		}
+	}
+
+	
+}
+
 
 /* <summary> assert_number - parse the number text and check if it is legal number
 numberStr - number string..</summary> */

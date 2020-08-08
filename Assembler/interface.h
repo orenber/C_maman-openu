@@ -29,7 +29,7 @@ struct addressTable{
 	char sourceCode[30];
 	int binaryMachineCode[27];
 	struct addressTable *next;
-}*top;
+}*top_node;
 
 
 typedef enum {
@@ -58,7 +58,12 @@ void flag_manger(char flag[]);
 
 void command_manager(char command[]);
 
+int*  arrayAssign(int arrtoChange[], int subArray[], int initial_index);
+
 void table_funct_opcode(char func[], struct operationFunc *opcodeFunc);
 
-void push(char sorceCode[], struct operationFunc *opcodeFunc);
+void push_operationFunc(char sorceCode[], struct operationFunc *opcodeFunc);
 
+void remove_substring(char *text, char *sub_string);
+
+void function_manger(char fun[], char input_str[]);

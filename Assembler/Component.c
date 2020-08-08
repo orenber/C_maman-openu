@@ -18,11 +18,11 @@ const char *function_legal[] = {
 
 /* all legal flags*/
 const char *flag_legal[] = {
-	"LIST","MAIN","LOOP",
+	 "MAIN","LOOP",
 	"END","STR","LIST",
 	".entry",".extern"
 };
-const char seperator[] = ", \t\r\n"; /* seperator for parsing text*/
+const char seperator[] = ": \t\r\n"; /* seperator for parsing text*/
 
 
 

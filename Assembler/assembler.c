@@ -12,10 +12,11 @@ int main(int argc, char* argv[])
     BOOL is_file_read_exist = False,     /* is the file that i read from exist?*/
 		 is_file_write_exist = False;    /* is the file that i write to exist?*/
 	FILE* filePointer;
-
+	struct operationFunc opcodeFunc;
 	
 	int  nargin = argc;                  /* number of input in */
-	int i;
+ 
+ 
 
 	/* check file name inputs */
 	if ((nargin >= 2) && (argv[1] != NULL)) {
@@ -30,12 +31,13 @@ int main(int argc, char* argv[])
 			exit(1);
 		}
 	}
-
+	
 	do{
 		printf("%s", line_read);
 		/* get the input from the file - read line by line*/
 		output = fgets(line_read, BUFFERSIZE, filePointer);
 		command_manager(output);
+		push_operationFunc(line_read, &opcodeFunc);
 	} while (output != NULL);
 
 
@@ -44,38 +46,61 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-void command_manager(char command[]) {
+void command_manager(char command_original[]) {
 	
-	 char *command_section = " ";
+	char *command_section = "",
+		command[MEM] = "",
+		command_left[MEM], input_str[MEM];
 	 BOOL isFlag, isFunction;
 	 struct operationFunc opcodeFunc;
-     /* parse the command into 3 category */
-	 command_section = strtok(command, seperator);
-	 /* ist aflag? */
-	 isFlag = assert_command(command_section,&flag_legal,8,"");
-	 if (isFlag)
-	 {
-		 flag_manger(command_section);
-	 }
-	 else
-	 {
-		 isFunction = assert_command(command_section, &function_legal,16, "");
-		 if (isFunction) {
-			 func_manger(command_section,&opcodeFunc);
+	 strcpy(command, command_original);
+	 strcpy(command_left, command_original);
+	 
+	 while (command_section != NULL) {
+
+		 remove_substring(&command_left, command_section);
+		 strcpy(command, command_left);
+		 /* parse the command into 3 category */
+		 command_section = strtok(command, seperator);
+
+
+		 /* ist aflag? */
+		 isFlag = assert_command(command_section, &flag_legal, 7, "");
+		 if (isFlag)
+		 {
+			 flag_manger(command_section);
+		 }
+		 else
+		 {
+			 isFunction = assert_command(command_section, &function_legal, 16, "");
+			 if (isFunction) {
+				 table_funct_opcode(command_section, &opcodeFunc);
+
+				 remove_substring(&command_left, command_section);
+				 strtok(command_left, seperator);
+				 function_manger(command_section, command_left);
+
+			 }
 		 }
 	 }
 	 printf("%s",command_section);
+	
 }
 
 void flag_manger(char flag[]) {
 
-	printf("\nthis is aflag: %s\n", flag);
+	printf("\nthis is flag: %s\n", flag);
 
+}
+
+void function_manger(char fun[],char input_str[]) {
+	printf("\nthis is function: %s\n", fun);
+
+	printf("\nthis is input: %s\n", input_str);
 }
 
 void table_funct_opcode(char func[], struct operationFunc *opcodeFunc) {
 
-	printf("\nthis is function: %s\n", func);
 	strcpy(opcodeFunc->name, func);
 
 	if (strcmp(func, "mov") == 0) {
