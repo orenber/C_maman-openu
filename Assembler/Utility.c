@@ -44,7 +44,7 @@ int * decimal2binaryArray(int decimalNumber, int digits) {
 		number = result;
 	}
 
-	return arr;
+	return *(arr);
 
 }
 
@@ -62,6 +62,25 @@ void remove_substring(char *text, char *sub_string) {
 	}
 
 	
+}
+
+int array_string_length(char *names[]) {
+
+	int namesLen = -1;
+	while (names[++namesLen] != NULL) {}
+	return namesLen;
+}
+
+void remove_substring_parts(char *main_string, char sub_string_parts[]) {
+
+	int i = 0;
+	int len = strlen(sub_string_parts);
+	char latter[] = {' ','\0'};
+	for (i; i < len; ++i) {
+		latter[0] = sub_string_parts[i];
+		remove_substring(main_string, latter);
+	}
+
 }
 
 
@@ -180,3 +199,4 @@ BOOL file_exists(char fileName[])
 	}
 	return state;
 }
+

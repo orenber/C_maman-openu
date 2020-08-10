@@ -10,7 +10,9 @@
 
 const char *function_legal[];
 const char *flag_legal[];
+const char *varType[];
 const char seperator[];
+
 
 struct operationFunc {
 	char name[4];
@@ -19,17 +21,18 @@ struct operationFunc {
 };
 
 struct flagTable {
-	char simebol[4];
-	int value;
+	char symbol[4];
+	int address;
 	struct flagTable *next;
 }*top;
 
 struct addressTable{
-	char address[6];
+	int address;
 	char sourceCode[30];
 	int binaryMachineCode[27];
 	struct addressTable *next;
 }*top_node;
+
 
 
 typedef enum {
@@ -58,7 +61,7 @@ void flag_manger(char flag[]);
 
 void command_manager(char command[]);
 
-int*  arrayAssign(int arrtoChange[], int subArray[], int initial_index);
+int* arrayAssign(int arrtoChange[], int subArray[], int initial_index);
 
 void table_funct_opcode(char func[], struct operationFunc *opcodeFunc);
 
@@ -66,4 +69,10 @@ void push_operationFunc(char sorceCode[], struct operationFunc *opcodeFunc);
 
 void remove_substring(char *text, char *sub_string);
 
+void varType_manger(char varType[], char var[]);
+
 void function_manger(char fun[], char input_str[]);
+
+int array_string_length(char *names[]);
+
+struct flagTable* list_iterator(int index);

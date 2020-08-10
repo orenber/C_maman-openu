@@ -36,10 +36,13 @@ int main(int argc, char* argv[])
 		printf("%s", line_read);
 		/* get the input from the file - read line by line*/
 		output = fgets(line_read, BUFFERSIZE, filePointer);
-		command_manager(output);
-		push_operationFunc(line_read, &opcodeFunc);
+		if (output != NULL) {
+			command_manager(output);
+			push_operationFunc(line_read, &opcodeFunc);
+		}
 	} while (output != NULL);
-
+	
+	
 
 	getchar();
 
@@ -48,48 +51,63 @@ int main(int argc, char* argv[])
 
 void command_manager(char command_original[]) {
 	
+	static int address = 100;
 	char *command_section = "",
 		command[MEM] = "",
 		command_left[MEM], input_str[MEM];
-	 BOOL isFlag, isFunction;
+	BOOL end_line = False, isFlag;
 	 struct operationFunc opcodeFunc;
 	 strcpy(command, command_original);
 	 strcpy(command_left, command_original);
-	 
-	 while (command_section != NULL) {
+	 address++;
+
+	 while (end_line != True) {
 
 		 remove_substring(&command_left, command_section);
 		 strcpy(command, command_left);
 		 /* parse the command into 3 category */
 		 command_section = strtok(command, seperator);
-
+		
 
 		 /* ist aflag? */
-		 isFlag = assert_command(command_section, &flag_legal, 7, "");
+		 isFlag = assert_command(command_section, &flag_legal, 6, "");
 		 if (isFlag)
 		 {
-			 flag_manger(command_section);
+			 flag_manger(command_section, address);
 		 }
-		 else
+		 else if (assert_command(command_section, &function_legal, 16, ""))
 		 {
-			 isFunction = assert_command(command_section, &function_legal, 16, "");
-			 if (isFunction) {
+			/* isFunction = assert_command(command_section, &function_legal, 16, "");*/
+			
 				 table_funct_opcode(command_section, &opcodeFunc);
 
 				 remove_substring(&command_left, command_section);
-				 strtok(command_left, seperator);
-				 function_manger(command_section, command_left);
 
-			 }
+				 remove_substring_parts(&command_left,seperator);
+
+				 function_manger(command_section, command_left);
+				 end_line = True;
+			
 		 }
+		 else if (assert_command(command_section, &varType, 2, ""))
+		 {
+			 remove_substring(&command_left, command_section);
+
+			 remove_substring_parts(&command_left, seperator);
+
+			 varType_manger(command_section, command_left);
+			 end_line = True;
+		 }
+		
 	 }
-	 printf("%s",command_section);
 	
 }
 
-void flag_manger(char flag[]) {
+void flag_manger(char flag[],int value) {
 
 	printf("\nthis is flag: %s\n", flag);
+	/* insert the flag in the table flage  - link list */
+	push_flag_table(flag, value);
 
 }
 
@@ -97,6 +115,15 @@ void function_manger(char fun[],char input_str[]) {
 	printf("\nthis is function: %s\n", fun);
 
 	printf("\nthis is input: %s\n", input_str);
+}
+
+void varType_manger(char varType[],char var[]) {
+
+	printf("\nthis is varType: %s\n", varType);
+
+	printf("\nthis is var: %s\n", var);
+
+
 }
 
 void table_funct_opcode(char func[], struct operationFunc *opcodeFunc) {
