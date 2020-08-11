@@ -75,4 +75,4 @@ void function_manger(char fun[], char input_str[]);
 
 int array_string_length(char *names[]);
 
-struct flagTable* list_iterator(int index);
+struct flagTable* flagTable_create();

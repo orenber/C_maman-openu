@@ -1,6 +1,6 @@
 #include "interface.h"
 
-
+static struct flagTable *l;
 
 
 int main(int argc, char* argv[])
@@ -15,7 +15,8 @@ int main(int argc, char* argv[])
 	struct operationFunc opcodeFunc;
 	
 	int  nargin = argc;                  /* number of input in */
- 
+	
+	l = flagTable_create();
  
 
 	/* check file name inputs */
@@ -42,7 +43,7 @@ int main(int argc, char* argv[])
 		}
 	} while (output != NULL);
 	
-	
+	int  op = serach_address(l,"LOOP");
 
 	getchar();
 
@@ -60,7 +61,7 @@ void command_manager(char command_original[]) {
 	 strcpy(command, command_original);
 	 strcpy(command_left, command_original);
 	 address++;
-
+	
 	 while (end_line != True) {
 
 		 remove_substring(&command_left, command_section);
@@ -107,7 +108,7 @@ void flag_manger(char flag[],int value) {
 
 	printf("\nthis is flag: %s\n", flag);
 	/* insert the flag in the table flage  - link list */
-	push_flag_table(flag, value);
+	push_flag_table(l,flag, value);
 
 }
 
