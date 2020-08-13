@@ -18,17 +18,21 @@ struct addressTable* addressTable_create() {
 /**
 * Functiont to push a new element in stack.
 */
-void push_operationFunc(struct addressTable* link_list,char sorceCode[] ,struct operationFunc *opcodeFunc)
+void push_operationFunc(struct addressTable* link_list,struct operationFunc *opcodeFunc,int address)
 {
-	 
+ 
 
 	// Create a new node and push to stack
-	struct addressTable * newNode = (struct addressTable *) calloc(23,sizeof(struct addressTable));
-
+	struct addressTable * newNode = (struct addressTable *) calloc(1,sizeof(struct addressTable));
 	// Assign data to new node in stack
-	newNode->address = opcodeFunc->funct;
-	newNode->binaryMachineCode[5] =opcodeFunc->opcode;
-	newNode->sourceCode[5] = sorceCode;
+	arrayAssign(newNode->binaryMachineCode, opcodeFunc->opcodeBinaryArr,18,23);
+	printArray(newNode->binaryMachineCode,24);
+
+	arrayAssign(newNode->binaryMachineCode, opcodeFunc->functBinaryArr,3,7);
+	printArray(newNode->binaryMachineCode,24);
+	newNode->address = address;
+	/* =opcodeFunc->opcode;*/
+	newNode->sourceCode[5] = "";
 	// Next element after new node should be current top element
 	newNode->next = link_list->next;
 	// Make sure new node is always at top
@@ -51,12 +55,37 @@ void push_flag_table(struct flagTable * link_list ,char flag[], int address)
 	strcpy(newNode->symbol ,flag);
  
 	// Next element after new node should be current top element
-	newNode->next =link_list->next;
+	newNode->next = link_list->next;
 	// Make sure new node is always at top
 	link_list->next = newNode;
 
 	printf("Data pushed to stack.\n");
 }
+
+void update_flag_table(struct flagTable * link_list, char flag[], int address) {
+	
+	
+	strcpy(link_list->symbol, flag);
+	link_list->address = address;
+	
+
+}
+
+
+int size_list(struct flagTable * link_list) {
+	
+	int size = 0;
+
+	while (link_list != NULL) {
+		
+		++size;
+		link_list = link_list->next;
+	};
+	return size;
+}
+
+
+
 
 int serach_address(struct flagTable * link_list, char flag[]) {
 

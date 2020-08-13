@@ -18,6 +18,8 @@ struct operationFunc {
 	char name[4];
 	int funct;
 	int opcode;
+	int functBinaryArr[5];
+	int opcodeBinaryArr[6];
 };
 
 struct flagTable {
@@ -45,6 +47,8 @@ typedef enum {
 	r6 = 6, r7 = 7
 }Register;
 
+void printArray(int arr[],int size);
+
 int* decimal2binaryArray(int decimalNumber, int digits);
 
 void array2string(int arrayNumber[], char *stringArray);
@@ -55,13 +59,15 @@ BOOL write_file(char fileName[], char word[], char write_type[]);
 
 BOOL assert_number(char numberStr[]);
 
+BOOL assertArrayIsEqual(int arr1[], int arr2[], int length);
+
 BOOL assert_command(char real_command[], const char *legal_command[], int  length, char error_messege[]);
 
 void flag_manger(char flag[]);
 
 void command_manager(char command[]);
 
-int* arrayAssign(int arrtoChange[], int subArray[], int initial_index);
+void arrayAssign(int *arrtoChange[], int *subArray[], int initial_index, int final_index);
 
 void table_funct_opcode(char func[], struct operationFunc *opcodeFunc);
 
@@ -76,3 +82,14 @@ void function_manger(char fun[], char input_str[]);
 int array_string_length(char *names[]);
 
 struct flagTable* flagTable_create();
+
+int size_list(struct flagTable * link_list);
+
+void update_flag_table(struct flagTable * link_list, char flag[], int address);
+
+
+
+/* unit test */
+void test_printArray();
+
+void run_test();

@@ -1,10 +1,11 @@
 #include "interface.h"
 
 static struct flagTable *l;
-
+static struct addressTable *addresstable;
 
 int main(int argc, char* argv[])
 {  
+	run_test();
 
 	char file_to_read[MEM] = "";         /* file name that i read from*/
 	char line_read[BUFFERSIZE] = "";     /* digit number string*/
@@ -13,7 +14,7 @@ int main(int argc, char* argv[])
 		 is_file_write_exist = False;    /* is the file that i write to exist?*/
 	FILE* filePointer;
 	struct operationFunc opcodeFunc;
-	
+
 	int  nargin = argc;                  /* number of input in */
 	
 	l = flagTable_create();
@@ -43,7 +44,7 @@ int main(int argc, char* argv[])
 		}
 	} while (output != NULL);
 	
-	int  op = serach_address(l,"LOOP");
+	 
 
 	getchar();
 
@@ -80,13 +81,13 @@ void command_manager(char command_original[]) {
 		 {
 			/* isFunction = assert_command(command_section, &function_legal, 16, "");*/
 			
-				 table_funct_opcode(command_section, &opcodeFunc);
+				
 
 				 remove_substring(&command_left, command_section);
 
 				 remove_substring_parts(&command_left,seperator);
 
-				 function_manger(command_section, command_left);
+				 function_manger(command_section, command_left, &opcodeFunc);
 				 end_line = True;
 			
 		 }
@@ -105,17 +106,29 @@ void command_manager(char command_original[]) {
 }
 
 void flag_manger(char flag[],int value) {
-
+	static int number_update = 0;
+	++number_update;
 	printf("\nthis is flag: %s\n", flag);
-	/* insert the flag in the table flage  - link list */
-	push_flag_table(l,flag, value);
-
+	if (number_update ==1) {
+		update_flag_table(l, flag, value);
+	}
+	else {
+		/* insert the flag in the table flage  - link list */
+		push_flag_table(l, flag, value);
+	}
 }
 
-void function_manger(char fun[],char input_str[]) {
+void function_manger(char fun[],char input_str[], struct operationFunc *opcodeFunc) {
+	
 	printf("\nthis is function: %s\n", fun);
-
 	printf("\nthis is input: %s\n", input_str);
+
+	table_funct_opcode(fun, opcodeFunc);
+
+	push_operationFunc(addresstable, fun, &opcodeFunc);
+
+
+	
 }
 
 void varType_manger(char varType[],char var[]) {
@@ -128,6 +141,7 @@ void varType_manger(char varType[],char var[]) {
 }
 
 void table_funct_opcode(char func[], struct operationFunc *opcodeFunc) {
+	int *binaryArr;
 
 	strcpy(opcodeFunc->name, func);
 
@@ -202,8 +216,21 @@ void table_funct_opcode(char func[], struct operationFunc *opcodeFunc) {
 		opcodeFunc->opcode = 15;
 		opcodeFunc->funct = NULL;
 	}
-		 
 
+	binaryArr = decimal2binaryArray(opcodeFunc->opcode, 6);
+	arrayAssign(opcodeFunc->opcodeBinaryArr, binaryArr, 0, 5);
+	printArray(opcodeFunc->opcodeBinaryArr, 6);
+	if (opcodeFunc->funct != NULL){
+
+		binaryArr = decimal2binaryArray(opcodeFunc->funct, 5);
+	}
+	else {
+
+		binaryArr = decimal2binaryArray(0, 5);
+	}
+
+	arrayAssign(opcodeFunc->functBinaryArr, binaryArr, 0, 4);
+	printArray(opcodeFunc->functBinaryArr, 5);
 }
 
 
