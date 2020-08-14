@@ -1,6 +1,55 @@
 #include "interface.h"
 
 
+/* <summary> assert_nargin - check the number of argument input
+text - string from user that will be parse to number of argument input.
+expected_nargin - expected number of argument input ..</summary> */
+BOOL assert_nargin(char text[], int expected_nargin) {
+
+	BOOL valid_inputs = False;
+	char messege[MEM] = "", *sep = "";
+	int nargin = 0;
+
+	sep = strtok(text, seperator);
+
+	while (sep != NULL)
+	{
+		/* count the number of inputs */
+		++nargin;
+		sep = strtok(NULL, seperator);
+
+	}
+
+	if (nargin == expected_nargin) {
+		valid_inputs = True;
+	}
+	else if (nargin > expected_nargin) {
+		valid_inputs = False;
+		strcpy(messege, "Extraneous text after end of command\n");
+	}
+	else if (nargin < expected_nargin) {
+		valid_inputs = False;
+		strcpy(messege, "Missing parameter\n");
+	}
+
+
+	if (valid_inputs == False) {
+		printf("%s", messege);
+	}
+
+	return valid_inputs;
+}
+
+
+/* <summary> assert_register_type - parse the register and check if it is legal register name
+Register_type - register name..</summary> */
+BOOL assert_register_type(char Register_type[]) {
+	BOOL is_validate_assertion = True;
+	is_validate_assertion = assert_command(Register_type, Register_legal, LEN_Register, "Undefined register variable\n");
+	return is_validate_assertion;
+}
+
+
 /* <summary> assert_number - parse the number text and check if it is legal number
 numberStr - number string..</summary> */
 BOOL assert_number(char numberStr[]) {
@@ -65,57 +114,56 @@ BOOL assert_command(char real_command[], const char *legal_command[], int  lengt
 	return is_validate_assertion;
 }
 
-BOOL write_file(char fileName[], char word[], char write_type[]) {
 
-	FILE *filePointer;
-	BOOL is_file_exist = True;  /* is the file that i write to, exist?*/
 
-	filePointer = fopen(fileName, write_type);
+/* <summary> assert_comma - parse the comma and check if it is legal comma apperance
+text - string
+comma_sum - number of cummas that need to be in the text..</summary> */
+BOOL assert_comma(char text[], int comma_sum) {
 
-	if (filePointer == NULL)
-	{
-		is_file_exist = False;
-		fprintf(stderr, "file not exist\n Error!");
+	BOOL llegal_comma = False;
+	char error_messege[MEM] = "", clean_string[MEM] = "";
+	int length = 0;
+	char *illgal_comma = ",,";
 
-		exit(1);
+	strcpy(clean_string, text);
+	remove_substring(clean_string, " ");
+	remove_substring(clean_string, "\n");
+	length = (int)strlen(clean_string);
+
+	if (clean_string[0] == ',') {
+
+		/* not allow to be in the first index*/
+		strcpy(error_messege, "Illegal comma\n");
+		llegal_comma = False;
 	}
-
-	fprintf(filePointer, "%s\n", word);
-	fclose(filePointer);
-
-	return is_file_exist;
-
-}
-
-/* <summary>
-file_exists - chack if the file name exist
-<input>
-const char *file_name - file name to check
-</input>
-<output>
-BOOL - output - return if file exist
-</output>
-</summary>*/
-BOOL file_exists(char fileName[])
-{
-	FILE *file;
-	BOOL state;
-
-
-	if ((file = fopen(fileName, "r")))
-	{
-		fclose(file);
-		state = True;
+	else if (clean_string[length - 1] == ',') {
+		/* not allow to be int the last index*/
+		strcpy(error_messege, "Extraneous text after end of command\n");
+		llegal_comma = False;
+	}
+	else if (strstr(clean_string, illgal_comma) != NULL) {
+		/* not allow consecutive comma*/
+		strcpy(error_messege, "Multiple consecutive commas\n");
+		llegal_comma = False;
+	}
+	else if (char_apperance(text, ',') < comma_sum) {
+		/* must be in exact number */
+		strcpy(error_messege, "Missing comma\n");
+		llegal_comma = False;
 	}
 	else {
-		state = False;
-
-		fprintf(stderr, "%s", fileName);
-		fprintf(stderr, "-file not exist - Error!\n");
-
+		llegal_comma = True;
 	}
-	return state;
+
+
+	if (llegal_comma == False) {
+		printf("%s", error_messege);
+	}
+
+	return llegal_comma;
 }
+
 
 
 BOOL assertArrayIsEqual(int arr1[], int arr2[], int length) {

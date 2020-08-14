@@ -95,3 +95,21 @@ void remove_substring_parts(char *main_string, char sub_string_parts[]) {
 	}
 
 }
+
+/* <summary> char_apperance -
+chack how many time the token (char) appers in the text.
+token - char..</summary> */
+int char_apperance(char text[], char token) {
+
+	int apperance = 0,              /* char apperance*/
+		i,
+		length = (int)strlen(text); /* text length */
+
+	for (i = 0; length > i; ++i) {
+		if (text[i] == token) {
+			++apperance;
+		}
+	}
+
+	return apperance;
+}

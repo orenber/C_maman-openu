@@ -7,7 +7,9 @@
 #define BUFFERSIZE 101
 #define LENGTH(x)  (sizeof(x) / sizeof((x)[0]))
 #define CAPACITY 10000  // Stack maximum capacity
+#define LEN_Register 8
 
+const char *Register_legal[LEN_Register];
 const char *function_legal[];
 const char *flag_legal[];
 const char *varType[];
@@ -47,15 +49,36 @@ typedef enum {
 	r6 = 6, r7 = 7
 }Register;
 
+
+/* ArrayUtils ---------------------------------------*/
+
 void printArray(int arr[],int size);
 
 int* decimal2binaryArray(int decimalNumber, int digits);
 
 void array2string(int arrayNumber[], char *stringArray);
 
+int  array_string_length(char *names[]);
+
+void remove_substring(char *text, char *sub_string);
+
+void arrayAssign(int *arrtoChange[], int *subArray[], int initial_index, int final_index);
+
+
+/* File management ---------------------------------*/
+
 BOOL file_exists(char fileName[]);
 
 BOOL write_file(char fileName[], char word[], char write_type[]);
+
+
+/* Assertion -----------------------------------*/
+
+BOOL assert_comma(char text[], int comma_sum);
+
+BOOL assert_register_type(char Register_type[]);
+
+BOOL assert_nargin(char text[], int expected_nargin);
 
 BOOL assert_number(char numberStr[]);
 
@@ -63,23 +86,21 @@ BOOL assertArrayIsEqual(int arr1[], int arr2[], int length);
 
 BOOL assert_command(char real_command[], const char *legal_command[], int  length, char error_messege[]);
 
+
+/* assembler ----------------------------------*/
+
 void flag_manger(char flag[]);
 
 void command_manager(char command[]);
 
-void arrayAssign(int *arrtoChange[], int *subArray[], int initial_index, int final_index);
-
 void table_funct_opcode(char func[], struct operationFunc *opcodeFunc);
-
-void push_operationFunc(char sorceCode[], struct operationFunc *opcodeFunc);
-
-void remove_substring(char *text, char *sub_string);
 
 void varType_manger(char varType[], char var[]);
 
 void function_manger(char fun[], char input_str[]);
 
-int array_string_length(char *names[]);
+
+ /* link list -----------------------------------*/
 
 struct flagTable* flagTable_create();
 
@@ -87,9 +108,11 @@ int size_list(struct flagTable * link_list);
 
 void update_flag_table(struct flagTable * link_list, char flag[], int address);
 
+void push_operationFunc(char sorceCode[], struct operationFunc *opcodeFunc);
 
 
-/* unit test */
+/* unit test -------------------------------------*/
+
 void test_printArray();
 
 void run_test();

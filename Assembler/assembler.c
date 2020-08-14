@@ -3,6 +3,19 @@
 static struct flagTable *l;
 static struct addressTable *addresstable;
 
+Register r0, r1, r2, r3, r4, r5, r6,r7;
+
+struct {
+	char name[2];
+	Register *reg;
+}registerDictionary[] = {
+	{ "r0",&r0 },{ "r1",&r1 },{ "r2",&r2 },
+    { "r3",&r3 },{ "r4",&r4 },{ "r5",&r5 },
+    { "r6",&r6 },{ "r7",&r7 },{ "#",NULL }
+};
+
+
+
 int main(int argc, char* argv[])
 {  
 	run_test();
@@ -124,6 +137,7 @@ void function_manger(char fun[],char input_str[], struct operationFunc *opcodeFu
 	printf("\nthis is input: %s\n", input_str);
 
 	table_funct_opcode(fun, opcodeFunc);
+	set_operation_command(fun, input_str);
 
 	push_operationFunc(addresstable, fun, &opcodeFunc);
 
@@ -139,6 +153,198 @@ void varType_manger(char varType[],char var[]) {
 
 
 }
+
+
+
+void set_operation_command(char func[], char input_str[]) {
+	
+	if (strcmp(func, "mov") == 0) {
+ 
+		mov_from_user(input_str);
+	}
+	else if (strcmp(func, "cmp") == 0) {
+		
+		cmp_from_user(input_str);
+	}
+	else if (strcmp(func, "add") == 0) {
+		
+		add_from_user(input_str);
+	 
+	}
+	else if (strcmp(func, "sub") == 0) {
+
+		sub_from_user(input_str);
+
+	}
+	else if (strcmp(func, "lea") == 0) {
+
+		lea_from_user(input_str);
+
+	}
+	else if (strcmp(func, "clr") == 0) {
+
+		clr_from_user(input_str);
+	 
+	}
+	else if (strcmp(func, "not") == 0) {
+		
+		not_from_user(input_str);
+	}
+	else if (strcmp(func, "inc") == 0) {
+		
+		inc_from_user(input_str);
+	}
+	else if (strcmp(func, "dec") == 0) {
+		
+		dec_from_user(input_str);
+	}
+	else if (strcmp(func, "jmp") == 0) {
+	 
+		jmp_from_user(input_str);
+	}
+	else if (strcmp(func, "bne") == 0) {
+		 
+		bne_from_user(input_str);
+	}
+	else if (strcmp(func, "jsr") == 0) {
+		 
+		jsr_from_user(input_str);
+	}
+	else if (strcmp(func, "red") == 0) {
+
+		red_from_user(input_str);
+ 
+	}
+	else if (strcmp(func, "prn") == 0) {
+	 
+		prn_from_user(input_str);
+	}
+	else if (strcmp(func, "rts") == 0) {
+		 
+		rts_from_user(input_str);
+	}
+	else if (strcmp(func, "stop") == 0) {
+		 
+		stop_from_user(input_str);
+	}
+
+}
+
+
+void mov_from_user(char nargin_str[]) {
+
+
+}
+
+void cmp_from_user(char nargin_str[]) {
+
+
+}
+
+void add_from_user(char nargin_str[]) {
+
+
+}
+
+void sub_from_user(char nargin_str[]) {
+
+
+}
+
+void lea_from_user(char nargin_str[]) {
+
+
+}
+
+void clr_from_user(char nargin_str[]) {
+
+
+}
+
+
+void not_from_user(char nargin_str[]) {
+
+
+}
+
+
+void inc_from_user(char nargin_str[]) {
+
+
+}
+
+
+void dec_from_user(char nargin_str[]) {
+
+
+}
+
+
+void jmp_from_user(char nargin_str[]) {
+
+
+}
+
+void bne_from_user(char nargin_str[]) {
+
+
+}
+
+
+void jsr_from_user(char nargin_str[]) {
+
+
+}
+
+
+void red_from_user(char nargin_str[]) {
+
+
+}
+
+
+void prn_from_user(char nargin_str[]) {
+
+
+}
+
+void rts_from_user(char nargin_str[]) {
+
+
+}
+
+
+void stop_from_user(char nargin_str[]) {
+
+
+}
+
+
+
+
+/* get complex name and return complex pointer to the complex varible */
+Register* getRegisterVar(char registerName) {
+
+	int i;
+	for (i = 0; LEN_Register > i; i++) {
+		if (registerDictionary[i].name == registerName) {
+			return registerDictionary[i].reg;
+		}
+	}
+
+	return registerDictionary[LEN_Register].reg;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 void table_funct_opcode(char func[], struct operationFunc *opcodeFunc) {
 	int *binaryArr;

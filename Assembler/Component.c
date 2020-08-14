@@ -29,6 +29,8 @@ const char *varType[] = {
 
  /* seperator for parsing text*/
 const char seperator[] = {':',' ','\t','\r','\n'};
+/* all legal register name*/
+const char *Register_leagal[LEN_Register] = {"r0", "r1", "r2", "r3","r4", "r5","r6", "r7" };
 
 
 
