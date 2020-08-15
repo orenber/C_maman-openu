@@ -50,6 +50,7 @@ typedef enum {
 }Register;
 
 
+
 /* ArrayUtils ---------------------------------------*/
 
 void printArray(int arr[],int size);
@@ -99,6 +100,43 @@ void varType_manger(char varType[], char var[]);
 
 void function_manger(char fun[], char input_str[]);
 
+void mov_from_user(char nargin_str[]);
+
+void cmp_from_user(char nargin_str[]);
+
+void add_from_user(char nargin_str[]);
+
+void sub_from_user(char nargin_str[]);
+
+void lea_from_user(char nargin_str[]);
+
+void clr_from_user(char nargin_str[]);
+
+void not_from_user(char nargin_str[]);
+
+void inc_from_user(char nargin_str[]);
+
+void dec_from_user(char nargin_str[]);
+
+void jmp_from_user(char nargin_str[]);
+
+void bne_from_user(char nargin_str[]);
+
+void jsr_from_user(char nargin_str[]);
+
+void red_from_user(char nargin_str[]);
+
+void prn_from_user(char nargin_str[]);
+
+void rts_from_user(char nargin_str[]);
+
+void stop_from_user(char nargin_str[]);
+
+Register* getRegisterVar(char registerName);
+
+void set_operation_command(char func[], char input_str[]);
+
+int cheakAddresingType(char inputString[]);
 
  /* link list -----------------------------------*/
 

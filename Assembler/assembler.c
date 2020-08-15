@@ -3,15 +3,17 @@
 static struct flagTable *l;
 static struct addressTable *addresstable;
 
-Register r0, r1, r2, r3, r4, r5, r6,r7;
+Register R0=r0, R1 = r1, R2 = r2, 
+         R3= r3, R4 = r4, R5 = r5,
+	     R6 = r6,R7 = r7;
 
 struct {
 	char name[2];
 	Register *reg;
 }registerDictionary[] = {
-	{ "r0",&r0 },{ "r1",&r1 },{ "r2",&r2 },
-    { "r3",&r3 },{ "r4",&r4 },{ "r5",&r5 },
-    { "r6",&r6 },{ "r7",&r7 },{ "#",NULL }
+	{ "r0",&R0 },{ "r1",&R1 },{ "r2",&R2 },
+	{ "r3",&R3 },{ "r4",&R4 },{ "r5",&R5 },
+	{ "r6",&R6 },{ "r7",&R7 },{ "#",NULL }
 };
 
 
@@ -243,6 +245,26 @@ void cmp_from_user(char nargin_str[]) {
 
 void add_from_user(char nargin_str[]) {
 
+	char *firstInput,*secondInput;
+	char command_input[MEM] = "";  /* copy of input string */
+	int nargin = 2;               /* number of input argument*/
+	int addressType_first, addressType_second;
+
+	strcpy(command_input, nargin_str);
+
+	/* assert number of inputs */
+	if (assert_nargin(nargin_str, nargin) == False) { return;}
+	/* assert legal comma */
+	if (assert_comma(nargin_str, nargin - 1) == False) { return;}
+
+	/* first input*/
+	firstInput = strtok(command_input,",");
+	addressType_first = cheakAddresingType(firstInput);
+
+	/* second input*/
+	secondInput = strtok(NULL, ",");
+	addressType_second = cheakAddresingType(secondInput);
+
 
 }
 
@@ -319,7 +341,12 @@ void stop_from_user(char nargin_str[]) {
 
 }
 
+int cheakAddresingType(char inputString[]) {
 
+
+	
+
+}
 
 
 /* get complex name and return complex pointer to the complex varible */

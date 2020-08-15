@@ -9,8 +9,11 @@ BOOL assert_nargin(char text[], int expected_nargin) {
 	BOOL valid_inputs = False;
 	char messege[MEM] = "", *sep = "";
 	int nargin = 0;
-
-	sep = strtok(text, seperator);
+	char seperator[] = { ',','\n','\t',':',' ','\r' };
+	char command_input[MEM] = "";  /* copy of input string */
+	
+	strcpy(command_input, text);
+	sep = strtok(command_input, seperator);
 
 	while (sep != NULL)
 	{
