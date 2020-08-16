@@ -14,6 +14,20 @@ void printArray(int arr[],int length)
 	printf("\n");
 }
 
+void printArrayReverse(int arr[], int length)
+{
+
+	int i = length - 1;
+
+	printf("Array elements are: ");
+	for (i; i >= 0; i--)
+	{
+		printf("%d, ", arr[i]);
+	}
+	printf("\n");
+}
+
+
 void array2string(int arrayNumber[], char* stringArray) {
 
 	/*detect the size of the array*/

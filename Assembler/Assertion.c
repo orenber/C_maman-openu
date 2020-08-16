@@ -48,7 +48,7 @@ BOOL assert_nargin(char text[], int expected_nargin) {
 Register_type - register name..</summary> */
 BOOL assert_register_type(char Register_type[]) {
 	BOOL is_validate_assertion = True;
-	is_validate_assertion = assert_command(Register_type, Register_legal, LEN_Register, "Undefined register variable\n");
+	is_validate_assertion = assert_command(Register_type, register_leagal, LEN_Register, "Undefined register variable\n");
 	return is_validate_assertion;
 }
 

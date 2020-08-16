@@ -22,7 +22,7 @@ BOOL cmp(int A, int operand) {
 }
 
 
-void add(int A,int *operand) {
+void add(int A, Register *operand) {
 
 	operand = operand + A;
 

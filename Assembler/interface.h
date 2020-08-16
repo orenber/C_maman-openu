@@ -2,6 +2,7 @@
 #include<stdio.h> 
 #include<stdlib.h>
 #include<string.h>
+#include<ctype.h>
 
 #define MEM 30
 #define BUFFERSIZE 101
@@ -9,19 +10,33 @@
 #define CAPACITY 10000  // Stack maximum capacity
 #define LEN_Register 8
 
-const char *Register_legal[LEN_Register];
+const char *register_leagal[];
 const char *function_legal[];
 const char *flag_legal[];
 const char *varType[];
 const char seperator[];
 
 
+typedef enum {
+	False = 0, True = 1
+}BOOL;
+
+typedef struct ARE {
+	BOOL x[3];
+} ARE;
+
 struct operationFunc {
+
 	char name[4];
-	int funct;
-	int opcode;
-	int functBinaryArr[5];
-	int opcodeBinaryArr[6];
+	int  funct;
+	int  opcode;
+	int  functBinaryArr[5];
+	int  opcodeBinaryArr[6];
+	int  addressSource[2];
+	int  registerSource[3];
+	int  addressDestination[2];
+	int  registerDestination[3];
+	ARE  ARE;
 };
 
 struct flagTable {
@@ -32,16 +47,13 @@ struct flagTable {
 
 struct addressTable{
 	int address;
-	char sourceCode[30];
-	int binaryMachineCode[27];
+	int binaryMachineCode[24];
 	struct addressTable *next;
 }*top_node;
 
 
 
-typedef enum {
-	False = 0, True = 1
-}BOOL;
+
 
 typedef enum {
 	r0 = 0, r1 = 1, r2 = 2,
@@ -50,10 +62,19 @@ typedef enum {
 }Register;
 
 
+typedef struct {
+	BOOL call_operation;
+	int firstInput;
+	Register secondInput;
+
+}twoInputRegistretion;
+
 
 /* ArrayUtils ---------------------------------------*/
 
 void printArray(int arr[],int size);
+
+void printArrayReverse(int arr[], int length);
 
 int* decimal2binaryArray(int decimalNumber, int digits);
 
@@ -65,6 +86,7 @@ void remove_substring(char *text, char *sub_string);
 
 void arrayAssign(int *arrtoChange[], int *subArray[], int initial_index, int final_index);
 
+int char_apperance(char text[], char token);
 
 /* File management ---------------------------------*/
 
@@ -93,6 +115,9 @@ BOOL assert_command(char real_command[], const char *legal_command[], int  lengt
 void flag_manger(char flag[]);
 
 void command_manager(char command[]);
+
+void set_operation_command(char func[], char input_str[], struct operationFunc *opcodeFunc);
+
 
 void table_funct_opcode(char func[], struct operationFunc *opcodeFunc);
 
@@ -132,9 +157,9 @@ void rts_from_user(char nargin_str[]);
 
 void stop_from_user(char nargin_str[]);
 
-Register* getRegisterVar(char registerName);
+Register* getRegisterVar(char registerName[]);
 
-void set_operation_command(char func[], char input_str[]);
+struct twoInputRegistretion* set_address_register(char nargin_str[], struct operationFunc *opcodeFunc);
 
 int cheakAddresingType(char inputString[]);
 
@@ -146,10 +171,19 @@ int size_list(struct flagTable * link_list);
 
 void update_flag_table(struct flagTable * link_list, char flag[], int address);
 
-void push_operationFunc(char sorceCode[], struct operationFunc *opcodeFunc);
+void update_operationFunc(struct addressTable * link_list, int address, int binaryArray[]);
+
+void push_operationFunc(struct addressTable* link_list, int address);
+
+/* operation */
+
+void add(int A, Register *operand);
+
 
 
 /* unit test -------------------------------------*/
+
+void test_printArrayReverse();
 
 void test_printArray();
 

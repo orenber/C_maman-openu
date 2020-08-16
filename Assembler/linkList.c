@@ -18,31 +18,39 @@ struct addressTable* addressTable_create() {
 /**
 * Functiont to push a new element in stack.
 */
-void push_operationFunc(struct addressTable* link_list,struct operationFunc *opcodeFunc,int address)
+void push_operationFunc(struct addressTable* link_list,int address)
 {
  
-
-	// Create a new node and push to stack
+	/* Create a new node and push to stack */
 	struct addressTable * newNode = (struct addressTable *) calloc(1,sizeof(struct addressTable));
-	// Assign data to new node in stack
-	arrayAssign(newNode->binaryMachineCode, opcodeFunc->opcodeBinaryArr,18,23);
-	printArray(newNode->binaryMachineCode,24);
-
-	arrayAssign(newNode->binaryMachineCode, opcodeFunc->functBinaryArr,3,7);
-	printArray(newNode->binaryMachineCode,24);
+	/* Assign data to new node in stack */
 	newNode->address = address;
-	/* =opcodeFunc->opcode;*/
-	newNode->sourceCode[5] = "";
+
 	// Next element after new node should be current top element
 	newNode->next = link_list->next;
 	// Make sure new node is always at top
 	link_list->next = newNode;
 	
-
 	printf("Data pushed to stack.\n");
 }
 
- 
+void update_operationFunc(struct addressTable * link_list, int address,int binaryArray[]) {
+	
+
+	int address = NULL;
+	while (link_list != NULL) {
+
+		if (link_list->address== address){
+			arrayAssign(link_list->binaryMachineCode, binaryArray, 0, 23);
+			break;
+
+		}
+		link_list = link_list->next;
+	}
+
+	
+
+ }
 
 void push_flag_table(struct flagTable * link_list ,char flag[], int address)
 {

@@ -33,6 +33,7 @@ int main(int argc, char* argv[])
 	int  nargin = argc;                  /* number of input in */
 	
 	l = flagTable_create();
+	addresstable = addressTable_create();
  
 
 	/* check file name inputs */
@@ -55,7 +56,6 @@ int main(int argc, char* argv[])
 		output = fgets(line_read, BUFFERSIZE, filePointer);
 		if (output != NULL) {
 			command_manager(output);
-			push_operationFunc(line_read, &opcodeFunc);
 		}
 	} while (output != NULL);
 	
@@ -135,17 +135,58 @@ void flag_manger(char flag[],int value) {
 
 void function_manger(char fun[],char input_str[], struct operationFunc *opcodeFunc) {
 	
+	int *binaryArray;
+
 	printf("\nthis is function: %s\n", fun);
 	printf("\nthis is input: %s\n", input_str);
 
 	table_funct_opcode(fun, opcodeFunc);
-	set_operation_command(fun, input_str);
+	set_operation_command(fun, input_str, opcodeFunc);
 
-	push_operationFunc(addresstable, fun, &opcodeFunc);
+	binaryArray = createBinaryArray(opcodeFunc);
+
+	push_operationFunc(addresstable, address);
 
 
 	
 }
+
+int * createBinaryArray(struct operationFunc *opcodeFunc) {
+
+	int binaryArray[24];
+
+	/*ARE*/
+	arrayAssign(binaryArray, opcodeFunc->ARE.x, 0, 2);
+	printArrayReverse(binaryArray, 24);
+
+	/*funct*/
+	arrayAssign(binaryArray, opcodeFunc->functBinaryArr, 3, 7);
+	printArrayReverse(binaryArray, 24);
+
+	/* register Destination */
+	arrayAssign(binaryArray, opcodeFunc->registerDestination, 3, 7);
+	printArrayReverse(binaryArray, 24);
+
+	/* address Destination */
+	arrayAssign(binaryArray, opcodeFunc->addressDestination, 8, 10);
+	printArrayReverse(binaryArray, 24);
+
+	/* register source */
+	arrayAssign(binaryArray, opcodeFunc->registerSource, 13, 15);
+	printArrayReverse(binaryArray, 24);
+
+	/* address source */
+	arrayAssign(binaryArray, opcodeFunc->addressSource, 16, 17);
+	printArrayReverse(binaryArray, 24);
+
+	/* opcode */
+	arrayAssign(binaryArray, opcodeFunc->opcodeBinaryArr, 18, 23);
+	printArrayReverse(binaryArray, 24);
+
+	return binaryArray;
+
+}
+
 
 void varType_manger(char varType[],char var[]) {
 
@@ -158,203 +199,275 @@ void varType_manger(char varType[],char var[]) {
 
 
 
-void set_operation_command(char func[], char input_str[]) {
+void set_operation_command(char func[], char input_str[], struct operationFunc *opcodeFunc) {
 	
 	if (strcmp(func, "mov") == 0) {
  
-		mov_from_user(input_str);
+		mov_from_user(input_str, opcodeFunc);
 	}
 	else if (strcmp(func, "cmp") == 0) {
 		
-		cmp_from_user(input_str);
+		cmp_from_user(input_str, opcodeFunc);
 	}
 	else if (strcmp(func, "add") == 0) {
 		
-		add_from_user(input_str);
+		add_from_user(input_str, opcodeFunc);
 	 
 	}
 	else if (strcmp(func, "sub") == 0) {
 
-		sub_from_user(input_str);
+		sub_from_user(input_str, opcodeFunc);
 
 	}
 	else if (strcmp(func, "lea") == 0) {
 
-		lea_from_user(input_str);
+		lea_from_user(input_str, opcodeFunc);
 
 	}
 	else if (strcmp(func, "clr") == 0) {
 
-		clr_from_user(input_str);
+		clr_from_user(input_str, opcodeFunc);
 	 
 	}
 	else if (strcmp(func, "not") == 0) {
 		
-		not_from_user(input_str);
+		not_from_user(input_str, opcodeFunc);
 	}
 	else if (strcmp(func, "inc") == 0) {
 		
-		inc_from_user(input_str);
+		inc_from_user(input_str, opcodeFunc);
 	}
 	else if (strcmp(func, "dec") == 0) {
 		
-		dec_from_user(input_str);
+		dec_from_user(input_str, opcodeFunc);
 	}
 	else if (strcmp(func, "jmp") == 0) {
 	 
-		jmp_from_user(input_str);
+		jmp_from_user(input_str, opcodeFunc);
 	}
 	else if (strcmp(func, "bne") == 0) {
 		 
-		bne_from_user(input_str);
+		bne_from_user(input_str, opcodeFunc);
 	}
 	else if (strcmp(func, "jsr") == 0) {
 		 
-		jsr_from_user(input_str);
+		jsr_from_user(input_str, opcodeFunc);
 	}
 	else if (strcmp(func, "red") == 0) {
 
-		red_from_user(input_str);
+		red_from_user(input_str, opcodeFunc);
  
 	}
 	else if (strcmp(func, "prn") == 0) {
 	 
-		prn_from_user(input_str);
+		prn_from_user(input_str, opcodeFunc);
 	}
 	else if (strcmp(func, "rts") == 0) {
 		 
-		rts_from_user(input_str);
+		rts_from_user(input_str, opcodeFunc);
 	}
 	else if (strcmp(func, "stop") == 0) {
 		 
-		stop_from_user(input_str);
+		stop_from_user(input_str, opcodeFunc);
 	}
 
 }
 
 
-void mov_from_user(char nargin_str[]) {
+void mov_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 
 }
 
-void cmp_from_user(char nargin_str[]) {
+void cmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 
 }
 
-void add_from_user(char nargin_str[]) {
+void add_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
+	twoInputRegistretion *inputs;
+	int *binaryArr;
 
-	char *firstInput,*secondInput;
+	inputs = set_address_register(nargin_str, opcodeFunc);
+	if (inputs->call_operation ==True){
+
+		add(inputs->firstInput,&inputs->secondInput);
+		binaryArr = decimal2binaryArray((int)inputs->secondInput, 3);
+		arrayAssign(opcodeFunc->registerSource, binaryArr, 0, 2);
+	}
+}
+
+
+
+struct twoInputRegistretion* set_address_register(char nargin_str[], struct operationFunc *opcodeFunc) {
+
+	char *firstInput, *secondInput;
 	char command_input[MEM] = "";  /* copy of input string */
 	int nargin = 2;               /* number of input argument*/
 	int addressType_first, addressType_second;
+	int *binaryArr;
+	Register *regi;
+    twoInputRegistretion inputRegistretion;
+	inputRegistretion.call_operation = False;
 
 	strcpy(command_input, nargin_str);
 
 	/* assert number of inputs */
-	if (assert_nargin(nargin_str, nargin) == False) { return;}
+	if (assert_nargin(nargin_str, nargin) == False) { return; }
 	/* assert legal comma */
-	if (assert_comma(nargin_str, nargin - 1) == False) { return;}
+	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	/* first input*/
-	firstInput = strtok(command_input,",");
+	firstInput = strtok(command_input, ",");
 	addressType_first = cheakAddresingType(firstInput);
+	
+	binaryArr = decimal2binaryArray(addressType_first, 2);
+	arrayAssign(opcodeFunc->addressSource, binaryArr, 0, 1);
 
+	if (addressType_first == 3) {
+		regi = getRegisterVar(firstInput);
+		inputRegistretion.firstInput = regi;
+		binaryArr = decimal2binaryArray((int)*regi, 3);
+		arrayAssign(opcodeFunc->registerSource, binaryArr, 0, 2);
+	}
 	/* second input*/
 	secondInput = strtok(NULL, ",");
 	addressType_second = cheakAddresingType(secondInput);
+	
+	binaryArr = decimal2binaryArray(addressType_second, 2);
+	arrayAssign(opcodeFunc->addressDestination, binaryArr, 0, 1);
 
-
-}
-
-void sub_from_user(char nargin_str[]) {
-
-
-}
-
-void lea_from_user(char nargin_str[]) {
-
-
-}
-
-void clr_from_user(char nargin_str[]) {
-
-
-}
-
-
-void not_from_user(char nargin_str[]) {
-
+	if (addressType_second == 3) {
+		regi = getRegisterVar(firstInput);
+		binaryArr = decimal2binaryArray(regi, 3);
+		arrayAssign(opcodeFunc->registerDestination, binaryArr, 0, 2);
+	}
+	else {
+		/* defult fill zeros */
+		binaryArr = decimal2binaryArray(0, 3);
+		arrayAssign(opcodeFunc->registerDestination, binaryArr, 0, 2);
+	}
+	return &inputRegistretion;
 
 }
 
 
-void inc_from_user(char nargin_str[]) {
+
+void sub_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 
 }
 
-
-void dec_from_user(char nargin_str[]) {
-
-
-}
-
-
-void jmp_from_user(char nargin_str[]) {
+void lea_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 
 }
 
-void bne_from_user(char nargin_str[]) {
+void clr_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 
 }
 
 
-void jsr_from_user(char nargin_str[]) {
+void not_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 
 }
 
 
-void red_from_user(char nargin_str[]) {
+void inc_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 
 }
 
 
-void prn_from_user(char nargin_str[]) {
-
-
-}
-
-void rts_from_user(char nargin_str[]) {
+void dec_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 
 }
 
 
-void stop_from_user(char nargin_str[]) {
+void jmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
+
+
+}
+
+void bne_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
+
+
+}
+
+
+void jsr_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
+
+
+}
+
+
+void red_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
+
+
+}
+
+
+void prn_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
+
+
+}
+
+void rts_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
+
+
+}
+
+
+void stop_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 
 }
 
 int cheakAddresingType(char inputString[]) {
 
+	int addresingType = NULL;
+ 
 
-	
+	if (char_apperance(inputString, '#')==1) {
+		strtok(inputString, '#');
+		if (isdigit(inputString) == 1) {
+		
+			addresingType = 0;
+		};
+	}
+
+
+	else if (assert_command(inputString, flag_legal,6,"")) {
+		addresingType = 1;
+
+	}
+
+	else if (char_apperance(inputString, '&')==1) {
+		strtok(inputString, '&');
+		if (assert_command(inputString, flag_legal, 6, "")){
+		
+			addresingType = 2;
+		}
+	}
+	else if (assert_command(inputString, register_leagal, 8, "")) {
+
+		addresingType = 3;
+	}
+
+	return addresingType;
 
 }
 
 
-/* get complex name and return complex pointer to the complex varible */
-Register* getRegisterVar(char registerName) {
+/* get Register name and return Register pointer to the Register varible */
+Register* getRegisterVar(char registerName[]) {
 
 	int i;
 	for (i = 0; LEN_Register > i; i++) {
-		if (registerDictionary[i].name == registerName) {
+		if (strcmp(registerDictionary[i].name, registerName)==0) {
 			return registerDictionary[i].reg;
 		}
 	}
