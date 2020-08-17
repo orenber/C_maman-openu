@@ -2,7 +2,7 @@
 
 
 /* all legal function*/
-const char *function_legal[] = {
+const char *instructionType[] = {
   "mov","cmp","add",
   "sub","lea","clr",
   "not","inc","dec",
@@ -16,9 +16,9 @@ const char *flag_legal[] = {
    ,"STR","LIST","K"
 };
 
-const char *varType[] = {
+const char *guidanceType[] = {
 
-	".string",".data",".extern", "next"
+	".string",".data",".extern", ".entry"
 };
 
  /* seperator for parsing text*/

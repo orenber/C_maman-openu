@@ -28,7 +28,7 @@ void add(int A, Register *operand) {
 
 }
 
-void sub(int A, int *operand) {
+void sub(int A, Register *operand) {
 
 	operand = operand - A;
 }

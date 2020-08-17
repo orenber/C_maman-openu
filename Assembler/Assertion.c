@@ -186,3 +186,20 @@ BOOL assertArrayIsEqual(int arr1[], int arr2[], int length) {
 	return valid;
 }
 
+
+BOOL assertIsEmpty(char sentence[]) {
+
+	/* seperator for parsing text*/
+    const char seperator[] = {' ','\t','\r','\n','\0'};
+	char text[MEM] = " ";
+	int length ;
+	BOOL IsEmpty = False;
+
+	strcpy(text, sentence);
+	remove_substring_parts(text, &seperator);
+	length = strlen(text);
+
+	(length == 0) ? IsEmpty = True : False;
+
+	return IsEmpty;
+}

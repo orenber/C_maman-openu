@@ -27,6 +27,12 @@ void printArrayReverse(int arr[], int length)
 	printf("\n");
 }
 
+void zeros(int *arr, int numberZeros) {
+	int i;
+	for (i = 0; numberZeros > i; ++i ) {
+		arr[i] = 0;
+	};
+};
 
 void array2string(int arrayNumber[], char* stringArray) {
 
@@ -43,6 +49,24 @@ void array2string(int arrayNumber[], char* stringArray) {
 	return;
 
 };
+
+void string2array(char* stringArray,int *arrayNumber[]) {
+
+	const char seperetor[] = { ',' };
+	char *var;
+	int i = 0;
+	var = strtok(stringArray, seperetor);
+	
+	while (var != NULL) {
+		
+		arrayNumber[i] = atoi(var);
+		strtok(var, NULL);
+		i++;
+	}
+
+
+
+}
 
 void arrayAssign(int *arrtoChange[], int *subArray[], int initial_index, int final_index) {
 	int i, j = 0;
@@ -98,7 +122,7 @@ int array_string_length(char *names[]) {
 	return namesLen;
 }
 
-void remove_substring_parts(char *main_string, char sub_string_parts[]) {
+void remove_substring_parts(char *main_string,const char *sub_string_parts) {
 
 	int i = 0;
 	int len = strlen(sub_string_parts);

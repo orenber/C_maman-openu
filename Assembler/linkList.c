@@ -18,14 +18,16 @@ struct addressTable* addressTable_create() {
 /**
 * Functiont to push a new element in stack.
 */
-void push_operationFunc(struct addressTable* link_list,int address)
+void push_operationFunc(struct addressTable* link_list, int binaryArray[])
 {
- 
+	static int address = 99;
+	++address;
+
 	/* Create a new node and push to stack */
 	struct addressTable * newNode = (struct addressTable *) calloc(1,sizeof(struct addressTable));
 	/* Assign data to new node in stack */
 	newNode->address = address;
-
+	arrayAssign(newNode->binaryMachineCode, binaryArray, 0, 23);
 	// Next element after new node should be current top element
 	newNode->next = link_list->next;
 	// Make sure new node is always at top
@@ -34,10 +36,8 @@ void push_operationFunc(struct addressTable* link_list,int address)
 	printf("Data pushed to stack.\n");
 }
 
-void update_operationFunc(struct addressTable * link_list, int address,int binaryArray[]) {
+void update_operationFunc(struct addressTable * link_list, int address, int binaryArray[]) {
 	
-
-	int address = NULL;
 	while (link_list != NULL) {
 
 		if (link_list->address== address){

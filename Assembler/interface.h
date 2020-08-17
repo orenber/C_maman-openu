@@ -5,15 +5,16 @@
 #include<ctype.h>
 
 #define MEM 30
-#define BUFFERSIZE 101
+#define BUFFERSIZE 81
+#define bitrray 24
 #define LENGTH(x)  (sizeof(x) / sizeof((x)[0]))
 #define CAPACITY 10000  // Stack maximum capacity
 #define LEN_Register 8
 
 const char *register_leagal[];
-const char *function_legal[];
+const char *instructionType[];
 const char *flag_legal[];
-const char *varType[];
+const char *guidanceType[];
 const char seperator[];
 
 
@@ -72,6 +73,8 @@ typedef struct {
 
 /* ArrayUtils ---------------------------------------*/
 
+void string2array(char* stringArray, int *arrayNumber[]);
+
 void printArray(int arr[],int size);
 
 void printArrayReverse(int arr[], int length);
@@ -82,7 +85,11 @@ void array2string(int arrayNumber[], char *stringArray);
 
 int  array_string_length(char *names[]);
 
+void zeros(int *arr, int numberZeros);
+
 void remove_substring(char *text, char *sub_string);
+
+void remove_substring_parts(char *main_string, char *sub_string_parts);
 
 void arrayAssign(int *arrtoChange[], int *subArray[], int initial_index, int final_index);
 
@@ -109,21 +116,31 @@ BOOL assertArrayIsEqual(int arr1[], int arr2[], int length);
 
 BOOL assert_command(char real_command[], const char *legal_command[], int  length, char error_messege[]);
 
-
+BOOL assertIsEmpty(char sentence[]);
 /* assembler ----------------------------------*/
 
-void flag_manger(char flag[]);
+void flag_manger(char flag[], int value);
 
 void command_manager(char command[]);
 
 void set_operation_command(char func[], char input_str[], struct operationFunc *opcodeFunc);
 
+int * createBinaryArray(struct operationFunc *opcodeFunc);
 
 void table_funct_opcode(char func[], struct operationFunc *opcodeFunc);
 
-void varType_manger(char varType[], char var[]);
+void guidance_sentence(char varType[], char var[]);
 
-void function_manger(char fun[], char input_str[]);
+void string_sentence(char var[]);
+
+void data_sentence(char var[]);
+
+void extern_sentence(char var[]);
+
+void entry_sentence(char var[]);
+
+
+void instructional_sentence(char fun[], char input_str[], struct operationFunc *opcodeFunc);
 
 void mov_from_user(char nargin_str[]);
 
@@ -173,7 +190,7 @@ void update_flag_table(struct flagTable * link_list, char flag[], int address);
 
 void update_operationFunc(struct addressTable * link_list, int address, int binaryArray[]);
 
-void push_operationFunc(struct addressTable* link_list, int address);
+void push_operationFunc(struct addressTable* link_list, int binaryArray[]);
 
 /* operation */
 
@@ -182,9 +199,11 @@ void add(int A, Register *operand);
 
 
 /* unit test -------------------------------------*/
+void print_test_result(BOOL test);
 
 void test_printArrayReverse();
 
 void test_printArray();
 
 void run_test();
+
