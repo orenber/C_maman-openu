@@ -50,21 +50,28 @@ void array2string(int arrayNumber[], char* stringArray) {
 
 };
 
-void string2array(char* stringArray,int *arrayNumber[]) {
+int * string2array(char stringArray[],int *length) {
 
 	const char seperetor[] = { ',' };
 	char *var;
-	int i = 0;
+	int i = 0, inputNum = 0;
+	int *arrayNumber;
+
+	inputNum = char_apperance(stringArray, seperetor[0]);
+	length[0] = inputNum + 1;
+	arrayNumber = (int*)calloc(length, sizeof(int));
+
 	var = strtok(stringArray, seperetor);
 	
 	while (var != NULL) {
 		
 		arrayNumber[i] = atoi(var);
-		strtok(var, NULL);
+		var = strtok(NULL, seperetor);
 		i++;
+
 	}
 
-
+	return arrayNumber;
 
 }
 
@@ -80,24 +87,48 @@ void arrayAssign(int *arrtoChange[], int *subArray[], int initial_index, int fin
 
 }
 
-int * decimal2binaryArray(int decimalNumber, int digits) {
+int * decimal2binaryArray(signed int decimalNumber,unsigned int digits) {
 
 
-	int number
-		, result;
+	int number;
 	int* arr = (int*)calloc(digits, sizeof(int));
 
 	number = decimalNumber;
-	for (int n = digits - 1; n >= 0; --n) {
+	if (number >= 0) {
+		for (int n = digits - 1; n >= 0; --n) {
 
-		arr[n] = number % 2;
-		number = number / 2;
+			arr[n] = number % 2;
+			number = number / 2;
+
+		}
+	}
+	else if (number < 0) {
+		for (int n = digits - 1; n >= 0; --n) {
+			/*Binary signed 1's complement:*/
+			arr[n] = (number % 2) == 0? 1: 0;
+
+			number = number / 2;
+		
+		}
+		for (int n = digits - 1; n >= 0; --n) {
+			/*Binary signed 2's complement:*/
+			if (arr[n] == 0) {
+				arr[n] = 1;
+				break;
+			}
+			else if (arr[n] == 1) {
+				arr[n] = 0;
+			}
+
+		}
 
 	}
 
 	return arr;
 
 }
+
+
 
 /* <summary> remove_substring - remove sub string from main string.
 text - main string..</summary> */

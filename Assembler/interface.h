@@ -73,7 +73,7 @@ typedef struct {
 
 /* ArrayUtils ---------------------------------------*/
 
-void string2array(char* stringArray, int *arrayNumber[]);
+int * string2array(char stringArray[]);
 
 void printArray(int arr[],int size);
 

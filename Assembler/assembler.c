@@ -105,7 +105,7 @@ void command_manager(char command_original[]) {
 			remove_substring(&command_left, command_section);
 			remove_substring_parts(&command_left, seperator);
 
-			//instructional_sentence(IC,command_section, command_left, &opcodeFunc);
+			instructional_sentence(command_section, command_left, &opcodeFunc);
 			end_line = True;
 
 		}
@@ -183,7 +183,7 @@ void string_sentence(char var[]) {
 	int i = 0,
 		ascii;
 	int *binaryArr;
-	char seperetor[] = { '/','"' };
+	const char seperetor[] = { '/','"' };
 	
 	remove_substring_parts(var, seperetor);
 	length = strlen(var);
@@ -193,6 +193,8 @@ void string_sentence(char var[]) {
 		ascii = (int)var[i];
 		/* convert to binary array*/
 		binaryArr = decimal2binaryArray(ascii, bitrray);
+		printf("%c:\t", var[i]);
+		printArray(binaryArr, bitrray);
 		/* pushe data to the table  */
 		push_operationFunc(addresstable, binaryArr);
 	}
@@ -204,14 +206,17 @@ void data_sentence(char var[]) {
 	 
 	int i ;
 	int *binaryArr,
-		*arr;
+		*arr, *length[1] ;
+	int len = 0;
 
-	string2array(var, &arr);
-	
-	for (i = 0; i<2; ++i) {
+	arr = string2array(var,&length);
+	len = (int)length[0];
+	printArray(arr,len);
+	for (i = 0; i<len; ++i) {
        
 		/* convert to binary array*/
 		binaryArr = decimal2binaryArray(arr[i], bitrray);
+		printArray(binaryArr, bitrray);
 		/* pushe data to the table  */
 		push_operationFunc(addresstable, binaryArr);
 		 
@@ -557,98 +562,7 @@ Register* getRegisterVar(char registerName[]) {
 
 
 
-void table_funct_opcode(char func[], struct operationFunc *opcodeFunc) {
-	int *binaryArr;
 
-	strcpy(opcodeFunc->name, func);
-
-	if (strcmp(func, "mov") == 0) {
-		opcodeFunc->opcode = 0;
-		opcodeFunc->funct = NULL;
-
-	}
-	else if (strcmp(func, "cmp") == 0) {
-		opcodeFunc->opcode = 1;
-		opcodeFunc->funct = NULL;
-	}
-	else if (strcmp(func, "add") == 0) {
-
-		opcodeFunc->opcode = 2;
-		opcodeFunc->funct = 1;
-	}
-	else if (strcmp(func, "sub") == 0) {
-
-		opcodeFunc->opcode = 2;
-		opcodeFunc->funct = 2;
-
-	}
-	else if (strcmp(func, "lea") == 0) {
-
-		opcodeFunc->opcode = 4;
-		opcodeFunc->funct = NULL;
-
-	}
-	else if (strcmp(func, "clr") == 0) {
-
-		opcodeFunc->opcode = 5;
-		opcodeFunc->funct = 1;
-	}
-	else if (strcmp(func, "not") == 0) {
-		opcodeFunc->opcode = 5;
-		opcodeFunc->funct = 2;
-	}
-	else if (strcmp(func, "inc") == 0) {
-		opcodeFunc->opcode = 5;
-		opcodeFunc->funct = 3;
-	}
-	else if (strcmp(func, "dec") == 0) {
-		opcodeFunc->opcode = 5;
-		opcodeFunc->funct = 4;
-	}
-	else if (strcmp(func, "jmp") == 0) {
-		opcodeFunc->opcode = 9;
-		opcodeFunc->funct = 1;
-	}
-	else if (strcmp(func, "bne") == 0) {
-		opcodeFunc->opcode = 9;
-		opcodeFunc->funct = 2;
-	}
-	else if (strcmp(func, "jsr") == 0) {
-		opcodeFunc->opcode = 9;
-		opcodeFunc->funct = 3;
-	}
-	else if (strcmp(func, "red") == 0) {
-		opcodeFunc->opcode = 12;
-		opcodeFunc->funct = NULL;
-	}
-	else if (strcmp(func, "prn") == 0) {
-		opcodeFunc->opcode = 13;
-		opcodeFunc->funct = NULL;
-	}
-	else if (strcmp(func, "rts") == 0) {
-		opcodeFunc->opcode = 14;
-		opcodeFunc->funct = NULL;
-	}
-	else if (strcmp(func, "stop") == 0) {
-		opcodeFunc->opcode = 15;
-		opcodeFunc->funct = NULL;
-	}
-
-	binaryArr = decimal2binaryArray(opcodeFunc->opcode, 6);
-	arrayAssign(opcodeFunc->opcodeBinaryArr, binaryArr, 0, 5);
-	printArray(opcodeFunc->opcodeBinaryArr, 6);
-	if (opcodeFunc->funct != NULL) {
-
-		binaryArr = decimal2binaryArray(opcodeFunc->funct, 5);
-	}
-	else {
-
-		binaryArr = decimal2binaryArray(0, 5);
-	}
-
-	arrayAssign(opcodeFunc->functBinaryArr, binaryArr, 0, 4);
-	printArray(opcodeFunc->functBinaryArr, 5);
-}
 
 
 
