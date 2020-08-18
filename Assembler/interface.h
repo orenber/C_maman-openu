@@ -22,6 +22,11 @@ typedef enum {
 	False = 0, True = 1
 }BOOL;
 
+typedef enum {
+	Immediate = 0, Direct = 1, Relative = 2, Register_Direct = 3
+}AdressType;
+
+
 typedef struct ARE {
 	BOOL x[3];
 } ARE;
@@ -54,8 +59,6 @@ struct addressTable{
 
 
 
-
-
 typedef enum {
 	r0 = 0, r1 = 1, r2 = 2,
 	r3 = 3, r4 = 4, r5 = 5,
@@ -65,10 +68,12 @@ typedef enum {
 
 typedef struct {
 	BOOL call_operation;
-	int firstInput;
-	Register secondInput;
+	int firstValue;
+	int secondValue;
+	AdressType firstType;
+	AdressType secondType;
 
-}twoInputRegistretion;
+}setupRegistretion;
 
 
 /* ArrayUtils ---------------------------------------*/
@@ -118,6 +123,10 @@ BOOL assert_command(char real_command[], const char *legal_command[], int  lengt
 
 BOOL assertIsEmpty(char sentence[]);
 /* assembler ----------------------------------*/
+
+ setupRegistretion* get_address_register_setup(char nargin_str[], struct operationFunc *opcodeFunc);
+
+void insert_binary_machine_code(AdressType type, int value, ARE are);
 
 void flag_manger(char flag[], int value);
 
@@ -176,9 +185,7 @@ void stop_from_user(char nargin_str[]);
 
 Register* getRegisterVar(char registerName[]);
 
-struct twoInputRegistretion* set_address_register(char nargin_str[], struct operationFunc *opcodeFunc);
-
-int cheakAddresingType(char inputString[]);
+AdressType getAddresingType(char inputString[]);
 
  /* link list -----------------------------------*/
 
