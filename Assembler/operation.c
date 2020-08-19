@@ -1,13 +1,13 @@
 #include "interface.h"
 
 
-void mov(int A, int *operand) {
+void mov(int A, Register *operand) {
 
-	operand = A;
+	*operand = A;
 }
 
 
-BOOL cmp(int A, int operand) {
+BOOL cmp(int A, Register operand) {
 
 	BOOL Z;
 
@@ -34,23 +34,23 @@ void sub(int A, Register *operand) {
 }
 
 
-void lea(char *word,int *operand) {
+void lea(char *word, Register *operand) {
 	operand = &word;
 }
 
 /* one operand*/
 
-void clr(int *operand) {
+void clr(Register *operand) {
 	operand = 0;
 }
 
 
-void inc(int *operand) {
-	operand++;
+void inc(Register *operand) {
+	(*operand)++;
 }
 
-void dec(int *operand) {
-	operand--;
+void dec(Register *operand) {
+	(*operand)--;
 }
 
 void jmp() {
@@ -71,9 +71,9 @@ void red() {
 
 }
 
-void prn(char word[]) {
+void prn(int value) {
 	
-	printf("%s", word);
+	printf("%d", value);
 }
 
 /* no operands*/

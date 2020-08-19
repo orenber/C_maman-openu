@@ -7,9 +7,13 @@
 #define MEM 30
 #define BUFFERSIZE 81
 #define bitrray 24
-#define LENGTH(x)  (sizeof(x) / sizeof((x)[0]))
+ 
+
 #define CAPACITY 10000  // Stack maximum capacity
 #define LEN_Register 8
+/* macro*/
+#define LENGTH(x)  (sizeof(x) / sizeof((x)[0]))
+#define INDEX(x)   ((bitrray-1)-x)
 
 const char *register_leagal[];
 const char *instructionType[];
@@ -17,19 +21,38 @@ const char *flag_legal[];
 const char *guidanceType[];
 const char seperator[];
 
-
+/* new type */
 typedef enum {
 	False = 0, True = 1
 }BOOL;
 
 typedef enum {
-	Immediate = 0, Direct = 1, Relative = 2, Register_Direct = 3
+	Immediate = 0, 
+	Direct = 1, 
+	Relative = 2, 
+	Register_Direct = 3
 }AdressType;
 
 
 typedef struct ARE {
 	BOOL x[3];
 } ARE;
+
+typedef enum {
+	r0 = 0, r1 = 1, r2 = 2,
+	r3 = 3, r4 = 4, r5 = 5,
+	r6 = 6, r7 = 7
+}Register;
+
+
+typedef union
+{
+	int value;
+	Register Register;
+	char label[5];
+} polymorfType;
+
+ /* tamplate */
 
 struct operationFunc {
 
@@ -59,21 +82,17 @@ struct addressTable{
 
 
 
-typedef enum {
-	r0 = 0, r1 = 1, r2 = 2,
-	r3 = 3, r4 = 4, r5 = 5,
-	r6 = 6, r7 = 7
-}Register;
 
 
-typedef struct {
-	BOOL call_operation;
-	int firstValue;
-	int secondValue;
+struct  setupRegistretion {
+
 	AdressType firstType;
 	AdressType secondType;
 
-}setupRegistretion;
+	polymorfType firstValue;
+	polymorfType secondValue;
+	
+};
 
 
 /* ArrayUtils ---------------------------------------*/
@@ -96,7 +115,7 @@ void remove_substring(char *text, char *sub_string);
 
 void remove_substring_parts(char *main_string, char *sub_string_parts);
 
-void arrayAssign(int *arrtoChange[], int *subArray[], int initial_index, int final_index);
+void arrayAssign(int *arrtoChange, int subArray[], int initial_index, int final_index);
 
 int char_apperance(char text[], char token);
 
@@ -124,9 +143,9 @@ BOOL assert_command(char real_command[], const char *legal_command[], int  lengt
 BOOL assertIsEmpty(char sentence[]);
 /* assembler ----------------------------------*/
 
- setupRegistretion* get_address_register_setup(char nargin_str[], struct operationFunc *opcodeFunc);
+struct setupRegistretion get_address_register_setup(char nargin_str[], struct operationFunc *opcodeFunc);
 
-void insert_binary_machine_code(AdressType type, int value, ARE are);
+void insert_binary_machine_code(AdressType type, polymorfType st, ARE are);
 
 void flag_manger(char flag[], int value);
 

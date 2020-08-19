@@ -163,52 +163,60 @@ void create_binary_machine_code(struct operationFunc *opcodeFunc) {
 
 }
 
-void set_binary_machine_code( setupRegistretion setup, struct operationFunc *opcodeFunc) {
+void set_binary_machine_code(struct setupRegistretion setup, struct operationFunc *opcodeFunc) {
 
 
-	int *binaryArray;
+	int *binaryArray  ;
 	int  binary_machine_code[bitrray];
+	int i = 0,  j = 0;
 
 	zeros(&binary_machine_code, bitrray);
 
 	binaryArray =  createBinaryArray(opcodeFunc);
-	arrayAssign(&binary_machine_code, binaryArray, 0, 23);
-	printArray(binary_machine_code, bitrray);
-	push_operationFunc(addresstable, binaryArray);
+	
+	for ( i = 0, j = 0; bitrray - 1 >= i; ++i, j++) {
+		binary_machine_code[i] = binaryArray[j];
 
-	if (setup.firstType != NULL) {
+	};
+	/*arrayAssign(binary_machine_code, binaryArray, 0, 23);*/
+	printArray(binary_machine_code, bitrray);
+	push_operationFunc(addresstable, binary_machine_code);
+
+	if (setup.firstValue.value != NULL) {
 		insert_binary_machine_code(setup.firstType, setup.firstValue, opcodeFunc->ARE);
 	}
 
-	if (setup.firstType != NULL) {
-		insert_binary_machine_code(setup.secondValue, setup.secondValue, opcodeFunc->ARE);
+	if (setup.secondValue.value != NULL) {
+		insert_binary_machine_code(setup.secondType, setup.secondValue, opcodeFunc->ARE);
 	}
 
 
 }
 
-void insert_binary_machine_code(AdressType type, int value, ARE are) {
+void insert_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 		
 	int *binaryArray;
 	int  binary_machine_code[bitrray];
 	zeros(&binary_machine_code, bitrray);
 
-		switch (type)
+		switch(type)
 		{
 		case (Immediate):
-			binaryArray = decimal2binaryArray(value, 21);
-			arrayAssign(&binary_machine_code, binaryArray, 0, 20);
-			arrayAssign(&binary_machine_code, are.x, 21, 23);
+			binaryArray = decimal2binaryArray(st.value, 21);
+			arrayAssign(&binary_machine_code, binaryArray, INDEX(23), INDEX(3));
+			arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
 			printArray(binary_machine_code, bitrray);
 			push_operationFunc(addresstable, &binary_machine_code);
 			break;
 
 		case (Direct):
 			binaryArray = decimal2binaryArray(0, 21);
-			arrayAssign(&binary_machine_code, binaryArray, 0, 20);
-			arrayAssign(&binary_machine_code, are.x, 21, 23);
+			arrayAssign(&binary_machine_code, binaryArray, INDEX(23), INDEX(3));
+			/*ARE */
+
+			arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
 			printArray(binary_machine_code, bitrray);
-			push_operationFunc(addresstable, binaryArray);
+			push_operationFunc(addresstable, &binary_machine_code);
 			break;
 		case (Relative):
 
@@ -314,37 +322,150 @@ int * createBinaryArray(struct operationFunc *opcodeFunc) {
 	int binaryArray[24];
 	zeros(&binaryArray, 24);
 	/*ARE*/
-	arrayAssign(binaryArray, opcodeFunc->ARE.x, 0, 2);
+	arrayAssign(binaryArray, opcodeFunc->ARE.x, INDEX(2), INDEX(0));
 	printArray(binaryArray, 24);
 
 	/*funct*/
-	arrayAssign(binaryArray, opcodeFunc->functBinaryArr, 3, 7);
+	arrayAssign(binaryArray, opcodeFunc->functBinaryArr, INDEX(7), INDEX(3));
 	printArray(binaryArray, 24);
 
 	/* register Destination */
-	arrayAssign(binaryArray, opcodeFunc->registerDestination, 8, 10);
+	arrayAssign(binaryArray, opcodeFunc->registerDestination, INDEX(10), INDEX(8));
 	printArray(binaryArray, 24);
 
 	/* address Destination */
-	arrayAssign(binaryArray, opcodeFunc->addressDestination, 11, 12);
+	arrayAssign(binaryArray, opcodeFunc->addressDestination, INDEX(12), INDEX(11));
 	printArray(binaryArray, 24);
 
 	/* register source */
-	arrayAssign(binaryArray, opcodeFunc->registerSource, 13, 15);
+	arrayAssign(binaryArray, opcodeFunc->registerSource, INDEX(15), INDEX(13));
 	printArray(binaryArray, 24);
 
 	/* address source */
-	arrayAssign(binaryArray, opcodeFunc->addressSource, 16, 17);
+	arrayAssign(binaryArray, opcodeFunc->addressSource, INDEX(17), INDEX(16));
 	printArray(binaryArray, 24);
 
 	/* opcode */
-	arrayAssign(binaryArray, opcodeFunc->opcodeBinaryArr, 18, 23);
+	arrayAssign(binaryArray, opcodeFunc->opcodeBinaryArr, INDEX(23), INDEX(18));
 	printArray(binaryArray, 24);
 
 	return binaryArray;
 
 }
 
+
+struct setupRegistretion get_address_register_setup(char nargin_str[], struct operationFunc *opcodeFunc) {
+
+	char *firstInput, *secondInput;
+	char command_input[MEM] = "";  /* copy of input string */
+								   /* number of input argument*/
+	int *binaryArr;
+	Register *regi;
+
+	struct setupRegistretion inputRegistretion;
+
+
+	strcpy(command_input, nargin_str);
+
+
+	/* first input*/
+	firstInput = strtok(command_input, ",");
+	inputRegistretion.firstType = getAddresingType(firstInput);
+
+	binaryArr = decimal2binaryArray((int)inputRegistretion.firstType, 2);
+	arrayAssign(opcodeFunc->addressSource, binaryArr, 0, 1);
+	switch (inputRegistretion.firstType) {
+
+	case Immediate:
+		/*ARE*/
+		binaryArr = decimal2binaryArray(4, 3);
+		arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
+		/* value*/
+		inputRegistretion.firstValue.value = atoi(firstInput);
+		printf("%d", inputRegistretion.firstValue.value);
+		break;
+	case Relative:
+		/*ARE*/
+		binaryArr = decimal2binaryArray(4, 3);
+		arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
+		break;
+	case Direct:
+		/*ARE*/
+		/* defult fill zeros */
+		binaryArr = decimal2binaryArray(0, 3);
+		arrayAssign(opcodeFunc->registerSource, binaryArr, 0, 2);
+		/* copy value*/
+		strcpy(inputRegistretion.firstValue.label, firstInput);
+
+		break;
+	case Register_Direct:
+		/*ARE*/
+		binaryArr = decimal2binaryArray(4, 3);
+		arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
+
+		regi = getRegisterVar(firstInput);
+		inputRegistretion.firstValue.Register = regi[0];
+		binaryArr = decimal2binaryArray((int)inputRegistretion.firstValue.Register, 3);
+		arrayAssign(opcodeFunc->registerSource, binaryArr, 0, 2);
+		break;
+	}
+	/* second input*/
+	secondInput = strtok(NULL, ",");
+
+	if (secondInput != NULL) {
+
+		inputRegistretion.secondType = getAddresingType(secondInput);
+
+		binaryArr = decimal2binaryArray((int)inputRegistretion.secondType, 2);
+		arrayAssign(opcodeFunc->addressDestination, binaryArr, 0, 1);
+		switch (inputRegistretion.secondType) {
+
+		case Relative:
+
+			break;
+		case Immediate:
+			/* defult fill zeros */
+			binaryArr = decimal2binaryArray(0, 3);
+			arrayAssign(opcodeFunc->registerDestination, binaryArr, 0, 2);
+			break;
+
+		case Direct:
+
+			/* defult fill zeros */
+			binaryArr = decimal2binaryArray(0, 3);
+			arrayAssign(opcodeFunc->registerDestination, binaryArr, 0, 2);
+			/* copy value*/
+			strcpy(inputRegistretion.secondValue.label, secondInput);
+			break;
+		case Register_Direct:
+			binaryArr = decimal2binaryArray(4, 3);
+			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
+
+			regi = getRegisterVar(secondInput);
+			inputRegistretion.secondValue.Register = regi[0];
+			binaryArr = decimal2binaryArray((int)inputRegistretion.secondValue.Register, 3);
+			arrayAssign(opcodeFunc->registerDestination, binaryArr, 0, 2);
+		}
+
+
+
+	}
+	else {
+
+		inputRegistretion.secondValue.value = NULL;
+
+		binaryArr = decimal2binaryArray(0, 2);
+		arrayAssign(opcodeFunc->addressDestination, binaryArr, 0, 1);
+
+		binaryArr = decimal2binaryArray(0, 3);
+		arrayAssign(opcodeFunc->registerSource, binaryArr, 0, 2);
+
+		binaryArr = decimal2binaryArray(0, 3);
+		arrayAssign(opcodeFunc->registerDestination, binaryArr, 0, 2);
+	}
+	return inputRegistretion;
+
+}
 
 
 void set_operation_command(char func[], char input_str[], struct operationFunc *opcodeFunc) {
@@ -423,159 +544,367 @@ void set_operation_command(char func[], char input_str[], struct operationFunc *
 
 
 void mov_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
-
-
-}
-
-void cmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
-
-
-}
-
-void add_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	
-	setupRegistretion *register_setup;
+	struct setupRegistretion register_setup;
+	BOOL call_operation = False;
 	int *binaryArr;
-
-	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-	if (register_setup->call_operation == True) {
-
-		add(register_setup->firstType, &register_setup->secondType);
-		binaryArr = decimal2binaryArray((int)register_setup->secondValue, 3);
-		arrayAssign(opcodeFunc->registerSource, binaryArr, 0, 2);
-	}
-
-	set_binary_machine_code(*register_setup, opcodeFunc);
-
-	
-
-
-	
-}
-
-
-
- setupRegistretion* get_address_register_setup(char nargin_str[], struct operationFunc *opcodeFunc) {
-
-	char *firstInput, *secondInput;
-	char command_input[MEM] = "";  /* copy of input string */
-	int nargin = 2;               /* number of input argument*/
-	AdressType addressType_first, addressType_second;
-	int *binaryArr;
-	Register *regi;
-
-	setupRegistretion inputRegistretion;
-	inputRegistretion.call_operation = False;
-
-	strcpy(command_input, nargin_str);
+	int nargin = 2;
 
 	/* assert number of inputs */
 	if (assert_nargin(nargin_str, nargin) == False) { return; }
 	/* assert legal comma */
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
-	/*ARE*/
-	binaryArr = decimal2binaryArray(4, 3);
-	arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
-	/* first input*/
-	firstInput = strtok(command_input, ",");
-	addressType_first = getAddresingType(firstInput);
+	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
 
-	binaryArr = decimal2binaryArray(addressType_first, 2);
-	arrayAssign(opcodeFunc->addressSource, binaryArr, 0, 1);
+	if (call_operation == True) {
 
-	if (addressType_first == 3) {
-		regi = getRegisterVar(firstInput);
-		inputRegistretion.firstValue = (int)regi;
-		binaryArr = decimal2binaryArray((int)*regi, 3);
+		mov(register_setup.firstType, &register_setup.secondType);
+		binaryArr = decimal2binaryArray((int)register_setup.secondValue.Register, 3);
 		arrayAssign(opcodeFunc->registerSource, binaryArr, 0, 2);
 	}
-	/* second input*/
-	secondInput = strtok(NULL, ",");
 
-	if (secondInput != NULL) {
-
-		addressType_second = getAddresingType(secondInput);
-
-		binaryArr = decimal2binaryArray(addressType_second, 2);
-		arrayAssign(opcodeFunc->addressDestination, binaryArr, 0, 1);
-
-		if (addressType_second == 3) {
-			regi = getRegisterVar(firstInput);
-			binaryArr = decimal2binaryArray(regi, 3);
-			arrayAssign(opcodeFunc->registerDestination, binaryArr, 0, 2);
-		}
-		else {
-			/* defult fill zeros */
-			binaryArr = decimal2binaryArray(0, 3);
-			arrayAssign(opcodeFunc->registerDestination, binaryArr, 0, 2);
-		}
-	}
-	return &inputRegistretion;
+	set_binary_machine_code(register_setup, opcodeFunc);
 
 }
 
+void cmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
+	
+	struct setupRegistretion register_setup;
+	BOOL call_operation = False;
+	int *binaryArr;
+	int nargin = 2;
 
+	/* assert number of inputs */
+	if (assert_nargin(nargin_str, nargin) == False) { return; }
+	/* assert legal comma */
+	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
+
+	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
+
+	if (call_operation == True) {
+
+		cmp(register_setup.firstType, &register_setup.secondType);
+		binaryArr = decimal2binaryArray((int)register_setup.secondValue.Register, 3);
+		arrayAssign(opcodeFunc->registerSource, binaryArr, 0, 2);
+	}
+
+	set_binary_machine_code(register_setup, opcodeFunc);
+
+}
+
+void add_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
+	
+	struct setupRegistretion register_setup;
+	BOOL call_operation = False;
+	int *binaryArr;
+	int nargin = 2;
+
+	/* assert number of inputs */
+	if (assert_nargin(nargin_str, nargin) == False) { return; }
+	/* assert legal comma */
+	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
+
+	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
+
+	if (call_operation == True) {
+
+		add(register_setup.firstType, &register_setup.secondType);
+		binaryArr = decimal2binaryArray((int)register_setup.secondValue.Register, 3);
+		arrayAssign(opcodeFunc->registerSource, binaryArr, 0, 2);
+	}
+
+	set_binary_machine_code(register_setup, opcodeFunc);
+ 
+	
+}
 
 void sub_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
+	
+	struct setupRegistretion register_setup;
+	BOOL call_operation = False;
+	int *binaryArr;
+	int nargin = 2;
 
+	/* assert number of inputs */
+	if (assert_nargin(nargin_str, nargin) == False) { return; }
+	/* assert legal comma */
+	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
+
+	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
+
+	if (call_operation == True) {
+
+		sub(register_setup.firstType, &register_setup.secondType);
+		binaryArr = decimal2binaryArray((int)register_setup.secondValue.Register, 3);
+		arrayAssign(opcodeFunc->registerSource, binaryArr, 0, 2);
+	}
+
+	set_binary_machine_code(register_setup, opcodeFunc);
 
 }
 
 void lea_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
+	
+	struct setupRegistretion register_setup;
+	int *binaryArr;
+	BOOL call_operation = False;
 
+	int nargin = 2;
+
+	/* assert number of inputs */
+	if (assert_nargin(nargin_str, nargin) == False) { return; }
+	/* assert legal comma */
+	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
+
+	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
+
+	if (call_operation == True) {
+
+		lea(register_setup.firstValue.Register, register_setup.firstValue.value);
+		/* TODO: add adjusment*/
+	}
+
+	set_binary_machine_code(register_setup, opcodeFunc);
 
 }
 
 void clr_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
+	struct setupRegistretion register_setup;
+	int *binaryArr;
+	BOOL call_operation = False;
+
+	int nargin = 1;
+
+	/* assert number of inputs */
+	if (assert_nargin(nargin_str, nargin) == False) { return; }
+	/* assert legal comma */
+	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
+
+	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
+	/* condition for call function*/
+	call_operation = (register_setup.firstType == Register_Direct) ? True : False;
+
+	if (call_operation == True) {
+
+		clr(&register_setup.firstValue.Register);
+	}
+
+	set_binary_machine_code(register_setup, opcodeFunc);
 
 }
 
-
 void not_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
+	struct setupRegistretion register_setup;
+	int *binaryArr;
+	BOOL call_operation = False;
+
+	int nargin = 1;
+
+	/* assert number of inputs */
+	if (assert_nargin(nargin_str, nargin) == False) { return; }
+	/* assert legal comma */
+	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
+
+	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
+	/* condition for call function*/
+	call_operation = (register_setup.firstType == Register_Direct) ? True : False;
+
+	if (call_operation == True) {
+
+		not(&register_setup.firstValue.Register);
+	}
+
+	set_binary_machine_code(register_setup, opcodeFunc);
 
 }
 
 
 void inc_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
+	struct setupRegistretion register_setup;
+	int *binaryArr;
+	BOOL call_operation = False;
+
+	int nargin = 1;
+
+	/* assert number of inputs */
+	if (assert_nargin(nargin_str, nargin) == False) { return; }
+	/* assert legal comma */
+	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
+
+	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
+	/* condition for call function*/
+	call_operation = (register_setup.firstType == Register_Direct) ? True : False;
+
+	if (call_operation == True) {
+
+		inc(&register_setup.firstValue.Register);
+	}
+
+	set_binary_machine_code(register_setup, opcodeFunc);
 
 }
 
 
 void dec_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
+	
+	struct setupRegistretion register_setup;
+	int *binaryArr;
+	BOOL call_operation = False;
 
+	int nargin = 1;
+
+	/* assert number of inputs */
+	if (assert_nargin(nargin_str, nargin) == False) { return; }
+	/* assert legal comma */
+	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
+
+	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
+	/* condition for call function*/
+	call_operation = (register_setup.firstType == Register_Direct) ? True : False;
+
+	if (call_operation == True) {
+
+		dec(&register_setup.firstValue.Register);
+	}
+
+	set_binary_machine_code(register_setup, opcodeFunc);
 
 }
 
 
 void jmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
+	struct setupRegistretion register_setup;
+	int *binaryArr;
+	BOOL call_operation = False;
+
+	int nargin = 1;
+
+	/* assert number of inputs */
+	if (assert_nargin(nargin_str, nargin) == False) { return; }
+	/* assert legal comma */
+	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
+
+	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
+	/* condition for call function*/
+	call_operation = (register_setup.firstType == Register_Direct) ? True : False;
+
+	if (call_operation == True) {
+
+		jmp(&register_setup.firstValue.Register);
+	}
+
+	set_binary_machine_code(register_setup, opcodeFunc);
 
 }
 
 void bne_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
+	
+	struct setupRegistretion register_setup;
+	int *binaryArr;
+	BOOL call_operation = False;
 
+	int nargin = 1;
+
+	/* assert number of inputs */
+	if (assert_nargin(nargin_str, nargin) == False) { return; }
+	/* assert legal comma */
+	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
+
+	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
+	/* condition for call function*/
+	call_operation = (register_setup.firstType == Register_Direct) ? True : False;
+
+	if (call_operation == True) {
+
+		bne(&register_setup.firstValue.Register);
+	}
+
+	set_binary_machine_code(register_setup, opcodeFunc);
 
 }
 
 
 void jsr_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
+	
+	struct setupRegistretion register_setup;
+	int *binaryArr;
+	BOOL call_operation = False;
 
+	int nargin = 1;
+
+	/* assert number of inputs */
+	if (assert_nargin(nargin_str, nargin) == False) { return; }
+	/* assert legal comma */
+	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
+
+	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
+	/* condition for call function*/
+	call_operation = (register_setup.firstType == Register_Direct) ? True : False;
+
+	if (call_operation == True) {
+
+		jsr(&register_setup.firstValue.Register);
+	}
+
+	set_binary_machine_code(register_setup, opcodeFunc);
 
 }
 
 
 void red_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
+	struct setupRegistretion register_setup;
+	int *binaryArr;
+	BOOL call_operation = False;
+
+	int nargin = 1;
+
+	/* assert number of inputs */
+	if (assert_nargin(nargin_str, nargin) == False) { return; }
+	/* assert legal comma */
+	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
+
+	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
+	/* condition for call function*/
+	call_operation = (register_setup.firstType == Register_Direct) ? True : False;
+
+	if (call_operation == True) {
+
+		red(&register_setup.firstValue.Register);
+	}
+
+	set_binary_machine_code(register_setup, opcodeFunc);
 
 }
 
 
 void prn_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
+	
+	struct setupRegistretion register_setup;
+	int *binaryArr;
+	BOOL call_operation;
+	int nargin = 1;
 
+	/* assert number of inputs */
+	if (assert_nargin(nargin_str, nargin) == False) { return; }
+	/* assert legal comma */
+	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
+
+	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
+
+	call_operation = (register_setup.firstValue.value) != NULL ? True : False;
+
+	if (call_operation == True) {
+
+		prn(register_setup.firstValue.value);
+	}
+
+	set_binary_machine_code(register_setup, opcodeFunc);
 
 }
 
@@ -593,11 +922,13 @@ void stop_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 AdressType getAddresingType(char inputString[]) {
 
 	AdressType addresingType;
+	const char hashTag[] = "#";
+	const char andTag[] = "&";
 
 
-	if (char_apperance(inputString, '#') == 1) {
-		strtok(inputString, '#');
-		if (isdigit(inputString) == 1) {
+	if (char_apperance(inputString, hashTag[0]) == 1) {
+		remove_substring_parts(inputString, hashTag);
+		if (assert_number(inputString)) {
 
 			addresingType = Immediate;
 		};
@@ -609,8 +940,8 @@ AdressType getAddresingType(char inputString[]) {
 
 	}
 
-	else if (char_apperance(inputString, '&') == 1) {
-		strtok(inputString, '&');
+	else if (char_apperance(inputString, andTag[0]) == 1) {
+		strtok(inputString, andTag);
 		if (assert_command(inputString, flag_legal, 6, "")) {
 
 			addresingType = Relative;
@@ -638,28 +969,4 @@ Register* getRegisterVar(char registerName[]) {
 
 	return registerDictionary[LEN_Register].reg;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
