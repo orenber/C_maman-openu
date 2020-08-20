@@ -3,6 +3,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include<ctype.h>
+#include <math.h>
 
 #define MEM 30
 #define BUFFERSIZE 81
@@ -52,6 +53,10 @@ typedef union
 	char label[5];
 } polymorfType;
 
+typedef enum {
+	code = 0, data =1, external=2 ,entry = 3
+}TypeSymbol;
+
  /* tamplate */
 
 struct operationFunc {
@@ -71,6 +76,8 @@ struct operationFunc {
 struct flagTable {
 	char symbol[4];
 	int address;
+	TypeSymbol characterization;
+	BOOL isExternal;
 	struct flagTable *next;
 }*top;
 
@@ -105,6 +112,8 @@ void printArrayReverse(int arr[], int length);
 
 int* decimal2binaryArray(int decimalNumber, int digits);
 
+int binaryArray2decimal(int binaryArray[], unsigned int digits);
+
 void array2string(int arrayNumber[], char *stringArray);
 
 int  array_string_length(char *names[]);
@@ -138,10 +147,15 @@ BOOL assert_number(char numberStr[]);
 
 BOOL assertArrayIsEqual(int arr1[], int arr2[], int length);
 
+BOOL assertIsEqual(int num1, int num2);
+
 BOOL assert_command(char real_command[], const char *legal_command[], int  length, char error_messege[]);
 
 BOOL assertIsEmpty(char sentence[]);
+
 /* assembler ----------------------------------*/
+
+void resetValues(struct setupRegistretion *inputRegistretion, struct operationFunc *opcodeFunc);
 
 struct setupRegistretion get_address_register_setup(char nargin_str[], struct operationFunc *opcodeFunc);
 
@@ -155,7 +169,7 @@ void set_operation_command(char func[], char input_str[], struct operationFunc *
 
 int * createBinaryArray(struct operationFunc *opcodeFunc);
 
-void table_funct_opcode(char func[], struct operationFunc *opcodeFunc);
+
 
 void guidance_sentence(char varType[], char var[]);
 
@@ -180,9 +194,9 @@ void sub_from_user(char nargin_str[]);
 
 void lea_from_user(char nargin_str[]);
 
-void clr_from_user(char nargin_str[]);
+void clr_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
-void not_from_user(char nargin_str[]);
+void not_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
 void inc_from_user(char nargin_str[]);
 
@@ -217,6 +231,11 @@ void update_flag_table(struct flagTable * link_list, char flag[], int address);
 void update_operationFunc(struct addressTable * link_list, int address, int binaryArray[]);
 
 void push_operationFunc(struct addressTable* link_list, int binaryArray[]);
+
+/* Tables*/
+
+void table_funct_opcode(char func[], struct operationFunc *opcodeFunc);
+
 
 /* operation */
 

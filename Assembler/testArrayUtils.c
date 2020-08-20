@@ -43,6 +43,19 @@ void test_decimal2binaryArray_negative() {
 	print_test_result(test_pass);
 }
 
+void test_binaryArray2decimal() {
+
+	int arr_test[] = { 1,0,1,1,1 };
+	
+	int decimal;
+	BOOL test_pass;
+
+	decimal = binaryArray2decimal(arr_test, 5);
+	printf("%d", decimal);
+	test_pass = assertIsEqual(decimal, 23, 5);
+	print_test_result(test_pass);
+}
+
 void test_arrayAssign() {
 
 	int arr_assign[] = { 0,0,0,0,0,0,0,0,0,0,0 },
@@ -82,4 +95,5 @@ void run_test() {
 	test_printArrayReverse();
 	test_assertIsEmpty();
 	test_decimal2binaryArray_negative();
+	test_binaryArray2decimal();
 }

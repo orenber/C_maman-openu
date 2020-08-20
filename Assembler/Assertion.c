@@ -187,6 +187,27 @@ BOOL assertArrayIsEqual(int arr1[], int arr2[], int length) {
 }
 
 
+BOOL assertIsEqual(int num1, int num2) {
+
+	return   (num1 == num2)?True:False;
+	  
+}
+
+BOOL assertIsMember(int num1, int arr[],int length) {
+
+	BOOL ismember = False;
+	int i = 0;
+	for (i; i < length; ++i) {
+
+		ismember = assertIsEqual(num1, arr[i]);
+		if (ismember) {
+			break;
+		}
+	}
+	return ismember;
+
+}
+
 BOOL assertIsEmpty(char sentence[]) {
 
 	/* seperator for parsing text*/

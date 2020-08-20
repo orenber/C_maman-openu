@@ -81,7 +81,7 @@ void table_funct_opcode(char func[], struct operationFunc *opcodeFunc) {
 
 	binaryArr = decimal2binaryArray(opcodeFunc->opcode, 6);
 	arrayAssign(opcodeFunc->opcodeBinaryArr, binaryArr, 0, 5);
-	printArray(opcodeFunc->opcodeBinaryArr, 6);
+
 	if (opcodeFunc->funct != NULL) {
 
 		binaryArr = decimal2binaryArray(opcodeFunc->funct, 5);
@@ -92,5 +92,161 @@ void table_funct_opcode(char func[], struct operationFunc *opcodeFunc) {
 	}
 
 	arrayAssign(opcodeFunc->functBinaryArr, binaryArr, 0, 4);
-	printArray(opcodeFunc->functBinaryArr, 5);
+	
+}
+
+
+BOOL table_legal_addres(struct operationFunc opcodeFunc) {
+	
+	int *binaryArr;
+	BOOL ok1 = False, ok2 = False,legal;
+	char func[4];
+	AdressType  sourceOperand, destinationOperand;
+	AdressType  legalSource[3], legalDestination[3];
+	strcpy(func, opcodeFunc.funct);
+	destinationOperand = (AdressType)binaryArray2decimal(opcodeFunc.addressDestination,2);
+	sourceOperand = (AdressType)binaryArray2decimal(opcodeFunc.addressSource, 2);
+
+	 
+	if (strcmp(func, "mov") == 0) {
+		 /* Source*/
+		legalSource[0] = 0; legalSource[1] = 1; legalSource[2] = 3;
+		ok1 = assertIsMember(sourceOperand, legalSource);
+		
+		/* Destination */
+		legalDestination[0] = 1; legalDestination[1] = 3;
+		ok2 = assertIsMember(sourceOperand, legalSource);
+
+		legal = ok1 * ok2;
+
+	}
+	else if (strcmp(func, "cmp") == 0) {
+		/* Source*/
+		legalSource[0] = 0; legalSource[1] = 1; legalSource[2] = 3;
+		ok1 = assertIsMember(sourceOperand, legalSource);
+		
+		/* Destination */
+		legalDestination[0] = 0;  legalDestination[1] = 1; legalDestination[3] = 3;
+		ok2 = assertIsMember(sourceOperand, legalSource);
+		
+		legal = ok1 * ok2;
+
+	}
+	else if (strcmp(func, "add") == 0) {
+
+		/* Source*/
+		legalSource[0] = 0; legalSource[1] = 1; legalSource[2] = 3;
+		ok1 = assertIsMember(sourceOperand, legalSource);
+
+		/* Destination */
+		legalDestination[0] = 1; legalDestination[1] = 3;
+		ok2 = assertIsMember(sourceOperand, legalSource);
+
+		legal = ok1 * ok2;
+ 
+	}
+	else if (strcmp(func, "sub") == 0) {
+
+		/* Source*/
+		legalSource[0] = 0; legalSource[1] = 1; legalSource[2] = 3;
+		ok1 = assertIsMember(sourceOperand, legalSource);
+
+		/* Destination */
+		legalDestination[0] = 1; legalDestination[1] = 3;
+		ok2 = assertIsMember(sourceOperand, legalSource);
+
+		legal = ok1 * ok2;
+		 
+	}
+	else if (strcmp(func, "lea") == 0) {
+
+		/* Source*/
+		legalSource[0] = 1;
+		ok1 = assertIsMember(sourceOperand, legalSource);
+
+		/* Destination */
+		legalDestination[0] = 1; legalDestination[1] = 3;
+		ok2 = assertIsMember(sourceOperand, legalSource);
+
+		legal = ok1 * ok2;
+
+	}
+	else if (strcmp(func, "clr") == 0) {
+	 
+
+		/* Destination */
+		legalDestination[0] = 1; legalDestination[1] = 3;
+		legal = assertIsMember(sourceOperand, legalSource);
+		 
+	}
+	else if (strcmp(func, "not") == 0) {
+	 
+		/* Destination */
+		legalDestination[0] = 1; legalDestination[1] = 3;
+		legal = assertIsMember(sourceOperand, legalSource);
+	}
+	else if (strcmp(func, "inc") == 0) {
+	 
+		/* Destination */
+		legalDestination[0] = 1; legalDestination[1] = 3;
+		legal = assertIsMember(sourceOperand, legalSource);
+	}
+	else if (strcmp(func, "dec") == 0) {
+	 
+
+		/* Destination */
+		legalDestination[0] = 1; legalDestination[1] = 3;
+		legal = assertIsMember(sourceOperand, legalSource);
+	}
+	else if (strcmp(func, "jmp") == 0) {
+
+		/* Destination */
+		legalDestination[0] = 1; legalDestination[1] = 2;
+		legal = assertIsMember(sourceOperand, legalSource);
+	}
+	else if (strcmp(func, "bne") == 0) {
+
+		/* Destination */
+		legalDestination[0] = 1; legalDestination[1] = 2;
+		legal = assertIsMember(sourceOperand, legalSource);
+	}
+	else if (strcmp(func, "jsr") == 0) {
+
+
+		/* Destination */
+		legalDestination[0] = 1; legalDestination[1] = 2;
+		legal = assertIsMember(sourceOperand, legalSource);
+
+	}
+	else if (strcmp(func, "red") == 0) {
+
+
+		/* Destination */
+		legalDestination[0] = 1; legalDestination[1] = 3;
+
+		legal = assertIsMember(sourceOperand, legalSource);
+
+	}
+	else if (strcmp(func, "prn") == 0) {
+		 
+
+		/* Destination */
+		legalDestination[0] = 0;legalDestination[1] = 1, legalDestination[1] = 3;
+
+		ok2 = assertIsMember(sourceOperand, legalSource);
+
+		legal =   ok2;
+	}
+	else if (strcmp(func, "rts") == 0) {
+	 
+
+		legal = True;
+	}
+	else if (strcmp(func, "stop") == 0) {
+		 
+
+		legal = True;
+	}
+	return legal;
+
 }

@@ -128,7 +128,31 @@ int * decimal2binaryArray(signed int decimalNumber,unsigned int digits) {
 
 }
 
+int binaryArray2decimal(int binaryArray[], unsigned int digits){
 
+	int decimal , result = 0;
+	int i = digits - 1,j =0;
+
+	for (i,j; i >=0, j<digits ; --i,++j) {
+
+		decimal = binaryArray[i] * pow(2, j);
+		result = result + decimal;
+
+	}
+
+	return result;
+}
+
+
+int inputs_check(char input_str[], char token) {
+	int nargin = 0;
+	BOOL isempty = True;
+	isempty = assertIsEmpty(input_str);
+	if (!isempty){
+		nargin = char_apperance(input_str, token) + 1;
+	}
+	return nargin;
+}
 
 /* <summary> remove_substring - remove sub string from main string.
 text - main string..</summary> */

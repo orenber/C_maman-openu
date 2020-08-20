@@ -44,6 +44,9 @@ void clr(Register *operand) {
 	operand = 0;
 }
 
+void not(Register *operand) {
+	operand = 0;
+}
 
 void inc(Register *operand) {
 	(*operand)++;
