@@ -2,38 +2,64 @@
 
 // Stack size
 
-struct flagTable* flagTable_create() {
-	struct flagTable* l = malloc(sizeof(struct flagTable));
-	l->next = NULL;
-	return l;
+struct symbolTable* symbolTable_create() {
+	struct symbolTable* newNode = malloc(sizeof(struct symbolTable));
+	newNode->next = NULL;
+	return newNode;
 
 }
-
 
 struct addressTable* addressTable_create() {
-	struct addressTable* l = malloc(sizeof(struct addressTable));
-	l->next = NULL;
-	return l;
+	struct addressTable* newNode = malloc(sizeof(struct addressTable));
+	newNode->next = NULL;
+	return newNode;
 }
+
+struct dataTable* dataTable_create() {
+	struct dataTable* newNode = malloc(sizeof(struct dataTable));
+	newNode->next = NULL;
+	return newNode;
+}
+
 /**
 * Functiont to push a new element in stack.
 */
-void push_operationFunc(struct addressTable* link_list, int binaryArray[])
+void push_operationFunc(struct addressTable* link_list, int *address)
 {
-	static int address = 99;
-	++address;
-
+	
 	/* Create a new node and push to stack */
 	struct addressTable * newNode = (struct addressTable *) calloc(1,sizeof(struct addressTable));
 	/* Assign data to new node in stack */
-	newNode->address = address;
-	arrayAssign(newNode->binaryMachineCode, binaryArray, 0, 23);
+	newNode->address = *address;
+	
+ 
 	// Next element after new node should be current top element
 	newNode->next = link_list->next;
 	// Make sure new node is always at top
 	link_list->next = newNode;
 	
-	printf("Data pushed to stack.\n");
+	printf("\nData: %d pushed to stack.\n", (*address));
+
+	(*address)++;
+}
+
+void push_update_operationFunc(struct addressTable* link_list, int *address, int binaryArray[])
+{
+
+	/* Create a new node and push to stack */
+	struct addressTable * newNode = (struct addressTable *) calloc(1, sizeof(struct addressTable));
+	/* Assign data to new node in stack */
+	newNode->address = *address;
+	arrayAssign(link_list->binaryMachineCode, binaryArray, 0, 23);
+
+	// Next element after new node should be current top element
+	newNode->next = link_list->next;
+	// Make sure new node is always at top
+	link_list->next = newNode;
+
+	printf("\nData: %d pushed to stack.\n", (*address));
+
+	(*address)++;
 }
 
 void update_operationFunc(struct addressTable * link_list, int address, int binaryArray[]) {
@@ -43,64 +69,89 @@ void update_operationFunc(struct addressTable * link_list, int address, int bina
 		if (link_list->address== address){
 			arrayAssign(link_list->binaryMachineCode, binaryArray, 0, 23);
 			break;
-
+			printf("\n Address: %d update .\n", address);
 		}
 		link_list = link_list->next;
 	}
 
-	
+
 
  }
 
-void push_flag_table(struct flagTable * link_list ,char flag[], int address)
+void push_symbol_table(struct symbolTable * link_list ,char symbol[], int address,  TypeSymbol type)
 {
  
 	// Create a new node and push to stack
-	struct flagTable * newNode = (struct flagTable *) malloc( sizeof(struct flagTable));
+	struct symbolTable * newNode = (struct symbolTable *) malloc( sizeof(struct symbolTable));
 
 	// Assign data to new node in stack
 	newNode->address = address;
-	strcpy(newNode->symbol ,flag);
+	strcpy(newNode->symbol , symbol);
+	newNode->characterization = type;
  
 	// Next element after new node should be current top element
 	newNode->next = link_list->next;
 	// Make sure new node is always at top
 	link_list->next = newNode;
 
+	printf("\nSymbol: %s", symbol);
+	printf("\tAddress: %d", address);
+	printf("\tType: %d", type);
+
 	printf("Data pushed to stack.\n");
 }
 
-void update_flag_table(struct flagTable * link_list, char flag[], int address) {
+void update_symbol_table(struct symbolTable * link_list, char symbol[], int address, TypeSymbol type) {
 	
-	
-	strcpy(link_list->symbol, flag);
+	printf("\nSymbol: %s", symbol);
+	printf("\tAddress: %d", address);
+	printf("\tType: %d", type);
+
+	strcpy(link_list->symbol, symbol);
 	link_list->address = address;
-	
+	link_list->characterization = type;
 
 }
 
+void push_update_data_table(struct dataTable * link_list,int *address, char name[], int binaryArray[]) {
+	 
 
-int size_list(struct flagTable * link_list) {
-	
+	// Create a new node and push to stack
+	struct dataTable * newNode = (struct dataTable *) malloc(sizeof(struct dataTable));
+
+	// Assign data to new node in stack
+	newNode->address = (*address);
+	strcpy(newNode->name, name);
+	arrayAssign(link_list->binaryMachineCode, binaryArray, 0, 23);
+
+	// Next element after new node should be current top element
+	newNode->next = link_list->next;
+	// Make sure new node is always at top
+	link_list->next = newNode;
+
+	printf("\nData: %d pushed to stack.\n", (*address));
+	(*address)++;
+
+}
+
+int size_list(struct symbolTable * link_list) {
+
 	int size = 0;
 
 	while (link_list != NULL) {
-		
+
 		++size;
 		link_list = link_list->next;
 	};
 	return size;
 }
 
-
-
-
-int serach_address(struct flagTable * link_list, char flag[]) {
+int serach_address(struct symbolTable * link_list, char symbol[]) {
 
 	int address = NULL;
 	while (link_list != NULL) {
-		
-		if (strcmp(link_list->symbol,flag)==0) {
+
+		if (strcmp(link_list->symbol, symbol) == 0) {
 			address = link_list->address;
 			break;
 
@@ -110,8 +161,3 @@ int serach_address(struct flagTable * link_list, char flag[]) {
 
 
 }
-
-
-
-
-

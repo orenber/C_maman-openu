@@ -52,4 +52,3 @@ BOOL file_exists(char fileName[])
 	}
 	return state;
 }
-

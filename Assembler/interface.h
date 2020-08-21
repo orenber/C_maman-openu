@@ -57,6 +57,7 @@ typedef enum {
 	code = 0, data =1, external=2 ,entry = 3
 }TypeSymbol;
 
+ 
  /* tamplate */
 
 struct operationFunc {
@@ -73,12 +74,12 @@ struct operationFunc {
 	ARE  ARE;
 };
 
-struct flagTable {
+struct symbolTable {
 	char symbol[4];
 	int address;
 	TypeSymbol characterization;
 	BOOL isExternal;
-	struct flagTable *next;
+	struct symbolTable *next;
 }*top;
 
 struct addressTable{
@@ -87,6 +88,14 @@ struct addressTable{
 	struct addressTable *next;
 }*top_node;
 
+
+struct dataTable {
+	int address;
+	char name[4];
+	int binaryMachineCode[24];
+	struct addressTable *next;
+
+}*head;
 
 
 
@@ -155,11 +164,22 @@ BOOL assertIsEmpty(char sentence[]);
 
 /* assembler ----------------------------------*/
 
+void update_or_insert_machine_code(struct setupRegistretion register_setup, struct operationFunc *opcodeFunc);
+
+void first_pass(char command_original[]);
+
+void second_pass(char command_original[]);
+
 void resetValues(struct setupRegistretion *inputRegistretion, struct operationFunc *opcodeFunc);
 
 struct setupRegistretion get_address_register_setup(char nargin_str[], struct operationFunc *opcodeFunc);
 
-void insert_binary_machine_code(AdressType type, polymorfType st, ARE are);
+void create_space_binary_machine_code(struct setupRegistretion setup, struct operationFunc *opcodeFunc);
+
+void update_binary_machine_code(AdressType type, polymorfType st, ARE are);
+
+void set_space_binary_machine_code(AdressType type);
+
 
 void flag_manger(char flag[], int value);
 
@@ -184,37 +204,37 @@ void entry_sentence(char var[]);
 
 void instructional_sentence(char fun[], char input_str[], struct operationFunc *opcodeFunc);
 
-void mov_from_user(char nargin_str[]);
+void mov_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
-void cmp_from_user(char nargin_str[]);
+void cmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
-void add_from_user(char nargin_str[]);
+void add_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
-void sub_from_user(char nargin_str[]);
+void sub_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
-void lea_from_user(char nargin_str[]);
+void lea_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
 void clr_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
 void not_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
-void inc_from_user(char nargin_str[]);
+void inc_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
-void dec_from_user(char nargin_str[]);
+void dec_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
-void jmp_from_user(char nargin_str[]);
+void jmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
-void bne_from_user(char nargin_str[]);
+void bne_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
-void jsr_from_user(char nargin_str[]);
+void jsr_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
-void red_from_user(char nargin_str[]);
+void red_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
-void prn_from_user(char nargin_str[]);
+void prn_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
-void rts_from_user(char nargin_str[]);
+void rts_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
-void stop_from_user(char nargin_str[]);
+void stop_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
 Register* getRegisterVar(char registerName[]);
 
@@ -222,19 +242,36 @@ AdressType getAddresingType(char inputString[]);
 
  /* link list -----------------------------------*/
 
-struct flagTable* flagTable_create();
+struct symbolTable* symbolTable_create();
 
-int size_list(struct flagTable * link_list);
+struct addressTable* addressTable_create();
 
-void update_flag_table(struct flagTable * link_list, char flag[], int address);
+struct dataTable* dataTable_create();
+
+void push_operationFunc(struct addressTable* link_list, int *address);
 
 void update_operationFunc(struct addressTable * link_list, int address, int binaryArray[]);
 
-void push_operationFunc(struct addressTable* link_list, int binaryArray[]);
+void push_update_operationFunc(struct addressTable* link_list, int *address, int binaryArray[]);
+ 
+void push_symbol_table(struct symbolTable * link_list, char symbol[], int address, TypeSymbol type);
 
+void update_symbol_table(struct symbolTable * link_list, char symbol[], int address, TypeSymbol type);
+
+void push_update_data_table(struct dataTable * link_list, int *address, char name[], int binaryArray[]);
+
+
+int size_list(struct symbolTable * link_list);
+
+int serach_address(struct symbolTable * link_list, char symbol[]);
+
+ 
 /* Tables*/
 
 void table_funct_opcode(char func[], struct operationFunc *opcodeFunc);
+
+void push_update_data_table(struct dataTable * link_list, int *address, char name[], int binaryArray[]);
+
 
 
 /* operation */

@@ -168,7 +168,6 @@ BOOL assert_comma(char text[], int comma_sum) {
 }
 
 
-
 BOOL assertArrayIsEqual(int arr1[], int arr2[], int length) {
 
 	int i;
@@ -185,7 +184,6 @@ BOOL assertArrayIsEqual(int arr1[], int arr2[], int length) {
 	}
 	return valid;
 }
-
 
 BOOL assertIsEqual(int num1, int num2) {
 
