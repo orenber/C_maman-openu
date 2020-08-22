@@ -52,3 +52,61 @@ BOOL file_exists(char fileName[])
 	}
 	return state;
 }
+
+void write_ob_file(char fileName[], struct addressTable* addresstable) {
+
+	int address = 100;
+	struct addressData data;
+	char *hexadecimal="",
+		*straddress ="";
+	char text[15] = "";
+	
+	/* get number of command*/
+
+	/* convert  num to string */
+
+	/* get number of data */
+
+	/* convert  data num to string */
+
+	/* write text row*/
+	/*-------------------------*/
+
+	for (address = 100; address < 133; ++address) {
+		/* initilize text*/
+		strcpy(text,"");
+		/* get address*/
+		data = get_code_data(addresstable, address);
+
+
+		/* convert addres to string*/
+		straddress = num2string(data.address);
+		strcat(text,straddress);
+
+		/* concatinate to one row */
+		strcat(text, " ");
+
+		/* convert binary machine code to hexadecimal sring*/
+		hexadecimal = binaryArray2Hexadecimal(data.binaryMachineCode, 24);
+		strcat(text, hexadecimal);
+
+		/* write text row*/
+		write_file(fileName, text, "a");
+	}
+}
+
+
+void write_ent_file(char fileName[], struct symbolTable* symboltable) {
+
+	int address = 100;
+	struct addressData data;
+	char *straddress = "";
+	char text[15] = "";
+
+	for (address = 100; address < 133; ++address) {
+		/* initilize text*/
+		strcpy(text, "");
+		/* get address*/
+
+	}
+}

@@ -1,4 +1,18 @@
- #include "Interface.h"
+/* ***********************************************************************
+Assembly         :
+Author           : Oren Berkovitch
+Created          : 22-08-2020
+Last Modified By : Oren Berkovitch
+Last Modified On : 23-08-2020
+***********************************************************************
+<summary>
+ 
+</summary>
+**********************************************************************
+*/
+
+
+#include "Interface.h"
 
 
 
@@ -28,26 +42,27 @@ static struct {
 int main(int argc, char* argv[])
 {
 	/*run_test();*/
+	
+	char file_to_read[MEM] = "",        /* file name that i read from*/
+		 *file_to_write;         /* file name that i write to */
 
-	char file_to_read[MEM] = "";         /* file name that i read from*/
 	char line_read[BUFFERSIZE] = "";     /* digit number string*/
 	char *output = "";                   /* output from the user */
 	BOOL is_file_read_exist = False,     /* is the file that i read from exist?*/
 		is_file_write_exist = False;    /* is the file that i write to exist?*/
 	FILE* filePointer;
 	struct operationFunc opcodeFunc;
-
+	
 	int  nargin = argc;                  /* number of input in */
-
-	state.DC = 0;
-	state.IC = 100;
-	state.Pass_num = 1;
 
 	symbol_table = symbolTable_create();
 	addresstable = addressTable_create();
 	data_table = dataTable_create();
 
-
+	state.DC = 0;
+	state.IC = 100;
+	state.Pass_num = 1;
+	
 	/* check file name inputs */
 	if ((nargin >= 2) && (argv[1] != NULL)) {
 		strcpy(file_to_read, argv[1]);
@@ -87,48 +102,22 @@ int main(int argc, char* argv[])
 		}
 	} while (output != NULL);
 
+	file_to_write = strep(file_to_read, ".as", ".ob");
+	write_ob_file(file_to_write,addresstable);
 	getchar();
 
 
 	return 0;
 }
 
-void writeObFile() {
 
-	int address = 100;
-	struct addressData data;
-	/* get number of command*/
 
-	/* convert  num to string */
-
-	/* get number of data */
-
-	/* convert  data num to string */
-
-	/* write text row*/
-	/*-------------------------*/
-
-	for (address = 100; address < 133; ++address) {
-		/* get address*/
-
-		/* get binary machine code*/
-
-		/* convert addres to string*/
-
-		/* convert binary machine code to hexadecimal sring*/
-
-		/* concatinate to one row */
-
-		/* write text row*/
-
-	}
-}
 
 
 
 void first_pass(char command_original[]) {
 
-	
+	static int line_num = 0;
 	char *command_section = "", *next_command = "",
 		command[MEM] = "",
 		command_left[MEM], input_str[MEM];
@@ -140,7 +129,7 @@ void first_pass(char command_original[]) {
 	strcpy(command_left, command_original);
 
 	
- 
+	line_num++;
 	while (end_line != True) {
 
 		remove_substring(&command_left, command_section);

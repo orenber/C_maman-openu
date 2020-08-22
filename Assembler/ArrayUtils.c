@@ -165,22 +165,22 @@ char * binaryArray2Hexadecimal(int binaryArray[], unsigned int digits) {
 			{
 
 			case 10:
-				hexadecimal[n] = 'A';
+				hexadecimal[n] = 'a';
 				break;
 			case 11:
-				hexadecimal[n] = 'B';
+				hexadecimal[n] = 'b';
 				break;
 			case 12:
-				hexadecimal[n] = 'C';
+				hexadecimal[n] = 'c';
 				break;
 			case 13:
-				hexadecimal[n] = 'D';
+				hexadecimal[n] = 'd';
 				break;
 			case 14:
-				hexadecimal[n] = 'E';
+				hexadecimal[n] = 'e';
 				break;
 			case 15:
-				hexadecimal[n] = 'F';
+				hexadecimal[n] = 'f';
 				break;
 
 			default:
@@ -278,6 +278,43 @@ void remove_substring(char *text, char *sub_string) {
 	}
 
 
+}
+
+char* strep(const char* s, const char* oldW, const char* newW)
+{
+	char* result;
+	int i, cnt = 0;
+	int newWlen = strlen(newW);
+	int oldWlen = strlen(oldW);
+
+	// Counting the number of times old word 
+	// occur in the string 
+	for (i = 0; s[i] != '\0'; i++) {
+		if (strstr(&s[i], oldW) == &s[i]) {
+			cnt++;
+
+			// Jumping to index after the old word. 
+			i += oldWlen - 1;
+		}
+	}
+
+	// Making new string of enough length 
+	result = (char*)malloc(i + cnt * (newWlen - oldWlen) + 1);
+
+	i = 0;
+	while (*s) {
+		// compare the substring with the result 
+		if (strstr(s, oldW) == s) {
+			strcpy(&result[i], newW);
+			i += newWlen;
+			s += oldWlen;
+		}
+		else
+			result[i++] = *s++;
+	}
+
+	result[i] = '\0';
+	return result;
 }
 
 int array_string_length(char *names[]) {

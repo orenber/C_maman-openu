@@ -2,6 +2,8 @@
 #include "assembler.h"
 /* ArrayUtils ---------------------------------------*/
 
+char* strep(const char* s, const char* oldW, const char* newW);
+
 char * num2string(int number);
 
 char * binaryArray2Hexadecimal(int binaryArray[], unsigned int digits);
