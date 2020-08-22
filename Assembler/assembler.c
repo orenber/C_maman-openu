@@ -1,4 +1,6 @@
-#include "interface.h"
+ #include "Interface.h"
+
+
 
 static struct symbolTable *symbol_table;
 static struct addressTable *addresstable;
@@ -74,7 +76,7 @@ int main(int argc, char* argv[])
 	/* second pass*/
 	filePointer = fopen(file_to_read, "r");
 	state.DC = 0;
-	state.IC = 100;
+	state.IC = 99;
 	state.Pass_num = 2;
 	do {
 		printf("\n%s", line_read);
@@ -90,6 +92,38 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
+
+void writeObFile() {
+
+	int address = 100;
+	struct addressData data;
+	/* get number of command*/
+
+	/* convert  num to string */
+
+	/* get number of data */
+
+	/* convert  data num to string */
+
+	/* write text row*/
+	/*-------------------------*/
+
+	for (address = 100; address < 133; ++address) {
+		/* get address*/
+
+		/* get binary machine code*/
+
+		/* convert addres to string*/
+
+		/* convert binary machine code to hexadecimal sring*/
+
+		/* concatinate to one row */
+
+		/* write text row*/
+
+	}
+}
+
 
 
 void first_pass(char command_original[]) {
@@ -212,10 +246,6 @@ void second_pass(char command_original[]) {
 		else if (assert_command(command_section, &guidanceType, 4, ""))
 		{
 			/* Guidance sentence */
-			remove_substring(&command_left, command_section);
-			remove_substring_parts(&command_left, seperator);
-
-			guidance_sentence(command_section, command_left);
 			end_line = True;
 		}
 
@@ -339,9 +369,12 @@ void set_binary_machine_code(struct setupRegistretion setup, struct operationFun
 void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 		
 	int *binaryArray;
-	int  binary_machine_code[bitrray];
-	zeros(&binary_machine_code, bitrray);
+	int  binary_machine_code[bitrray], 
+		address_symbol;
+	struct symbolData symbol_data;
 
+
+	zeros(&binary_machine_code, bitrray);
 		switch(type)
 		{
 		case (Immediate):
@@ -353,16 +386,43 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 			break;
 
 		case (Direct):
-			binaryArray = decimal2binaryArray(0, 21);
+
+			/* get the label data*/
+			symbol_data = get_symbol_data(symbol_table, st.label);
+
+			binaryArray = decimal2binaryArray(symbol_data.address, 21);
 			arrayAssign(&binary_machine_code, binaryArray, INDEX(23), INDEX(3));
 			/*ARE */
+			/* if internal ARE = 010*/
+			if (symbol_data.isInternal) {
+				are.x[0] = False; are.x[1] = True; are.x[2] = False;
+			}
+			else {
+				/* f external ARE = 001*/
+				are.x[0] = False; are.x[1] = False; are.x[2] = True;
+			}
+			arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
+			printArray(binary_machine_code, bitrray);
+			update_operationFunc(addresstable, ++state.IC, &binary_machine_code);
+			break;
+
+
+
+			break;
+		case (Relative):
+			/* get the label data*/
+			symbol_data = get_symbol_data(symbol_table, st.label);
+			/* jump curent */
+			binaryArray = decimal2binaryArray(symbol_data.address - state.IC, 21);
+			arrayAssign(&binary_machine_code, binaryArray, INDEX(23), INDEX(3));
+			/*ARE */
+			are.x[0] = True;
+			are.x[1] = False;
+			are.x[2] = False;
 
 			arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
 			printArray(binary_machine_code, bitrray);
-			update_operationFunc(addresstable, ++state.IC,&binary_machine_code);
-			break;
-		case (Relative):
-
+			update_operationFunc(addresstable, ++state.IC, &binary_machine_code);
 			break;
 		case (Register_Direct):
 

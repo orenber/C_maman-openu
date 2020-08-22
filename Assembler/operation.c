@@ -1,4 +1,4 @@
-#include "interface.h"
+#include "operation.h"
 
 void mov(int A, Register *operand) {
 

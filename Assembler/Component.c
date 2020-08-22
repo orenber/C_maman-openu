@@ -1,4 +1,4 @@
-#include "interface.h"
+#include "Component.h"
 
 
 /* all legal function*/

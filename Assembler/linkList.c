@@ -1,4 +1,4 @@
-#include "interface.h"
+#include "linkList.h"
 
 // Stack size
 
@@ -68,8 +68,8 @@ void update_operationFunc(struct addressTable * link_list, int address, int bina
 
 		if (link_list->address== address){
 			arrayAssign(link_list->binaryMachineCode, binaryArray, 0, 23);
-			break;
 			printf("\n Address: %d update .\n", address);
+			break;
 		}
 		link_list = link_list->next;
 	}
@@ -77,6 +77,27 @@ void update_operationFunc(struct addressTable * link_list, int address, int bina
 
 
  }
+
+
+struct addressData get_code_data(struct addressTable* link_list, int address[]) {
+
+	
+	struct addressData  data;
+
+	while (link_list != NULL) {
+
+		if ( link_list->address == address) {
+			data.address = link_list->address;
+			arrayAssign(data.binaryMachineCode, link_list->binaryMachineCode, 0, 23);
+ 
+			break;
+
+		}
+		link_list = link_list->next;
+	}
+
+	return data;
+}
 
 void push_symbol_table(struct symbolTable * link_list ,char symbol[], int address,  TypeSymbol type)
 {
@@ -146,7 +167,7 @@ int size_list(struct symbolTable * link_list) {
 	return size;
 }
 
-int serach_address(struct symbolTable * link_list, char symbol[]) {
+int serach_symbol_address(struct symbolTable * link_list, char symbol[]) {
 
 	int address = NULL;
 	while (link_list != NULL) {
@@ -159,5 +180,28 @@ int serach_address(struct symbolTable * link_list, char symbol[]) {
 		link_list = link_list->next;
 	}
 
+	return address;
+}
 
+
+struct symbolData get_symbol_data(struct symbolTable * link_list, char symbol[]) {
+
+	 
+	struct symbolData  row;
+
+	while (link_list != NULL) {
+
+		if (strcmp(link_list->symbol, symbol) == 0) {
+			row.address = link_list->address;
+			row.characterization = link_list->characterization;
+			row.isInternal = link_list->isInternal;
+			strcpy(row.symbol, symbol);
+
+			break;
+
+		}
+		link_list = link_list->next;
+	}
+
+	return row;
 }

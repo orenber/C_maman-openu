@@ -1,4 +1,4 @@
-#include "interface.h"
+#include "UnitTest.h"
 
 
 
@@ -79,6 +79,29 @@ void test_assertIsEmpty() {
 }
 
 
+void test_binaryArray2Hexadecimal( ) {
+	
+	int binaryArray[] = { 0,0,0,0,1,0,1,1,0,1,1,0,1,0,0,0,0,0,0,1,1,0,0,1 };
+	char *result ,test[] = "0B6819";
+	BOOL test_pass;
+
+	result = binaryArray2Hexadecimal(binaryArray,24);
+	test_pass = (strcmp(result, test)==0);
+	print_test_result(test_pass);
+}
+
+void test_num2string() {
+
+
+	int number = 123;
+	char * str ="";
+
+	str = num2string(number);
+	 
+
+
+}
+
 void print_test_result(BOOL test) {
 
 	(test == True) ? printf("\ntest pass") : printf("\ntest fail");
@@ -87,8 +110,11 @@ void print_test_result(BOOL test) {
 
 
 
+
+
 void run_test() {
 
+	test_num2string();
 	test_arrayAssign();
 	test_decimal2binaryArray();
 	test_printArray();
@@ -96,4 +122,5 @@ void run_test() {
 	test_assertIsEmpty();
 	test_decimal2binaryArray_negative();
 	test_binaryArray2decimal();
+	test_binaryArray2Hexadecimal();
 }

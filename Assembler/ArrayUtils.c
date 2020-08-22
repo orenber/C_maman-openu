@@ -1,4 +1,4 @@
-#include "interface.h"
+#include "ArrayUtils.h"
 
 
 void printArray(int arr[],int length)
@@ -143,6 +143,116 @@ int binaryArray2decimal(int binaryArray[], unsigned int digits){
 	return result;
 }
 
+char * binaryArray2Hexadecimal(int binaryArray[], unsigned int digits) {
+
+	int decimal, result = 0;
+	int i = digits - 1, j = 0,n ;
+	char hexadecimal[] = "000000";
+	n= strlen(hexadecimal);
+
+	printArray(binaryArray, digits);
+	for (i, j; i >= 0; --i, ++j)
+	{
+
+		decimal = binaryArray[i] * pow(2, j);
+		result = result + decimal;
+		
+		if (( (j+1) % 4 == 0) || (i == 0))
+		{
+			
+			n--;
+			switch (result)
+			{
+
+			case 10:
+				hexadecimal[n] = 'A';
+				break;
+			case 11:
+				hexadecimal[n] = 'B';
+				break;
+			case 12:
+				hexadecimal[n] = 'C';
+				break;
+			case 13:
+				hexadecimal[n] = 'D';
+				break;
+			case 14:
+				hexadecimal[n] = 'E';
+				break;
+			case 15:
+				hexadecimal[n] = 'F';
+				break;
+
+			default:
+				hexadecimal[n] = result + '0';
+				
+				break;
+
+			}
+			printf("%s\n", hexadecimal);
+			/* reset values */
+			result = 0;
+			j = -1;
+		}
+	}
+
+ /*	printf("Equivalent hexadecimal value: %s", hexadecimal);*/
+
+	return hexadecimal;
+}
+
+char *decimal2Hexadecimal(long int decimalNumber)
+{
+	static char hexDecNum[100];
+	int i;
+	for (i = 0; i < sizeof(decimalNumber) * 2; i++)
+	{
+		int digit = decimalNumber & 0xf;
+
+		if (digit >= 10)
+			digit += 'A' - 10; 
+		else
+			digit += '0';       
+
+		hexDecNum[i] = digit;
+		decimalNumber >>= 4;
+	}
+
+	hexDecNum[i] = 0;
+	return hexDecNum;
+}
+
+char * num2string(int number) {
+
+	char * padding = "0000000";
+	char strnum[6];
+	char strC[10];
+	int indx ;
+
+	indx = strlen(padding) - numSize(number);
+	sprintf(strnum ,"%d",number);
+	strncpy(strC, padding, indx);
+	strC[indx] = '\0';
+	strcat(strC, strnum);
+	 
+	printf("%s\n", strC);
+	return strC;
+}
+
+int numSize(int number) {
+
+	int numsize = -1, result;
+	do {
+
+		result = number / pow(10, ++numsize);
+
+
+	} while (result != 0);
+
+	 
+	return numsize;
+
+}
 
 int inputs_check(char input_str[], char token) {
 	int nargin = 0;
