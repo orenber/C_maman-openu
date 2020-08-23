@@ -93,7 +93,7 @@ int main(int argc, char* argv[])
 	/* second pass*/
 	filePointer = fopen(file_to_read, "r");
 	state.DC = 0;
-	state.IC = 99;
+	state.IC = 100;
 	state.Pass_num = 2;
 	do {
 		printf("\n%s", line_read);
@@ -237,6 +237,12 @@ void second_pass(char command_original[]) {
 		else if (assert_command(command_section, &guidanceType, 4, ""))
 		{
 			/* Guidance sentence */
+			remove_substring(&command_left, command_section);
+			remove_substring_parts(&command_left, seperator);
+			 if (strcmp(command_section, ".entry") == 0) {
+
+				entry_sentence(command_section);
+			}
 			end_line = True;
 		}
 
@@ -249,7 +255,7 @@ void second_pass(char command_original[]) {
 void flag_manger(char symbol[], TypeSymbol type) {
 	
 	/* insert the flag in the table flage  - link list */
-	push_symbol_table(&symbol_table, symbol, state.IC, type);
+	push_symbol_table(&symbol_table, state.IC, symbol, type,True);
 	 
 }
 
@@ -427,10 +433,7 @@ void guidance_sentence(char varType[], char var[]) {
 		
 		extern_sentence(var);
 	}
-	else if (strcmp(varType, ".entry") == 0) {
-		
-		entry_sentence(var);
-	}
+
 
 }
 
@@ -488,12 +491,14 @@ void data_sentence(char var[]) {
 
 }
 
-void extern_sentence(char var[]) {
+void extern_sentence(char symbol[]) {
 
+	push_symbol_table(&symbol_table, 0, symbol, external,True);
 }
 
-void entry_sentence(char var[]) {
+void entry_sentence(char symbol[]) {
 
+	/* update_symbol_table(&symbol_table, symbol, entry,False);*/
 }
 
 void update_or_insert_machine_code(struct setupRegistretion register_setup, struct operationFunc *opcodeFunc) {

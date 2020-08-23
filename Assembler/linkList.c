@@ -75,10 +75,10 @@ void update_addressTable(struct addressTable * link_list, int address, int binar
 		}
 		link_list = link_list->next;
 	}
-
-
-
  }
+
+
+
 
 
 struct addressData get_code_data(struct addressTable* link_list, int address[]) {
@@ -101,7 +101,22 @@ struct addressData get_code_data(struct addressTable* link_list, int address[]) 
 	return data;
 }
 
-void push_symbol_table(struct symbolTable ** link_list ,char symbol[], int address,  TypeSymbol type)
+
+void update_symbol_Table(struct symbolTable * link_list, char symbol[], TypeSymbol type, BOOL isInternal) {
+
+	while (link_list != NULL) {
+
+		if (strcmp(link_list->symbol, symbol) == 0) {
+			link_list->isInternal = isInternal;
+			link_list->characterization = type;
+
+			break;
+		}
+		link_list = link_list->next;
+	}
+}
+
+void push_symbol_table(struct symbolTable ** link_list , int address, char symbol[],  TypeSymbol type, BOOL isInternal)
 {
  
 	// Create a new node and push to stack
@@ -111,6 +126,7 @@ void push_symbol_table(struct symbolTable ** link_list ,char symbol[], int addre
 	newNode->address = address;
 	strcpy(newNode->symbol , symbol);
 	newNode->characterization = type;
+	newNode->isInternal = isInternal;
  
 	// Next element after new node should be current top element
 	newNode->next = *link_list;
@@ -150,7 +166,7 @@ void push_update_data_table(struct dataTable ** link_list,int *address, char nam
  
 
 
-int size_list(struct symbolTable * link_list) {
+int size_list_symbol_table(struct symbolTable * link_list) {
 
 	
 	int size = 0;
@@ -208,16 +224,37 @@ int serach_symbol_address(struct symbolTable * link_list, char symbol[]) {
 	return address;
 }
 
+int serach_symbol_entry(struct symbolTable * link_list, TypeSymbol type) {
+	
+	struct symbolTable symbolEntry[2];
+	int address = NULL;
+	while (link_list != NULL) {
+
+		if (link_list->characterization== type)  {
+			address = link_list->address;
+			break;
+
+		}
+		link_list = link_list->next;
+	}
+
+	return address;
+
+}
+
+
+
+
  void print_symbol_table(struct symbolTable * link_list) {
 
 	while (link_list != NULL) {
 
 		printf("\nsymbol:  %s\t", link_list->symbol);
 		printf("address: %d\t", link_list->address);
+		printf("Type: %d\t", link_list->characterization);
+		printf("isInternal: %d\t", link_list->isInternal);
 		link_list = link_list->next;
 	}
-
-
 }
  
 void print_address_table(struct addressTable* link_list) {
