@@ -72,7 +72,7 @@ void write_ob_file(char fileName[], struct addressTable* addresstable) {
 	/* write text row*/
 	/*-------------------------*/
 
-	for (address = 100; address < 133; ++address) {
+	for (address = 100; address <= 130; ++address) {
 		/* initilize text*/
 		strcpy(text,"");
 		/* get address*/

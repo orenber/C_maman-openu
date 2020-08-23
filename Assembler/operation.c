@@ -169,7 +169,6 @@ void set_operation_command(char func[], char input_str[], struct operationFunc *
 void mov_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	struct setupRegistretion register_setup;
-	BOOL call_operation = False;
 	int *binaryArr;
 	int nargin = 2;
 
@@ -179,13 +178,6 @@ void mov_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-
-	if (call_operation == True) {
-
-		mov(register_setup.firstType, &register_setup.secondType);
-		binaryArr = decimal2binaryArray((int)register_setup.secondValue.Register, 3);
-		arrayAssign(opcodeFunc->registerSource, binaryArr, 0, 2);
-	}
 
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
@@ -194,7 +186,6 @@ void mov_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 void cmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	struct setupRegistretion register_setup;
-	BOOL call_operation = False;
 	int *binaryArr;
 	int nargin = 2;
 
@@ -204,13 +195,6 @@ void cmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-
-	if (call_operation == True) {
-
-		cmp(register_setup.firstValue.value,  register_setup.secondValue.Register);
-		binaryArr = decimal2binaryArray((int)register_setup.secondValue.Register, 3);
-		arrayAssign(opcodeFunc->registerSource, binaryArr, 0, 2);
-	}
 
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
@@ -220,7 +204,6 @@ void cmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 void sub_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	struct setupRegistretion register_setup;
-	BOOL call_operation = False;
 	int *binaryArr;
 	int nargin = 2;
 
@@ -230,14 +213,6 @@ void sub_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-
-	if (call_operation == True) {
-
-		sub(register_setup.firstType, &register_setup.secondType);
-		binaryArr = decimal2binaryArray((int)register_setup.secondValue.Register, 3);
-		arrayAssign(opcodeFunc->registerSource, binaryArr, 0, 2);
-	}
-
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
@@ -246,8 +221,6 @@ void lea_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	struct setupRegistretion register_setup;
 	int *binaryArr;
-	BOOL call_operation = False;
-
 	int nargin = 2;
 
 	/* assert number of inputs */
@@ -256,12 +229,6 @@ void lea_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-
-	if (call_operation == True) {
-
-		/*lea(register_setup.firstValue.Register, register_setup.firstValue.value);
-		/* TODO: add adjusment*/
-	}
 
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
@@ -271,8 +238,6 @@ void clr_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	struct setupRegistretion register_setup;
 	int *binaryArr;
-	BOOL call_operation = False;
-
 	int nargin = 1;
 
 	/* assert number of inputs */
@@ -281,13 +246,6 @@ void clr_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-	/* condition for call function*/
-	call_operation = (register_setup.firstType == Register_Direct) ? True : False;
-
-	if (call_operation == True) {
-
-		clr(&register_setup.firstValue.Register);
-	}
 
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
@@ -297,8 +255,6 @@ void not_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	struct setupRegistretion register_setup;
 	int *binaryArr;
-	BOOL call_operation = False;
-
 	int nargin = 1;
 
 	/* assert number of inputs */
@@ -307,14 +263,7 @@ void not_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-	/* condition for call function*/
-	call_operation = (register_setup.firstType == Register_Direct) ? True : False;
-
-	if (call_operation == True) {
-
-		not(&register_setup.firstValue.Register);
-	}
-
+ 
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
@@ -334,13 +283,7 @@ void inc_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-	/* condition for call function*/
-	call_operation = (register_setup.secondType == Register_Direct) ? True : False;
-
-	if (call_operation == True) {
-
-		inc(&register_setup.firstValue.Register);
-	}
+ 
 
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
@@ -351,8 +294,6 @@ void dec_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	struct setupRegistretion register_setup;
 	int *binaryArr;
-	BOOL call_operation = False;
-
 	int nargin = 1;
 
 	/* assert number of inputs */
@@ -361,14 +302,7 @@ void dec_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-	/* condition for call function*/
-	call_operation = (register_setup.firstType == Register_Direct) ? True : False;
-
-	if (call_operation == True) {
-
-		dec(&register_setup.firstValue.Register);
-	}
-
+  
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
@@ -378,8 +312,6 @@ void jmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	struct setupRegistretion register_setup;
 	int *binaryArr;
-	BOOL call_operation = False;
-
 	int nargin = 1;
 
 	/* assert number of inputs */
@@ -388,14 +320,7 @@ void jmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-	/* condition for call function*/
-	call_operation = (register_setup.firstType == Register_Direct) ? True : False;
-
-	if (call_operation == True) {
-
-		jmp(&register_setup.firstValue.Register);
-	}
-
+ 
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
@@ -404,8 +329,6 @@ void bne_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	struct setupRegistretion register_setup;
 	int *binaryArr;
-	BOOL call_operation = False;
-
 	int nargin = 1;
 
 	/* assert number of inputs */
@@ -414,14 +337,7 @@ void bne_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-	/* condition for call function*/
-	call_operation = (register_setup.firstType == Register_Direct) ? True : False;
-
-	if (call_operation == True) {
-
-		bne(&register_setup.firstValue.Register);
-	}
-
+ 
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
@@ -431,8 +347,6 @@ void jsr_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	struct setupRegistretion register_setup;
 	int *binaryArr;
-	BOOL call_operation = False;
-
 	int nargin = 1;
 
 	/* assert number of inputs */
@@ -441,14 +355,7 @@ void jsr_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-	/* condition for call function*/
-	call_operation = (register_setup.firstType == Register_Direct) ? True : False;
-
-	if (call_operation == True) {
-
-		jsr(&register_setup.firstValue.Register);
-	}
-
+ 
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
@@ -458,8 +365,6 @@ void red_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	struct setupRegistretion register_setup;
 	int *binaryArr;
-	BOOL call_operation = False;
-
 	int nargin = 1;
 
 	/* assert number of inputs */
@@ -468,14 +373,7 @@ void red_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-	/* condition for call function*/
-	call_operation = (register_setup.firstType == Register_Direct) ? True : False;
-
-	if (call_operation == True) {
-
-		red(&register_setup.firstValue.Register);
-	}
-
+	
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
@@ -494,14 +392,7 @@ void prn_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-
-	call_operation = (register_setup.secondValue.value) != NULL ? True : False;
-
-	if (call_operation == True) {
-
-		prn(register_setup.secondValue.value);
-	}
-
+ 
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
@@ -510,7 +401,6 @@ void rts_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	struct setupRegistretion register_setup;
 	int *binaryArr;
-	BOOL call_operation;
 	int nargin = 0;
 
 	/* assert number of inputs */
@@ -519,15 +409,9 @@ void rts_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-
-	call_operation = (register_setup.secondValue.value) != NULL ? True : False;
-
-	if (call_operation == True) {
-
-
-	}
-
+	
 	update_or_insert_machine_code(register_setup, opcodeFunc);
+
 }
 
 
@@ -544,14 +428,7 @@ void stop_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-
-	call_operation = (register_setup.secondValue.value) != NULL ? True : False;
-
-	if (call_operation == True) {
-
-		stop();
-	}
-
+ 
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
@@ -559,7 +436,6 @@ void stop_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 void add_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	struct setupRegistretion register_setup;
-	BOOL call_operation = False;
 	int *binaryArr;
 	int nargin = 2;
 

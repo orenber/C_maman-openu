@@ -262,7 +262,7 @@ void instructional_sentence(char fun[], char input_str[], struct operationFunc *
 
 	table_funct_opcode(fun, opcodeFunc);
 	set_operation_command(fun, input_str, opcodeFunc);
-
+	print_address_table(address_table);
 
 }
 
@@ -305,7 +305,6 @@ void set_space_binary_machine_code(AdressType type) {
 		break;
 	case (Relative):
 
-		push_addressTable(&address_table, &state.IC);
 		push_addressTable(&address_table, &state.IC);
 
 		break;
