@@ -53,26 +53,40 @@ BOOL file_exists(char fileName[])
 	return state;
 }
 
-void write_ob_file(char fileName[], struct addressTable* addresstable) {
+void write_ob_file(char fileName[], struct addressTable* addresstable,struct dataTable* dataTable) {
 
-	int address = 100;
+	 
+	int commands,
+		data_size,
+		instruction,
+		guidlines, address;
 	struct addressData data;
 	char *hexadecimal="",
 		*straddress ="";
+	char snum[10];
 	char text[15] = "";
 	
 	/* get number of command*/
-
-	/* convert  num to string */
+	  commands = size_list_address_table(addresstable);
+	  instruction = INITIAL_ADDRESS + commands;
 
 	/* get number of data */
-
-	/* convert  data num to string */
+	  data_size = size_list_data_table(dataTable);
+	  guidlines = commands - data_size;
+	 
+	  /* convert  num to string */
+	  sprintf(snum,"%7d", guidlines);
+	  strcat(text, snum);
+	  strcat(text, " ");
+	  sprintf(snum, "%d", data_size);
+	  strcat(text, snum);
+	  /* write text row*/
+	  write_file(fileName, text, "w");
 
 	/* write text row*/
 	/*-------------------------*/
 
-	for (address = 100; address <= 130; ++address) {
+	for (address = INITIAL_ADDRESS; address < instruction; ++address) {
 		/* initilize text*/
 		strcpy(text,"");
 		/* get address*/

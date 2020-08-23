@@ -187,7 +187,7 @@ char * binaryArray2Hexadecimal(int binaryArray[], unsigned int digits) {
 				break;
 
 			}
-			printf("%s\n", hexadecimal);
+		
 			/* reset values */
 			result = 0;
 			j = -1;
@@ -233,7 +233,6 @@ char * num2string(int number) {
 	strC[indx] = '\0';
 	strcat(strC, strnum);
 	 
-	printf("%s\n", strC);
 	return strC;
 }
 

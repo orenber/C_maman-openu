@@ -10,6 +10,7 @@
 #define MEM 30
 #define BUFFERSIZE 81
 #define bitrray 24
+#define INITIAL_ADDRESS  100
  
 #define LEN_Register 8
 /* macro*/
@@ -62,7 +63,7 @@ typedef enum {
 
 struct operationFunc {
 
-	char name[4];
+	char name[5];
 	int  funct;
 	int  opcode;
 	int  functBinaryArr[5];
@@ -106,7 +107,7 @@ struct addressData {
 
 
 struct symbolData {
-	char symbol[4];
+	char symbol[10];
 	int address;
 	TypeSymbol characterization;
 	BOOL isInternal;

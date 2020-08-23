@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
 
 
 	file_to_write = strep(file_to_read, ".as", ".ob");
-	write_ob_file(file_to_write,address_table);
+	write_ob_file(file_to_write,address_table, data_table);
 	getchar();
 
 
@@ -254,11 +254,6 @@ void flag_manger(char symbol[], TypeSymbol type) {
 }
 
 void instructional_sentence(char fun[], char input_str[], struct operationFunc *opcodeFunc) {
-
-	
-
-	printf("\nthis is function: %s\n", fun);
-	printf("\nthis is input: %s\n", input_str);
 
 	table_funct_opcode(fun, opcodeFunc);
 	set_operation_command(fun, input_str, opcodeFunc);

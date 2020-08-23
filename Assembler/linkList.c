@@ -125,17 +125,7 @@ void push_symbol_table(struct symbolTable ** link_list ,char symbol[], int addre
 
 }
 
-void initial_symbol_table(struct symbolTable * link_list, char symbol[], int address, TypeSymbol type) {
-	
-	printf("\nSymbol: %s", symbol);
-	printf("\tAddress: %d", address);
-	printf("\tType: %d", type);
-
-	strcpy(link_list->symbol, symbol);
-	link_list->address = address;
-	link_list->characterization = type;
-
-}
+ 
 
 void push_update_data_table(struct dataTable ** link_list,int *address, char name[], int binaryArray[]) {
 	 
@@ -157,17 +147,24 @@ void push_update_data_table(struct dataTable ** link_list,int *address, char nam
 	(*address)++;
 
 }
-
-void initial_data_table(struct dataTable * link_list, int address, char name[], int binaryArray[]) {
  
-	link_list->address = address;
-	strcpy(link_list->name, name);
-    arrayAssign(link_list->binaryMachineCode, binaryArray, 0, 23);
- 
-}
 
 
 int size_list(struct symbolTable * link_list) {
+
+	
+	int size = 0;
+
+	while (link_list != NULL) {
+
+		++size;
+		link_list = link_list->next;
+	};
+	return size;
+}
+
+int size_list_data_table(struct dataTable * link_list) {
+
 
 	int size = 0;
 
@@ -178,6 +175,22 @@ int size_list(struct symbolTable * link_list) {
 	};
 	return size;
 }
+
+int size_list_address_table(struct addressTable * link_list) {
+
+
+	int size = 0;
+
+	while (link_list != NULL) {
+
+		++size;
+		link_list = link_list->next;
+	};
+	return size;
+}
+
+
+
 
 int serach_symbol_address(struct symbolTable * link_list, char symbol[]) {
 
