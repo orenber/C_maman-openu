@@ -24,7 +24,7 @@ struct dataTable* dataTable_create() {
 /**
 * Functiont to push a new element in stack.
 */
-void push_operationFunc(struct addressTable* link_list, int *address)
+void push_addressTable(struct addressTable** link_list, int *address)
 {
 	
 	/* Create a new node and push to stack */
@@ -34,35 +34,37 @@ void push_operationFunc(struct addressTable* link_list, int *address)
 	
  
 	// Next element after new node should be current top element
-	newNode->next = link_list->next;
+	newNode->next = *link_list;
 	// Make sure new node is always at top
-	link_list->next = newNode;
+	*link_list = newNode;
 	
 	printf("\nData: %d pushed to stack.\n", (*address));
 
 	(*address)++;
 }
 
-void push_update_operationFunc(struct addressTable* link_list, int *address, int binaryArray[])
+void push_update_addressTable(struct addressTable** link_list, int *address, int binaryArray[])
 {
 
 	/* Create a new node and push to stack */
 	struct addressTable * newNode = (struct addressTable *) calloc(1, sizeof(struct addressTable));
 	/* Assign data to new node in stack */
 	newNode->address = *address;
-	arrayAssign(link_list->binaryMachineCode, binaryArray, 0, 23);
+	arrayAssign(newNode->binaryMachineCode, binaryArray, 0, 23);
 
 	// Next element after new node should be current top element
-	newNode->next = link_list->next;
+	newNode->next = *link_list;
 	// Make sure new node is always at top
-	link_list->next = newNode;
+	*link_list = newNode;
 
 	printf("\nData: %d pushed to stack.\n", (*address));
 
 	(*address)++;
 }
 
-void update_operationFunc(struct addressTable * link_list, int address, int binaryArray[]) {
+
+
+void update_addressTable(struct addressTable * link_list, int address, int binaryArray[]) {
 	
 	while (link_list != NULL) {
 
@@ -99,7 +101,7 @@ struct addressData get_code_data(struct addressTable* link_list, int address[]) 
 	return data;
 }
 
-void push_symbol_table(struct symbolTable * link_list ,char symbol[], int address,  TypeSymbol type)
+void push_symbol_table(struct symbolTable ** link_list ,char symbol[], int address,  TypeSymbol type)
 {
  
 	// Create a new node and push to stack
@@ -111,18 +113,19 @@ void push_symbol_table(struct symbolTable * link_list ,char symbol[], int addres
 	newNode->characterization = type;
  
 	// Next element after new node should be current top element
-	newNode->next = link_list->next;
+	newNode->next = *link_list;
 	// Make sure new node is always at top
-	link_list->next = newNode;
+	*link_list = newNode;
 
 	printf("\nSymbol: %s", symbol);
 	printf("\tAddress: %d", address);
 	printf("\tType: %d", type);
 
 	printf("Data pushed to stack.\n");
+
 }
 
-void update_symbol_table(struct symbolTable * link_list, char symbol[], int address, TypeSymbol type) {
+void initial_symbol_table(struct symbolTable * link_list, char symbol[], int address, TypeSymbol type) {
 	
 	printf("\nSymbol: %s", symbol);
 	printf("\tAddress: %d", address);
@@ -134,7 +137,7 @@ void update_symbol_table(struct symbolTable * link_list, char symbol[], int addr
 
 }
 
-void push_update_data_table(struct dataTable * link_list,int *address, char name[], int binaryArray[]) {
+void push_update_data_table(struct dataTable ** link_list,int *address, char name[], int binaryArray[]) {
 	 
 
 	// Create a new node and push to stack
@@ -143,17 +146,26 @@ void push_update_data_table(struct dataTable * link_list,int *address, char name
 	// Assign data to new node in stack
 	newNode->address = (*address);
 	strcpy(newNode->name, name);
-	arrayAssign(link_list->binaryMachineCode, binaryArray, 0, 23);
+	arrayAssign(newNode->binaryMachineCode, binaryArray, 0, 23);
 
 	// Next element after new node should be current top element
-	newNode->next = link_list->next;
+	newNode->next = *link_list;
 	// Make sure new node is always at top
-	link_list->next = newNode;
+	*link_list = newNode;
 
 	printf("\nData: %d pushed to stack.\n", (*address));
 	(*address)++;
 
 }
+
+void initial_data_table(struct dataTable * link_list, int address, char name[], int binaryArray[]) {
+ 
+	link_list->address = address;
+	strcpy(link_list->name, name);
+    arrayAssign(link_list->binaryMachineCode, binaryArray, 0, 23);
+ 
+}
+
 
 int size_list(struct symbolTable * link_list) {
 
@@ -182,6 +194,44 @@ int serach_symbol_address(struct symbolTable * link_list, char symbol[]) {
 
 	return address;
 }
+
+ void print_symbol_table(struct symbolTable * link_list) {
+
+	while (link_list != NULL) {
+
+		printf("\nsymbol:  %s\t", link_list->symbol);
+		printf("address: %d\t", link_list->address);
+		link_list = link_list->next;
+	}
+
+
+}
+ 
+void print_address_table(struct addressTable* link_list) {
+
+	while (link_list != NULL) {
+ 
+		printf("\naddress: %d:\n", link_list->address);
+		printArray(link_list->binaryMachineCode,24);
+ 
+		link_list = link_list->next;
+	}
+
+}
+
+void print_data_table(struct dataTable* link_list) {
+
+	while (link_list != NULL) {
+
+		printf("\naddress: %d:\t", link_list->address);
+		printf("name: %s:\t", link_list->name);
+		printArray(link_list->binaryMachineCode,24);
+
+		link_list = link_list->next;
+	}
+
+}
+
 
 
 struct symbolData get_symbol_data(struct symbolTable * link_list, char symbol[]) {

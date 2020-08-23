@@ -83,8 +83,6 @@ void arrayAssign(int *arrtoChange, int subArray[], int initial_index, int final_
 
 	};
 
-	 
-
 }
 
 int * decimal2binaryArray(signed int decimalNumber,unsigned int digits) {

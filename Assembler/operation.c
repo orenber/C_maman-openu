@@ -570,13 +570,6 @@ void add_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
 
-	if (call_operation == True) {
-
-		add(register_setup.firstType, &register_setup.secondType);
-		binaryArr = decimal2binaryArray((int)register_setup.secondValue.Register, 3);
-		arrayAssign(opcodeFunc->registerSource, binaryArr, 0, 2);
-	}
-
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 }
 

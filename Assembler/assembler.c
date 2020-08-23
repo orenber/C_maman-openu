@@ -17,7 +17,7 @@ Last Modified On : 23-08-2020
 
 
 static struct symbolTable *symbol_table;
-static struct addressTable *addresstable;
+static struct addressTable *address_table;
 static struct dataTable *data_table;
 
 Register R0 = r0, R1 = r1, R2 = r2,
@@ -55,9 +55,6 @@ int main(int argc, char* argv[])
 	
 	int  nargin = argc;                  /* number of input in */
 
-	symbol_table = symbolTable_create();
-	addresstable = addressTable_create();
-	data_table = dataTable_create();
 
 	state.DC = 0;
 	state.IC = 100;
@@ -88,6 +85,11 @@ int main(int argc, char* argv[])
 	} while (output != NULL);
 
 	
+	 
+	print_symbol_table(symbol_table);
+	print_data_table(data_table);
+
+
 	/* second pass*/
 	filePointer = fopen(file_to_read, "r");
 	state.DC = 0;
@@ -102,16 +104,16 @@ int main(int argc, char* argv[])
 		}
 	} while (output != NULL);
 
+	print_address_table(address_table);
+
+
 	file_to_write = strep(file_to_read, ".as", ".ob");
-	write_ob_file(file_to_write,addresstable);
+	write_ob_file(file_to_write,address_table);
 	getchar();
 
 
 	return 0;
 }
-
-
-
 
 
 
@@ -160,7 +162,7 @@ void first_pass(char command_original[]) {
 
 			}
 
-			flag_manger(command_section, state.IC, type_symbol);
+			flag_manger(command_section, type_symbol);
 			 
 		}
 
@@ -244,19 +246,11 @@ void second_pass(char command_original[]) {
 
 
 
-void flag_manger(char symbol[], int address, TypeSymbol type) {
-	static int number_update = 0;
-	++number_update;
-
-
-
-	if (number_update == 1) {
-		update_symbol_table(symbol_table, symbol, address, type);
-	}
-	else {
-		/* insert the flag in the table flage  - link list */
-		push_symbol_table(symbol_table, symbol, address, type);
-	}
+void flag_manger(char symbol[], TypeSymbol type) {
+	
+	/* insert the flag in the table flage  - link list */
+	push_symbol_table(&symbol_table, symbol, state.IC, type);
+	 
 }
 
 void instructional_sentence(char fun[], char input_str[], struct operationFunc *opcodeFunc) {
@@ -280,7 +274,7 @@ void create_space_binary_machine_code(struct setupRegistretion setup, struct ope
 	int i = 0, j = 0;
 
  
-	push_operationFunc(addresstable, &state.IC);
+	push_addressTable(&address_table, &state.IC);
 
 	if (setup.firstValue.value != NULL) {
 		set_space_binary_machine_code(setup.firstType);
@@ -302,17 +296,17 @@ void set_space_binary_machine_code(AdressType type) {
 	{
 	case (Immediate):
 
-		push_operationFunc(addresstable, &state.IC);
+		push_addressTable(&address_table, &state.IC);
 		break;
 
 	case (Direct):
 
-		push_operationFunc(addresstable, &state.IC);
+		push_addressTable(&address_table, &state.IC);
 		break;
 	case (Relative):
 
-		push_operationFunc(addresstable, &state.IC);
-		push_operationFunc(addresstable, &state.IC);
+		push_addressTable(&address_table, &state.IC);
+		push_addressTable(&address_table, &state.IC);
 
 		break;
 	case (Register_Direct):
@@ -341,7 +335,7 @@ void set_binary_machine_code(struct setupRegistretion setup, struct operationFun
 	};
 	/*arrayAssign(binary_machine_code, binaryArray, 0, 23);*/
 	printArray(binary_machine_code, bitrray);
-	update_operationFunc(addresstable,++state.IC, binary_machine_code);
+	update_addressTable(address_table,++state.IC, binary_machine_code);
 
 	if (setup.firstValue.value != NULL) {
 		update_binary_machine_code(setup.firstType, setup.firstValue, opcodeFunc->ARE);
@@ -371,7 +365,7 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 			arrayAssign(&binary_machine_code, binaryArray, INDEX(23), INDEX(3));
 			arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
 			printArray(binary_machine_code, bitrray);
-			update_operationFunc(addresstable,  ++state.IC,&binary_machine_code);
+			update_addressTable(address_table,  ++state.IC,&binary_machine_code);
 			break;
 
 		case (Direct):
@@ -392,7 +386,7 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 			}
 			arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
 			printArray(binary_machine_code, bitrray);
-			update_operationFunc(addresstable, ++state.IC, &binary_machine_code);
+			update_addressTable(address_table, ++state.IC, &binary_machine_code);
 			break;
 
 
@@ -411,7 +405,7 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 
 			arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
 			printArray(binary_machine_code, bitrray);
-			update_operationFunc(addresstable, ++state.IC, &binary_machine_code);
+			update_addressTable(address_table, ++state.IC, &binary_machine_code);
 			break;
 		case (Register_Direct):
 
@@ -446,28 +440,31 @@ void guidance_sentence(char varType[], char var[]) {
 
 }
 
-void string_sentence(char var[]) {
+void string_sentence(char str[]) {
 
 	int length;
 	int i = 0,
 		ascii;
 	int *binaryArr;
+	char latter[] = { ' ','\0' };
 	const char seperetor[] = { '/','"' };
-	
-	remove_substring_parts(var, seperetor);
-	length = strlen(var);
+
+	remove_substring_parts(str, seperetor);
+	length = strlen(str);
 
 	for (i; i <= length; ++i) {
- 
+		 
 		/* convert to Ascii number*/
-		ascii = (int)var[i];
+		ascii = (int)str[i];
+		latter[0] = str[i];
 		/* convert to binary array*/
 		binaryArr = decimal2binaryArray(ascii, bitrray);
-		printf("%c:\t", var[i]);
+		printf("%c:\t", str[i]);
 		printArray(binaryArr, bitrray);
-		/* pushe data to the table  */
-		push_operationFunc(addresstable, & state.IC);
-		push_update_data_table(data_table, &state.DC, var, binaryArr);
+
+		push_update_addressTable(&address_table, &state.IC, binaryArr);
+		push_update_data_table(&data_table, &state.DC, latter, binaryArr);
+	 
 	}
 
 }
@@ -483,16 +480,16 @@ void data_sentence(char var[]) {
 	arr = string2array(var,&length);
 	len = (int)length[0];
 	printArray(arr,len);
+	
 	for (i = 0; i<len; ++i) {
-       
+	
 		/* convert to binary array*/
 		binaryArr = decimal2binaryArray(arr[i], bitrray);
 		printArray(binaryArr, bitrray);
-		/* pushe data to the table  */
-		push_update_operationFunc(addresstable, &state.IC, binaryArr);
-		
-	    push_update_data_table(data_table, &state.DC, var, binaryArr);
-		 
+		/* pushe data to the tables  */
+		push_update_addressTable(&address_table, &state.IC, binaryArr);
+		push_update_data_table(&data_table, &state.DC, var, binaryArr);
+	 
 	}
 
 }

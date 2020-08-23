@@ -18,18 +18,25 @@ struct symbolData get_symbol_data(struct symbolTable * link_list, char symbol[])
 
  
 
-void push_operationFunc(struct addressTable* link_list, int *address);
+void push_addressTable(struct addressTable** link_list, int *address);
 
-void update_operationFunc(struct addressTable * link_list, int address, int binaryArray[]);
+void update_addressTable(struct addressTable * link_list, int address, int binaryArray[]);
 
-void push_update_operationFunc(struct addressTable* link_list, int *address, int binaryArray[]);
+void push_update_addressTable(struct addressTable** link_list, int *address, int binaryArray[]);
 
-void push_symbol_table(struct symbolTable * link_list, char symbol[], int address, TypeSymbol type);
+void push_symbol_table(struct symbolTable ** link_list, char symbol[], int address, TypeSymbol type);
 
-void update_symbol_table(struct symbolTable * link_list, char symbol[], int address, TypeSymbol type);
+void update_symbol_table(struct symbolTable* link_list, char symbol[], int address, TypeSymbol type);
 
-void push_update_data_table(struct dataTable * link_list, int *address, char name[], int binaryArray[]);
+void push_update_data_table(struct dataTable ** link_list, int *address, char name[], int binaryArray[]);
 
 int size_list(struct symbolTable * link_list);
 
 int serach_symbol_address(struct symbolTable * link_list, char symbol[]);
+
+
+void print_symbol_table(struct symbolTable * link_list);
+
+void print_address_table(struct addressTable* link_list);
+
+void print_data_table(struct dataTable* link_list);

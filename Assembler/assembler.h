@@ -75,7 +75,7 @@ struct operationFunc {
 };
 
 struct symbolTable {
-	char symbol[4];
+	char symbol[10];
 	int address;
 	TypeSymbol characterization;
 	BOOL isInternal;
@@ -91,9 +91,9 @@ struct addressTable{
 
 struct dataTable {
 	int address;
-	char name[4];
+	char name[10];
 	int binaryMachineCode[24];
-	struct addressTable *next;
+	struct dataTable *next;
 
 }*head;
 
