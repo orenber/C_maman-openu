@@ -96,18 +96,13 @@ void table_funct_opcode(char func[], struct operationFunc *opcodeFunc) {
 }
 
 
-BOOL table_legal_addres(struct operationFunc opcodeFunc) {
+BOOL cheak_legal_address(char func[], AdressType  sourceOperand, AdressType destinationOperand) {
 	
 	int *binaryArr;
-	BOOL ok1 = False, ok2 = False,legal;
-	char func[4];
-	AdressType  sourceOperand, destinationOperand;
+	BOOL ok1 = False, ok2 = False,legal;	
 	AdressType  legalSource[3], legalDestination[3];
-	strcpy(func, opcodeFunc.funct);
-	destinationOperand = (AdressType)binaryArray2decimal(opcodeFunc.addressDestination,2);
-	sourceOperand = (AdressType)binaryArray2decimal(opcodeFunc.addressSource, 2);
+ 
 
-	 
 	if (strcmp(func, "mov") == 0) {
 		 /* Source*/
 		legalSource[0] = 0; legalSource[1] = 1; legalSource[2] = 3;

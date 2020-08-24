@@ -171,6 +171,7 @@ void mov_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	struct setupRegistretion register_setup;
 	int *binaryArr;
 	int nargin = 2;
+	BOOL is_leagal_address;
 
 	/* assert number of inputs */
 	if (assert_nargin(nargin_str, nargin) == False) { return; }
@@ -178,6 +179,8 @@ void mov_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
+	/* call function that check the operand leagllety */
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
 
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
@@ -188,6 +191,7 @@ void cmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	struct setupRegistretion register_setup;
 	int *binaryArr;
 	int nargin = 2;
+	BOOL is_leagal_address;
 
 	/* assert number of inputs */
 	if (assert_nargin(nargin_str, nargin) == False) { return; }
@@ -195,6 +199,8 @@ void cmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
+	/* call function that check the operand leagllety */
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
 
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
@@ -206,6 +212,7 @@ void sub_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	struct setupRegistretion register_setup;
 	int *binaryArr;
 	int nargin = 2;
+	BOOL is_leagal_address;
 
 	/* assert number of inputs */
 	if (assert_nargin(nargin_str, nargin) == False) { return; }
@@ -213,6 +220,10 @@ void sub_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
+
+	/* call function that check the operand leagllety */
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
@@ -222,6 +233,7 @@ void lea_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	struct setupRegistretion register_setup;
 	int *binaryArr;
 	int nargin = 2;
+	BOOL is_leagal_address;
 
 	/* assert number of inputs */
 	if (assert_nargin(nargin_str, nargin) == False) { return; }
@@ -229,6 +241,9 @@ void lea_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
+
+	/* call function that check the operand leagllety */
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
 
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
@@ -239,6 +254,7 @@ void clr_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	struct setupRegistretion register_setup;
 	int *binaryArr;
 	int nargin = 1;
+	BOOL is_leagal_address;
 
 	/* assert number of inputs */
 	if (assert_nargin(nargin_str, nargin) == False) { return; }
@@ -246,6 +262,10 @@ void clr_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
+
+	/* call function that check the operand leagllety */
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+
 
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
@@ -256,6 +276,7 @@ void not_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	struct setupRegistretion register_setup;
 	int *binaryArr;
 	int nargin = 1;
+	BOOL is_leagal_address;
 
 	/* assert number of inputs */
 	if (assert_nargin(nargin_str, nargin) == False) { return; }
@@ -264,6 +285,9 @@ void not_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
  
+	/* call function that check the operand leagllety */
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
@@ -273,9 +297,8 @@ void inc_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	struct setupRegistretion register_setup;
 	int *binaryArr;
-	BOOL call_operation = False;
-
 	int nargin = 1;
+	BOOL is_leagal_address;
 
 	/* assert number of inputs */
 	if (assert_nargin(nargin_str, nargin) == False) { return; }
@@ -284,6 +307,9 @@ void inc_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
  
+	/* call function that check the operand leagllety */
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+
 
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
@@ -295,6 +321,7 @@ void dec_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	struct setupRegistretion register_setup;
 	int *binaryArr;
 	int nargin = 1;
+	BOOL is_leagal_address;
 
 	/* assert number of inputs */
 	if (assert_nargin(nargin_str, nargin) == False) { return; }
@@ -303,6 +330,10 @@ void dec_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
   
+	/* call function that check the operand leagllety */
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+
+
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
@@ -313,6 +344,7 @@ void jmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	struct setupRegistretion register_setup;
 	int *binaryArr;
 	int nargin = 1;
+	BOOL is_leagal_address;
 
 	/* assert number of inputs */
 	if (assert_nargin(nargin_str, nargin) == False) { return; }
@@ -321,6 +353,9 @@ void jmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
  
+	/* call function that check the operand leagllety */
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
@@ -330,6 +365,7 @@ void bne_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	struct setupRegistretion register_setup;
 	int *binaryArr;
 	int nargin = 1;
+	BOOL is_leagal_address;
 
 	/* assert number of inputs */
 	if (assert_nargin(nargin_str, nargin) == False) { return; }
@@ -338,6 +374,9 @@ void bne_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
  
+	/* call function that check the operand leagllety */
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
@@ -348,6 +387,7 @@ void jsr_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	struct setupRegistretion register_setup;
 	int *binaryArr;
 	int nargin = 1;
+	BOOL is_leagal_address;
 
 	/* assert number of inputs */
 	if (assert_nargin(nargin_str, nargin) == False) { return; }
@@ -355,7 +395,10 @@ void jsr_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
- 
+    
+	/* call function that check the operand leagllety */
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
@@ -366,6 +409,7 @@ void red_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	struct setupRegistretion register_setup;
 	int *binaryArr;
 	int nargin = 1;
+	BOOL is_leagal_address;
 
 	/* assert number of inputs */
 	if (assert_nargin(nargin_str, nargin) == False) { return; }
@@ -374,6 +418,9 @@ void red_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
 	
+	/* call function that check the operand leagllety */
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
@@ -383,8 +430,8 @@ void prn_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	struct setupRegistretion register_setup;
 	int *binaryArr;
-	BOOL call_operation;
 	int nargin = 1;
+	BOOL is_leagal_address;
 
 	/* assert number of inputs */
 	if (assert_nargin(nargin_str, nargin) == False) { return; }
@@ -393,6 +440,9 @@ void prn_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
  
+	/* call function that check the operand leagllety */
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
@@ -402,6 +452,7 @@ void rts_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	struct setupRegistretion register_setup;
 	int *binaryArr;
 	int nargin = 0;
+	BOOL is_leagal_address;
 
 	/* assert number of inputs */
 	if (assert_nargin(nargin_str, nargin) == False) { return; }
@@ -410,6 +461,9 @@ void rts_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
 	
+	/* call function that check the operand leagllety */
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
@@ -419,8 +473,8 @@ void stop_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	struct setupRegistretion register_setup;
 	int *binaryArr;
-	BOOL call_operation;
 	int nargin = 0;
+	BOOL is_leagal_address;
 
 	/* assert number of inputs */
 	if (assert_nargin(nargin_str, nargin) == False) { return; }
@@ -428,7 +482,10 @@ void stop_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
- 
+    
+	/* call function that check the operand leagllety */
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
@@ -438,6 +495,7 @@ void add_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	struct setupRegistretion register_setup;
 	int *binaryArr;
 	int nargin = 2;
+	BOOL is_leagal_address;
 
 	/* assert number of inputs */
 	if (assert_nargin(nargin_str, nargin) == False) { return; }
@@ -445,6 +503,9 @@ void add_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	if (assert_comma(nargin_str, nargin - 1) == False) { return; }
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
+
+	/* call function that check the operand leagllety */
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
 
 	update_or_insert_machine_code(register_setup, opcodeFunc);
 }
