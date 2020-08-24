@@ -49,6 +49,8 @@ int serach_symbol_address(struct symbolTable * link_list, char symbol[]);
 
 BOOL serach_symbol_type(struct symbolTable  *link_list, char symbol[], TypeSymbol type);
 
+BOOL is_symbol_exist(struct symbolTable  *link_list, char symbol[]);
+
 /* print */
 
 void print_symbol_table(struct symbolTable * link_list);
