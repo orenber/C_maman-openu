@@ -350,3 +350,25 @@ int char_apperance(char text[], char token) {
 
 	return apperance;
 }
+
+
+BOOL compare_string(char *first, char *second)
+{
+	BOOL match = False;
+	while (*first == *second)
+	{
+		if (*first == '\0' || *second == '\0')
+			break;
+
+		first++;
+		second++;
+	}
+	if (*first == '\0' && *second == '\0') {
+		match = True;
+	}
+ 
+	return match;
+ 
+}
+
+ 

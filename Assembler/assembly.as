@@ -1,5 +1,5 @@
 ;file ps.as
-.entry List
+.entry LIST
 .extern W
 MAIN: 	    add r3, LIST
 LOOP:       prn #48

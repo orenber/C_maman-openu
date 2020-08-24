@@ -102,7 +102,7 @@ struct addressData get_code_data(struct addressTable* link_list, int address[]) 
 }
 
 
-void update_symbol_Table(struct symbolTable * link_list, char symbol[], TypeSymbol type, BOOL isInternal) {
+void update_symbol_table(struct symbolTable * link_list, char symbol[], TypeSymbol type, BOOL isInternal) {
 
 	while (link_list != NULL) {
 
@@ -208,12 +208,12 @@ int size_list_address_table(struct addressTable * link_list) {
 
 
 
-int serach_symbol_address(struct symbolTable * link_list, char symbol[]) {
+int serach_symbol_address(struct symbolTable  *link_list, char symbol[]) {
 
 	int address = NULL;
 	while (link_list != NULL) {
-
-		if (strcmp(link_list->symbol, symbol) == 0) {
+		
+		if (strcmp(link_list->symbol, symbol)==0) {
 			address = link_list->address;
 			break;
 
@@ -223,26 +223,6 @@ int serach_symbol_address(struct symbolTable * link_list, char symbol[]) {
 
 	return address;
 }
-
-int serach_symbol_entry(struct symbolTable * link_list, TypeSymbol type) {
-	
-	struct symbolTable symbolEntry[2];
-	int address = NULL;
-	while (link_list != NULL) {
-
-		if (link_list->characterization== type)  {
-			address = link_list->address;
-			break;
-
-		}
-		link_list = link_list->next;
-	}
-
-	return address;
-
-}
-
-
 
 
  void print_symbol_table(struct symbolTable * link_list) {

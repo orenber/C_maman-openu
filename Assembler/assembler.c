@@ -105,10 +105,17 @@ int main(int argc, char* argv[])
 	} while (output != NULL);
 
 	print_address_table(address_table);
-
-
+	print_symbol_table(symbol_table);
+	/* .ob */
 	file_to_write = strep(file_to_read, ".as", ".ob");
 	write_ob_file(file_to_write,address_table, data_table);
+
+	/* .ent */
+	file_to_write = strep(file_to_read, ".as", ".ent");
+	write_ent_file(file_to_write,  symbol_table);
+
+	/* .*/
+
 	getchar();
 
 
@@ -195,9 +202,10 @@ void first_pass(char command_original[]) {
 void second_pass(char command_original[]) {
 
 
-	char *command_section = "",
-		command[MEM] = "",
-		command_left[MEM], input_str[MEM];
+	char *command_section = "";
+	char command[MEM] = "",
+		 command_left[MEM],
+	    	input_str[MEM] ;
 	BOOL end_line = False, isFlag;
 	struct operationFunc opcodeFunc;
 	strcpy(command, command_original);
@@ -241,7 +249,7 @@ void second_pass(char command_original[]) {
 			remove_substring_parts(&command_left, seperator);
 			 if (strcmp(command_section, ".entry") == 0) {
 
-				entry_sentence(command_section);
+				entry_sentence(command_left);
 			}
 			end_line = True;
 		}
@@ -389,9 +397,6 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 			update_addressTable(address_table, ++state.IC, &binary_machine_code);
 			break;
 
-
-
-			break;
 		case (Relative):
 			/* get the label data*/
 			symbol_data = get_symbol_data(symbol_table, st.label);
@@ -493,12 +498,25 @@ void data_sentence(char var[]) {
 
 void extern_sentence(char symbol[]) {
 
-	push_symbol_table(&symbol_table, 0, symbol, external,True);
+	push_symbol_table(&symbol_table, 0, symbol, external,False);
 }
 
 void entry_sentence(char symbol[]) {
 
-	/* update_symbol_table(&symbol_table, symbol, entry,False);*/
+
+	/* check if the symbol exist*/
+	if (serach_symbol_address(symbol_table, symbol) != NULL) {
+	   
+		/* update symbol table */
+		update_symbol_table(symbol_table, symbol, entry, True);
+	
+	}
+	else {
+	/* throw exeption */
+
+	}
+
+   
 }
 
 void update_or_insert_machine_code(struct setupRegistretion register_setup, struct operationFunc *opcodeFunc) {
@@ -510,7 +528,6 @@ void update_or_insert_machine_code(struct setupRegistretion register_setup, stru
 	case 2:
 		set_binary_machine_code(register_setup, opcodeFunc);
 		break;
-
 
 	}
 

@@ -110,17 +110,34 @@ void write_ob_file(char fileName[], struct addressTable* addresstable,struct dat
 }
 
 
-void write_ent_file(char fileName[], struct symbolTable* symboltable) {
+void write_ent_file(char fileName[], struct symbolTable *symboltable) {
 
-	int address = 100;
-	struct addressData data;
-	char *straddress = "";
+
 	char text[15] = "";
 
-	for (address = 100; address < 133; ++address) {
-		/* initilize text*/
-		strcpy(text, "");
-		/* get address*/
+	/* clear text for the first time */
+	write_file(fileName, text, "w");
 
+	while (symboltable != NULL) {
+
+		if (symboltable->characterization == entry) {
+			
+			/* initilize text*/
+			strcpy(text, "");
+			
+			/* convert symbol to text */
+			strcat(text, symboltable->symbol);
+			strcat(text, " ");
+			
+			/* convert address to string*/
+			strcat(text, num2string(symboltable->address));
+			
+			/* write text file */
+			write_file(fileName, text, "a");
+
+		}
+		symboltable = symboltable->next;
 	}
+
+	 
 }

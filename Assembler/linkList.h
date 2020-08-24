@@ -20,7 +20,7 @@ struct symbolData get_symbol_data(struct symbolTable * link_list, char symbol[])
 
 void update_addressTable(struct addressTable * link_list, int address, int binaryArray[]);
  
-void update_symbol_Table(struct symbolTable * link_list, char symbol[], TypeSymbol type, BOOL isInternal);
+void update_symbol_table(struct symbolTable * link_list, char symbol[], TypeSymbol type, BOOL isInternal);
 
 
 void push_addressTable(struct addressTable** link_list, int *address);
