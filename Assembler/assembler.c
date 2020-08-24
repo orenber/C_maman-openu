@@ -17,7 +17,7 @@ Last Modified On : 23-08-2020
 
 
 static struct symbolTable *symbol_table;
-static struct addressTable *address_table;
+static struct memoryTable *memory_table;
 static struct dataTable *data_table;
 
 Register R0 = r0, R1 = r1, R2 = r2,
@@ -104,11 +104,11 @@ int main(int argc, char* argv[])
 		}
 	} while (output != NULL);
 
-	print_address_table(address_table);
+	print_memory_table(memory_table);
 	print_symbol_table(symbol_table);
 	/* .ob */
 	file_to_write = strep(file_to_read, ".as", ".ob");
-	write_ob_file(file_to_write,address_table, data_table);
+	write_ob_file(file_to_write,memory_table, data_table);
 
 	/* .ent */
 	file_to_write = strep(file_to_read, ".as", ".ent");
@@ -271,7 +271,7 @@ void instructional_sentence(char fun[], char input_str[], struct operationFunc *
 
 	table_funct_opcode(fun, opcodeFunc);
 	set_operation_command(fun, input_str, opcodeFunc);
-	print_address_table(address_table);
+	print_memory_table(memory_table);
 
 }
 
@@ -283,7 +283,7 @@ void create_space_binary_machine_code(struct setupRegistretion setup, struct ope
 	int i = 0, j = 0;
 
  
-	push_addressTable(&address_table, &state.IC);
+	push_memory_table(&memory_table, &state.IC);
 
 	if (setup.firstValue.value != NULL) {
 		set_space_binary_machine_code(setup.firstType);
@@ -305,16 +305,16 @@ void set_space_binary_machine_code(AdressType type) {
 	{
 	case (Immediate):
 
-		push_addressTable(&address_table, &state.IC);
+		push_memory_table(&memory_table, &state.IC);
 		break;
 
 	case (Direct):
 
-		push_addressTable(&address_table, &state.IC);
+		push_memory_table(&memory_table, &state.IC);
 		break;
 	case (Relative):
 
-		push_addressTable(&address_table, &state.IC);
+		push_memory_table(&memory_table, &state.IC);
 
 		break;
 	case (Register_Direct):
@@ -343,7 +343,7 @@ void set_binary_machine_code(struct setupRegistretion setup, struct operationFun
 	};
 	/*arrayAssign(binary_machine_code, binaryArray, 0, 23);*/
 	printArray(binary_machine_code, bitrray);
-	update_addressTable(address_table,++state.IC, binary_machine_code);
+	update_memory_table(memory_table,++state.IC, binary_machine_code);
 
 	if (setup.firstValue.value != NULL) {
 		update_binary_machine_code(setup.firstType, setup.firstValue, opcodeFunc->ARE);
@@ -373,7 +373,7 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 			arrayAssign(&binary_machine_code, binaryArray, INDEX(23), INDEX(3));
 			arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
 			printArray(binary_machine_code, bitrray);
-			update_addressTable(address_table,  ++state.IC,&binary_machine_code);
+			update_memory_table(memory_table,  ++state.IC,&binary_machine_code);
 			break;
 
 		case (Direct):
@@ -394,7 +394,7 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 			}
 			arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
 			printArray(binary_machine_code, bitrray);
-			update_addressTable(address_table, ++state.IC, &binary_machine_code);
+			update_memory_table(memory_table, ++state.IC, &binary_machine_code);
 			break;
 
 		case (Relative):
@@ -410,7 +410,7 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 
 			arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
 			printArray(binary_machine_code, bitrray);
-			update_addressTable(address_table, ++state.IC, &binary_machine_code);
+			update_memory_table(memory_table, ++state.IC, &binary_machine_code);
 			break;
 		case (Register_Direct):
 
@@ -464,8 +464,8 @@ void string_sentence(char str[]) {
 		printf("%c:\t", str[i]);
 		printArray(binaryArr, bitrray);
 
-		push_update_addressTable(&address_table, &state.IC, binaryArr);
-		push_update_data_table(&data_table, &state.DC, latter, binaryArr);
+		push_and_update_memory_table(&memory_table, &state.IC, binaryArr);
+		push_and_update_data_table(&data_table, &state.DC, latter, binaryArr);
 	 
 	}
 
@@ -488,9 +488,9 @@ void data_sentence(char var[]) {
 		/* convert to binary array*/
 		binaryArr = decimal2binaryArray(arr[i], bitrray);
 		printArray(binaryArr, bitrray);
-		/* pushe data to the tables  */
-		push_update_addressTable(&address_table, &state.IC, binaryArr);
-		push_update_data_table(&data_table, &state.DC, var, binaryArr);
+		/* push data to the tables  */
+		push_and_update_memory_table(&memory_table, &state.IC, binaryArr);
+		push_and_update_data_table(&data_table, &state.DC, var, binaryArr);
 	 
 	}
 
@@ -736,7 +736,9 @@ AdressType getAddresingType(char inputString[]) {
 	}
 
 
-	else if (assert_command(inputString, flag_legal, 6, "")) {
+	else if ((assert_command(inputString, flag_legal, 6, ""))||
+	         (serach_symbol_type(symbol_table,inputString,external))) {
+		
 		addresingType = Direct;
 
 	}

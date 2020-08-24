@@ -67,11 +67,11 @@ void write_ob_file(char fileName[], struct addressTable* addresstable,struct dat
 	char text[15] = "";
 	
 	/* get number of command*/
-	  commands = size_list_address_table(addresstable);
+	  commands = size_memory_table(addresstable);
 	  instruction = INITIAL_ADDRESS + commands;
 
 	/* get number of data */
-	  data_size = size_list_data_table(dataTable);
+	  data_size = size_data_table(dataTable);
 	  guidlines = commands - data_size;
 	 
 	  /* convert  num to string */

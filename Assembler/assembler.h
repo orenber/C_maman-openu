@@ -83,10 +83,10 @@ struct symbolTable {
 	struct symbolTable *next;
 }*top;
 
-struct addressTable{
+struct memoryTable{
 	int address;
 	int binaryMachineCode[24];
-	struct addressTable *next;
+	struct memoryTable *next;
 }*top_node;
 
 
@@ -166,15 +166,3 @@ void instructional_sentence(char fun[], char input_str[], struct operationFunc *
 Register* getRegisterVar(char registerName[]);
 
 AdressType getAddresingType(char inputString[]);
-
-
- 
-
-
-
-
-
-
-
-
-
