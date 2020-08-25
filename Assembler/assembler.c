@@ -39,27 +39,124 @@ static struct {
 		Pass_num;
 }state;
 
+//int main(int argc, char* argv[])
+//{
+//	/*run_test();*/
+//	
+//	char file_to_read[MEM] = "",        /* file name that i read from*/
+//		 *file_to_write;         /* file name that i write to */
+//
+//	char line_read[BUFFERSIZE] = "";     /* digit number string*/
+//	char *output = "";                   /* output from the user */
+//	BOOL is_file_read_exist = False,     /* is the file that i read from exist?*/
+//		is_file_write_exist = False;    /* is the file that i write to exist?*/
+//	FILE* filePointer;
+//	struct operationFunc opcodeFunc;
+//	
+//	int  nargin = argc;                  /* number of input in */
+//
+//
+//	state.DC = 0;
+//	state.IC = 100;
+//	state.Pass_num = 1;
+//	
+//	/* check file name inputs */
+//	if ((nargin >= 2) && (argv[1] != NULL)) {
+//		strcpy(file_to_read, argv[1]);
+//		/* check if the file read exist*/
+//		is_file_read_exist = file_exists(file_to_read);
+//		if (is_file_read_exist == True) {
+//			filePointer = fopen(file_to_read, "r");
+//		}
+//		else if (is_file_read_exist == False) {
+//			/* if the file not exist the programe shoude stop*/
+//			exit(1);
+//		}
+//	}
+//	
+//	/* first pass*/
+//	do {
+//		printf("\n%s", line_read);
+//		/* get the input from the file - read line by line*/
+//		output = fgets(line_read, BUFFERSIZE, filePointer);
+//		if (output != NULL) {
+//			first_pass(output);
+//		}
+//	} while (output != NULL);
+//
+//	
+//	 
+//	print_symbol_table(symbol_table);
+//	print_data_table(data_table);
+//
+//
+//	/* second pass*/
+//	filePointer = fopen(file_to_read, "r");
+//	state.DC = 0;
+//	state.IC = 100;
+//	state.Pass_num = 2;
+//	do {
+//		printf("\n%s", line_read);
+//		/* get the input from the file - read line by line*/
+//		output = fgets(line_read, BUFFERSIZE, filePointer);
+//		if (output != NULL) {
+//			second_pass(output);
+//		}
+//	} while (output != NULL);
+//
+//	print_memory_table(memory_table);
+//	print_symbol_table(symbol_table);
+//	/* .ob */
+//	file_to_write = strep(file_to_read, ".as", ".ob");
+//	write_ob_file(file_to_write,memory_table, data_table);
+//
+//	/* .ent */
+//	file_to_write = strep(file_to_read, ".as", ".ent");
+//	write_ent_file(file_to_write,  symbol_table);
+//
+//	/* .*/
+//
+//	getchar();
+//
+//
+//	return 0;
+//}
+
+
 int main(int argc, char* argv[])
 {
-	/*run_test();*/
-	
+
+	int filesNumber;
+	FILE *filepointer; 
+
+	while (filesNumber <= argc) {
+
+
+		open_files(argc, argv, filesNumber, filepointer);
+		analize_files(filepointer);
+	}
+
+	return 0;
+
+}
+
+void open_files(int argc,char *argv,int filesNum,FILE *filePointer) {
+
 	char file_to_read[MEM] = "",        /* file name that i read from*/
-		 *file_to_write;         /* file name that i write to */
+		*file_to_write;         /* file name that i write to */
 
 	char line_read[BUFFERSIZE] = "";     /* digit number string*/
 	char *output = "";                   /* output from the user */
 	BOOL is_file_read_exist = False,     /* is the file that i read from exist?*/
 		is_file_write_exist = False;    /* is the file that i write to exist?*/
-	FILE* filePointer;
+ 
 	struct operationFunc opcodeFunc;
-	
+
 	int  nargin = argc;                  /* number of input in */
 
 
-	state.DC = 0;
-	state.IC = 100;
-	state.Pass_num = 1;
-	
+
+
 	/* check file name inputs */
 	if ((nargin >= 2) && (argv[1] != NULL)) {
 		strcpy(file_to_read, argv[1]);
@@ -73,58 +170,58 @@ int main(int argc, char* argv[])
 			exit(1);
 		}
 	}
-	
+
+}
+
+
+void analize_files(FILE* filePointer) {
+
+	char file_to_read[MEM] = "";        /* file name that i read from*/
+
+
+	first_pass( file_to_read);
+
+	second_pass( file_to_read);
+
+	create_files_output(file_to_read);
+
+
+}
+
+void first_pass(char file_to_read[]) {
+
+	char line_read[BUFFERSIZE] = "";     /* digit number string*/
+	char *output = "";                   /* output from the user */
+	char file_to_read[MEM] = "";       /* file name that i read from*/
+	FILE* filePointer;
+
+    state.DC = 0;
+	state.IC = 100;
+	state.Pass_num = 1;
+
 	/* first pass*/
 	do {
 		printf("\n%s", line_read);
 		/* get the input from the file - read line by line*/
 		output = fgets(line_read, BUFFERSIZE, filePointer);
 		if (output != NULL) {
-			first_pass(output);
+			command_first_pass(output);
 		}
 	} while (output != NULL);
 
-	
-	 
+
+
 	print_symbol_table(symbol_table);
 	print_data_table(data_table);
 
 
-	/* second pass*/
-	filePointer = fopen(file_to_read, "r");
-	state.DC = 0;
-	state.IC = 100;
-	state.Pass_num = 2;
-	do {
-		printf("\n%s", line_read);
-		/* get the input from the file - read line by line*/
-		output = fgets(line_read, BUFFERSIZE, filePointer);
-		if (output != NULL) {
-			second_pass(output);
-		}
-	} while (output != NULL);
 
-	print_memory_table(memory_table);
-	print_symbol_table(symbol_table);
-	/* .ob */
-	file_to_write = strep(file_to_read, ".as", ".ob");
-	write_ob_file(file_to_write,memory_table, data_table);
-
-	/* .ent */
-	file_to_write = strep(file_to_read, ".as", ".ent");
-	write_ent_file(file_to_write,  symbol_table);
-
-	/* .*/
-
-	getchar();
-
-
-	return 0;
 }
 
 
 
-void first_pass(char command_original[]) {
+
+void commands_first_pass(char command_original[]) {
 
 	static int line_num = 0;
 	char *command_section = "", *next_command = "",
@@ -199,7 +296,49 @@ void first_pass(char command_original[]) {
 
 }
 
-void second_pass(char command_original[]) {
+void second_pass(char file_to_read) {
+	
+	FILE* filePointer;
+	char line_read[BUFFERSIZE] = "";     /* digit number string*/
+	char *output = "";                   /* output from the user */
+
+	/* second pass*/
+	filePointer = fopen(file_to_read, "r");
+	state.DC = 0;
+	state.IC = 100;
+	state.Pass_num = 2;
+	do {
+		printf("\n%s", line_read);
+		/* get the input from the file - read line by line*/
+		output = fgets(line_read, BUFFERSIZE, filePointer);
+		if (output != NULL) {
+			second_pass(output);
+		}
+	} while (output != NULL);
+
+	print_memory_table(memory_table);
+	print_symbol_table(symbol_table);
+
+
+
+
+}
+
+void create_files_output(char file_to_read[]){
+
+	char *file_to_write;         /* file name that i write to */
+	
+	/* .ob */
+	file_to_write = strep(file_to_read, ".as", ".ob");
+	write_ob_file(file_to_write, memory_table, data_table);
+
+	/* .ent */
+	file_to_write = strep(file_to_read, ".as", ".ent");
+	write_ent_file(file_to_write, symbol_table);
+
+}
+
+void commands_second_pass(char command_original[]) {
 
 
 	char *command_section = "";

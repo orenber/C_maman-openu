@@ -278,21 +278,7 @@ BOOL is_symbol_exist(struct symbolTable  *link_list, char symbol[]) {
 	return exist;
 }
 
-int serach_symbol_address(struct symbolTable  *link_list, char symbol[]) {
-
-	int address = NULL;
-	while (link_list != NULL) {
-
-		if (strcmp(link_list->symbol, symbol) == 0) {
-			address = link_list->address;
-			break;
-
-		}
-		link_list = link_list->next;
-	}
-
-	return address;
-}
+ 
 
 /* print */
 
