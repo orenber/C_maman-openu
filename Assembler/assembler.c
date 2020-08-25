@@ -126,13 +126,12 @@ static struct {
 int main(int argc, char* argv[])
 {
 
-	int filesNumber;
-	FILE *filepointer; 
+	int filesNumber = 0;
+	FILE *filepointer=""; 
 
 	while (filesNumber <= argc) {
 
-
-		open_files(argc, argv, filesNumber, filepointer);
+		open_files(argc, argv, &filesNumber, &filepointer);
 		analize_files(filepointer);
 	}
 
@@ -140,38 +139,6 @@ int main(int argc, char* argv[])
 
 }
 
-void open_files(int argc,char *argv,int filesNum,FILE *filePointer) {
-
-	char file_to_read[MEM] = "",        /* file name that i read from*/
-		*file_to_write;         /* file name that i write to */
-
-	char line_read[BUFFERSIZE] = "";     /* digit number string*/
-	char *output = "";                   /* output from the user */
-	BOOL is_file_read_exist = False,     /* is the file that i read from exist?*/
-		is_file_write_exist = False;    /* is the file that i write to exist?*/
- 
-	struct operationFunc opcodeFunc;
-
-	int  nargin = argc;                  /* number of input in */
-
-
-
-
-	/* check file name inputs */
-	if ((nargin >= 2) && (argv[1] != NULL)) {
-		strcpy(file_to_read, argv[1]);
-		/* check if the file read exist*/
-		is_file_read_exist = file_exists(file_to_read);
-		if (is_file_read_exist == True) {
-			filePointer = fopen(file_to_read, "r");
-		}
-		else if (is_file_read_exist == False) {
-			/* if the file not exist the programe shoude stop*/
-			exit(1);
-		}
-	}
-
-}
 
 
 void analize_files(FILE* filePointer) {
@@ -183,17 +150,17 @@ void analize_files(FILE* filePointer) {
 
 	second_pass( file_to_read);
 
-	create_files_output(file_to_read);
+	create_files_output(file_to_read,memory_table,data_table,symbol_table);
 
 
 }
+
 
 void first_pass(char file_to_read[]) {
 
 	char line_read[BUFFERSIZE] = "";     /* digit number string*/
 	char *output = "";                   /* output from the user */
-	char file_to_read[MEM] = "";       /* file name that i read from*/
-	FILE* filePointer;
+	FILE* filePointer = fopen(file_to_read, "r");
 
     state.DC = 0;
 	state.IC = 100;
@@ -217,9 +184,6 @@ void first_pass(char file_to_read[]) {
 
 
 }
-
-
-
 
 void commands_first_pass(char command_original[]) {
 
@@ -296,7 +260,8 @@ void commands_first_pass(char command_original[]) {
 
 }
 
-void second_pass(char file_to_read) {
+
+void second_pass(char file_to_read[]) {
 	
 	FILE* filePointer;
 	char line_read[BUFFERSIZE] = "";     /* digit number string*/
@@ -321,20 +286,6 @@ void second_pass(char file_to_read) {
 
 
 
-
-}
-
-void create_files_output(char file_to_read[]){
-
-	char *file_to_write;         /* file name that i write to */
-	
-	/* .ob */
-	file_to_write = strep(file_to_read, ".as", ".ob");
-	write_ob_file(file_to_write, memory_table, data_table);
-
-	/* .ent */
-	file_to_write = strep(file_to_read, ".as", ".ent");
-	write_ent_file(file_to_write, symbol_table);
 
 }
 
@@ -413,7 +364,6 @@ void instructional_sentence(char fun[], char input_str[], struct operationFunc *
 	print_memory_table(memory_table);
 
 }
-
 
 void create_space_binary_machine_code(struct setupRegistretion setup, struct operationFunc *opcodeFunc) {
 
@@ -494,7 +444,6 @@ void set_binary_machine_code(struct setupRegistretion setup, struct operationFun
 
 
 }
-
  
 void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 		
@@ -671,6 +620,7 @@ void update_or_insert_machine_code(struct setupRegistretion register_setup, stru
 	}
 
 }
+
 int * createBinaryArray(struct operationFunc *opcodeFunc) {
 
 	int binaryArray[24];
@@ -699,7 +649,6 @@ int * createBinaryArray(struct operationFunc *opcodeFunc) {
 	return binaryArray;
 
 }
-
 
 struct setupRegistretion get_address_register_setup(char nargin_str[], struct operationFunc *opcodeFunc) {
 
@@ -829,7 +778,6 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 
 }
 
-
 void resetValues(struct setupRegistretion *inputRegistretion,struct operationFunc *opcodeFunc) {
 
 	int *binaryArr;
@@ -856,8 +804,6 @@ void resetValues(struct setupRegistretion *inputRegistretion,struct operationFun
 	arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
 
 }
-
-
 
 AdressType getAddresingType(char inputString[]) {
 

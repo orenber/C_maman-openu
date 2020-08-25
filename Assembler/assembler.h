@@ -128,9 +128,15 @@ struct  setupRegistretion {
 
 void update_or_insert_machine_code(struct setupRegistretion register_setup, struct operationFunc *opcodeFunc);
 
+void analize_files(FILE* filePointer);
+
 void first_pass(char command_original[]);
 
-void second_pass(char command_original[]);
+void commands_first_pass(char command_original[]);
+
+void second_pass(char file_to_read[]);
+
+void commands_second_pass(char command_original[]);
 
 void resetValues(struct setupRegistretion *inputRegistretion, struct operationFunc *opcodeFunc);
 
