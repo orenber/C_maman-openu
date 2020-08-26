@@ -180,9 +180,9 @@ void mov_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
 	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
 
-	update_or_insert_machine_code(register_setup, opcodeFunc);
+	update_or_insert_machine_code(register_setup, opcodeFunc->name);
 
 }
 
@@ -200,9 +200,9 @@ void cmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
 	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
 
-	update_or_insert_machine_code(register_setup, opcodeFunc);
+	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
 
 }
 
@@ -222,9 +222,9 @@ void sub_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
 
 	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
 
-	update_or_insert_machine_code(register_setup, opcodeFunc);
+	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
 
 }
 
@@ -243,9 +243,9 @@ void lea_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
 
 	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
 
-	update_or_insert_machine_code(register_setup, opcodeFunc);
+	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
 
 }
 
@@ -264,10 +264,10 @@ void clr_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
 
 	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
 
 
-	update_or_insert_machine_code(register_setup, opcodeFunc);
+	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
 
 }
 
@@ -286,9 +286,9 @@ void not_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
  
 	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
 
-	update_or_insert_machine_code(register_setup, opcodeFunc);
+	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
 
 }
 
@@ -308,10 +308,10 @@ void inc_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
  
 	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+	 is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
 
 
-	update_or_insert_machine_code(register_setup, opcodeFunc);
+	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
 
 }
 
@@ -331,10 +331,10 @@ void dec_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
   
 	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+	 is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
 
 
-	update_or_insert_machine_code(register_setup, opcodeFunc);
+	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
 
 }
 
@@ -354,9 +354,9 @@ void jmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
  
 	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+	 is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
 
-	update_or_insert_machine_code(register_setup, opcodeFunc);
+	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
 
 }
 
@@ -375,9 +375,9 @@ void bne_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
  
 	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+	 is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
 
-	update_or_insert_machine_code(register_setup, opcodeFunc);
+	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
 
 }
 
@@ -397,9 +397,9 @@ void jsr_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
     
 	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+	 is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
 
-	update_or_insert_machine_code(register_setup, opcodeFunc);
+	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
 
 }
 
@@ -419,9 +419,9 @@ void red_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
 	
 	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+	 is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
 
-	update_or_insert_machine_code(register_setup, opcodeFunc);
+	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
 
 }
 
@@ -441,9 +441,9 @@ void prn_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
  
 	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+	 is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
 
-	update_or_insert_machine_code(register_setup, opcodeFunc);
+	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
 
 }
 
@@ -462,9 +462,9 @@ void rts_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
 	
 	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+	 is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
 
-	update_or_insert_machine_code(register_setup, opcodeFunc);
+	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
 
 }
 
@@ -484,9 +484,9 @@ void stop_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
     
 	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+	 is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
 
-	update_or_insert_machine_code(register_setup, opcodeFunc);
+	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
 
 }
 
@@ -505,9 +505,9 @@ void add_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
 
 	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstType, register_setup.secondType);
+	 is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
 
-	update_or_insert_machine_code(register_setup, opcodeFunc);
+	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
 }
 
 

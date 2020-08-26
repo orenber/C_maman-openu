@@ -6,8 +6,8 @@
 #include <math.h>
 
  
-
-#define MEM 30
+#define NAME 10
+#define MEM 31
 #define BUFFERSIZE 81
 #define bitrray 24
 #define INITIAL_ADDRESS  100
@@ -47,11 +47,13 @@ typedef enum {
 }Register;
 
 
-typedef union
+typedef struct
 {
+	AdressType Type;
 	int value;
 	Register Register;
-	char label[5];
+	char label[NAME];
+
 } polymorfType;
 
 typedef enum {
@@ -85,6 +87,7 @@ struct symbolTable {
 
 struct memoryTable{
 	int address;
+	char name[MEM];
 	int binaryMachineCode[24];
 	struct memoryTable *next;
 }*top_node;
@@ -115,11 +118,8 @@ struct symbolData {
 
 struct  setupRegistretion {
 
-	AdressType firstType;
-	AdressType secondType;
-
-	polymorfType firstValue;
-	polymorfType secondValue;
+	polymorfType firstOperand;
+	polymorfType secondOperand;
 	
 };
 
@@ -146,7 +146,7 @@ void create_space_binary_machine_code(struct setupRegistretion setup, struct ope
 
 void update_binary_machine_code(AdressType type, polymorfType st, ARE are);
 
-void set_space_binary_machine_code(AdressType type);
+void set_space_binary_machine_code(AdressType type,char name[]);
 
 
 void flag_manger(char flag[], int value);

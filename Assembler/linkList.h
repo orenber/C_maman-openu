@@ -15,15 +15,16 @@ struct dataTable* create_data_table();
 
 
 /* push */
+
 void push_memory_table(struct memoryTable** link_list, int *memory);
 
 void push_symbol_table(struct symbolTable ** link_list, int memory, char symbol[] , TypeSymbol type, BOOL isInternal);
 
 /* push and update*/
 
-void push_and_update_data_table(struct dataTable ** link_list, int *memory, char name[], int binaryArray[]);
+void push_and_update_data_table(struct dataTable ** link_list, int *memory, char label[], int binaryArray[]);
 
-void push_and_update_memory_table(struct memoryTable** link_list, int *memory, int binaryArray[]);
+void push_and_update_memory_table(struct memoryTable** link_list, int *memory, char label[], int binaryArray[]);
 
 /* update */
 

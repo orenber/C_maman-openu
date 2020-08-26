@@ -24,14 +24,14 @@ struct dataTable* create_data_table() {
 /**
 * Functiont to push a new element in stack.
 */
-void push_memory_table(struct memoryTable** link_list, int *address)
+void push_memory_table(struct memoryTable** link_list, int *address,char sorceCode[])
 {
 	
 	/* Create a new node and push to stack */
 	struct memoryTable * newNode = (struct memoryTable *) calloc(1,sizeof(struct memoryTable));
 	/* Assign data to new node in stack */
 	newNode->address = *address;
-	
+	strcpy(newNode->name, sorceCode);
  
 	// Next element after new node should be current top element
 	newNode->next = *link_list;
@@ -69,13 +69,14 @@ void push_symbol_table(struct symbolTable ** link_list, int address, char symbol
 }
 
 /* push and update*/
-void push_and_update_memory_table(struct memoryTable** link_list, int *address, int binaryArray[])
+void push_and_update_memory_table(struct memoryTable** link_list, int *address,char sorceCode[], int binaryArray[])
 {
 
 	/* Create a new node and push to stack */
 	struct memoryTable * newNode = (struct memoryTable *) calloc(1, sizeof(struct memoryTable));
 	/* Assign data to new node in stack */
 	newNode->address = *address;
+	strcpy(newNode->name, sorceCode);
 	arrayAssign(newNode->binaryMachineCode, binaryArray, 0, 23);
 
 	// Next element after new node should be current top element
@@ -295,10 +296,14 @@ void print_symbol_table(struct symbolTable * link_list) {
 }
  
 void print_memory_table(struct memoryTable* link_list) {
-
+	char tempstr[100];
 	while (link_list != NULL) {
  
-		printf("\naddress: %d:\n", link_list->address);
+		printf("\naddress: %d:", link_list->address);
+		printf("\tSource Code: %s:", link_list->name);
+		
+	
+		printf("%-10s", "");
 		printArray(link_list->binaryMachineCode,24);
  
 		link_list = link_list->next;

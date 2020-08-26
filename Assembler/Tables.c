@@ -106,11 +106,11 @@ BOOL cheak_legal_address(char func[], AdressType  sourceOperand, AdressType dest
 	if (strcmp(func, "mov") == 0) {
 		 /* Source*/
 		legalSource[0] = 0; legalSource[1] = 1; legalSource[2] = 3;
-		ok1 = assertIsMember(sourceOperand, legalSource);
+		ok1 = assertIsMember(sourceOperand, legalSource, 3);
 		
 		/* Destination */
 		legalDestination[0] = 1; legalDestination[1] = 3;
-		ok2 = assertIsMember(sourceOperand, legalSource);
+		ok2 = assertIsMember(destinationOperand, legalDestination,3);
 
 		legal = ok1 * ok2;
 
@@ -118,11 +118,11 @@ BOOL cheak_legal_address(char func[], AdressType  sourceOperand, AdressType dest
 	else if (strcmp(func, "cmp") == 0) {
 		/* Source*/
 		legalSource[0] = 0; legalSource[1] = 1; legalSource[2] = 3;
-		ok1 = assertIsMember(sourceOperand, legalSource);
+		ok1 = assertIsMember(sourceOperand, legalSource,3);
 		
 		/* Destination */
-		legalDestination[0] = 0;  legalDestination[1] = 1; legalDestination[3] = 3;
-		ok2 = assertIsMember(sourceOperand, legalSource);
+		legalDestination[0] = 0;  legalDestination[1] = 1; legalDestination[2] = 3;
+		ok2 = assertIsMember(destinationOperand, legalDestination,3);
 		
 		legal = ok1 * ok2;
 
@@ -131,11 +131,11 @@ BOOL cheak_legal_address(char func[], AdressType  sourceOperand, AdressType dest
 
 		/* Source*/
 		legalSource[0] = 0; legalSource[1] = 1; legalSource[2] = 3;
-		ok1 = assertIsMember(sourceOperand, legalSource);
+		ok1 = assertIsMember(sourceOperand, legalSource, 3);
 
 		/* Destination */
 		legalDestination[0] = 1; legalDestination[1] = 3;
-		ok2 = assertIsMember(sourceOperand, legalSource);
+		ok2 = assertIsMember(destinationOperand, legalDestination, 3);
 
 		legal = ok1 * ok2;
  
@@ -144,11 +144,11 @@ BOOL cheak_legal_address(char func[], AdressType  sourceOperand, AdressType dest
 
 		/* Source*/
 		legalSource[0] = 0; legalSource[1] = 1; legalSource[2] = 3;
-		ok1 = assertIsMember(sourceOperand, legalSource);
+		ok1 = assertIsMember(sourceOperand, legalSource, 3);
 
 		/* Destination */
 		legalDestination[0] = 1; legalDestination[1] = 3;
-		ok2 = assertIsMember(sourceOperand, legalSource);
+		ok2 = assertIsMember(destinationOperand, legalDestination, 3);
 
 		legal = ok1 * ok2;
 		 
@@ -157,11 +157,11 @@ BOOL cheak_legal_address(char func[], AdressType  sourceOperand, AdressType dest
 
 		/* Source*/
 		legalSource[0] = 1;
-		ok1 = assertIsMember(sourceOperand, legalSource);
+		ok1 = assertIsMember(sourceOperand, legalSource, 3);
 
 		/* Destination */
 		legalDestination[0] = 1; legalDestination[1] = 3;
-		ok2 = assertIsMember(sourceOperand, legalSource);
+		ok2 = assertIsMember(destinationOperand, legalDestination, 3);
 
 		legal = ok1 * ok2;
 
@@ -171,46 +171,46 @@ BOOL cheak_legal_address(char func[], AdressType  sourceOperand, AdressType dest
 
 		/* Destination */
 		legalDestination[0] = 1; legalDestination[1] = 3;
-		legal = assertIsMember(sourceOperand, legalSource);
+		legal = assertIsMember(destinationOperand, legalDestination, 3);
 		 
 	}
 	else if (strcmp(func, "not") == 0) {
 	 
 		/* Destination */
 		legalDestination[0] = 1; legalDestination[1] = 3;
-		legal = assertIsMember(sourceOperand, legalSource);
+		legal = assertIsMember(destinationOperand, legalDestination, 3);
 	}
 	else if (strcmp(func, "inc") == 0) {
 	 
 		/* Destination */
 		legalDestination[0] = 1; legalDestination[1] = 3;
-		legal = assertIsMember(sourceOperand, legalSource);
+		legal = assertIsMember(destinationOperand, legalDestination, 3);
 	}
 	else if (strcmp(func, "dec") == 0) {
 	 
 
 		/* Destination */
 		legalDestination[0] = 1; legalDestination[1] = 3;
-		legal = assertIsMember(sourceOperand, legalSource);
+		legal = assertIsMember(destinationOperand, legalDestination, 3);
 	}
 	else if (strcmp(func, "jmp") == 0) {
 
 		/* Destination */
 		legalDestination[0] = 1; legalDestination[1] = 2;
-		legal = assertIsMember(sourceOperand, legalSource);
+		legal = assertIsMember(destinationOperand, legalDestination, 3);
 	}
 	else if (strcmp(func, "bne") == 0) {
 
 		/* Destination */
 		legalDestination[0] = 1; legalDestination[1] = 2;
-		legal = assertIsMember(sourceOperand, legalSource);
+		legal = assertIsMember(destinationOperand, legalDestination, 3);
 	}
 	else if (strcmp(func, "jsr") == 0) {
 
 
 		/* Destination */
 		legalDestination[0] = 1; legalDestination[1] = 2;
-		legal = assertIsMember(sourceOperand, legalSource);
+		legal = assertIsMember(destinationOperand, legalDestination, 3);
 
 	}
 	else if (strcmp(func, "red") == 0) {
@@ -219,7 +219,7 @@ BOOL cheak_legal_address(char func[], AdressType  sourceOperand, AdressType dest
 		/* Destination */
 		legalDestination[0] = 1; legalDestination[1] = 3;
 
-		legal = assertIsMember(sourceOperand, legalSource);
+		legal = assertIsMember(destinationOperand, legalDestination, 3);
 
 	}
 	else if (strcmp(func, "prn") == 0) {
@@ -228,7 +228,7 @@ BOOL cheak_legal_address(char func[], AdressType  sourceOperand, AdressType dest
 		/* Destination */
 		legalDestination[0] = 0;legalDestination[1] = 1, legalDestination[1] = 3;
 
-		ok2 = assertIsMember(sourceOperand, legalSource);
+		ok2 = assertIsMember(destinationOperand, legalDestination, 3);
 
 		legal =   ok2;
 	}

@@ -6,7 +6,6 @@ void printArray(int arr[],int length)
 
 	int i;
 
-	printf("Array elements are: ");
 	for (i = 0; i < length; i++)
 	{
 		printf("%d, ", arr[i]);
@@ -19,7 +18,6 @@ void printArrayReverse(int arr[], int length)
 
 	int i = length - 1;
 
-	printf("Array elements are: ");
 	for (i; i >= 0; i--)
 	{
 		printf("%d, ", arr[i]);
@@ -53,7 +51,7 @@ void array2string(int arrayNumber[], char* stringArray) {
 int * string2array(char stringArray[],int *length) {
 
 	const char seperetor[] = { ',' };
-	char *var;
+	char *var = "" ,strArray[MEM] = "";
 	int i = 0, inputNum = 0;
 	int *arrayNumber;
 
@@ -61,7 +59,8 @@ int * string2array(char stringArray[],int *length) {
 	length[0] = inputNum + 1;
 	arrayNumber = (int*)calloc(length, sizeof(int));
 
-	var = strtok(stringArray, seperetor);
+	strcpy(strArray, stringArray);
+	var = strtok(strArray, seperetor);
 	
 	while (var != NULL) {
 		

@@ -20,6 +20,8 @@ static struct symbolTable *symbol_table;
 static struct memoryTable *memory_table;
 static struct dataTable *data_table;
 
+
+
 Register R0 = r0, R1 = r1, R2 = r2,
 R3 = r3, R4 = r4, R5 = r5,
 R6 = r6, R7 = r7;
@@ -29,154 +31,73 @@ struct {
 	Register *reg;
 }registerDictionary[] = {
 	{ "r0",&R0 },{ "r1",&R1 },{ "r2",&R2 },
-	{ "r3",&R3 },{ "r4",&R4 },{ "r5",&R5 },
-	{ "r6",&R6 },{ "r7",&R7 },{ "#",NULL }
+{ "r3",&R3 },{ "r4",&R4 },{ "r5",&R5 },
+{ "r6",&R6 },{ "r7",&R7 },{ "#",NULL }
 };
 
-static struct {
+ struct {
 	int IC,
+		ICF,
 		DC,
+		DCF,
 		Pass_num;
 }state;
-
-//int main(int argc, char* argv[])
-//{
-//	/*run_test();*/
-//	
-//	char file_to_read[MEM] = "",        /* file name that i read from*/
-//		 *file_to_write;         /* file name that i write to */
-//
-//	char line_read[BUFFERSIZE] = "";     /* digit number string*/
-//	char *output = "";                   /* output from the user */
-//	BOOL is_file_read_exist = False,     /* is the file that i read from exist?*/
-//		is_file_write_exist = False;    /* is the file that i write to exist?*/
-//	FILE* filePointer;
-//	struct operationFunc opcodeFunc;
-//	
-//	int  nargin = argc;                  /* number of input in */
-//
-//
-//	state.DC = 0;
-//	state.IC = 100;
-//	state.Pass_num = 1;
-//	
-//	/* check file name inputs */
-//	if ((nargin >= 2) && (argv[1] != NULL)) {
-//		strcpy(file_to_read, argv[1]);
-//		/* check if the file read exist*/
-//		is_file_read_exist = file_exists(file_to_read);
-//		if (is_file_read_exist == True) {
-//			filePointer = fopen(file_to_read, "r");
-//		}
-//		else if (is_file_read_exist == False) {
-//			/* if the file not exist the programe shoude stop*/
-//			exit(1);
-//		}
-//	}
-//	
-//	/* first pass*/
-//	do {
-//		printf("\n%s", line_read);
-//		/* get the input from the file - read line by line*/
-//		output = fgets(line_read, BUFFERSIZE, filePointer);
-//		if (output != NULL) {
-//			first_pass(output);
-//		}
-//	} while (output != NULL);
-//
-//	
-//	 
-//	print_symbol_table(symbol_table);
-//	print_data_table(data_table);
-//
-//
-//	/* second pass*/
-//	filePointer = fopen(file_to_read, "r");
-//	state.DC = 0;
-//	state.IC = 100;
-//	state.Pass_num = 2;
-//	do {
-//		printf("\n%s", line_read);
-//		/* get the input from the file - read line by line*/
-//		output = fgets(line_read, BUFFERSIZE, filePointer);
-//		if (output != NULL) {
-//			second_pass(output);
-//		}
-//	} while (output != NULL);
-//
-//	print_memory_table(memory_table);
-//	print_symbol_table(symbol_table);
-//	/* .ob */
-//	file_to_write = strep(file_to_read, ".as", ".ob");
-//	write_ob_file(file_to_write,memory_table, data_table);
-//
-//	/* .ent */
-//	file_to_write = strep(file_to_read, ".as", ".ent");
-//	write_ent_file(file_to_write,  symbol_table);
-//
-//	/* .*/
-//
-//	getchar();
-//
-//
-//	return 0;
-//}
 
 
 int main(int argc, char* argv[])
 {
 
-	int filesNumber = 0;
-	FILE *filepointer=""; 
+	int filesNumber = 1;
+	FILE *filepointer = NULL; 
+	
 
-	while (filesNumber <= argc) {
+	while (argv[filesNumber] != NULL) {
 
-		open_files(argc, argv, &filesNumber, &filepointer);
+		 
+		filepointer = open_files(argc, argv[filesNumber]);
 		analize_files(filepointer);
+		create_files_output(argv[filesNumber++], memory_table, symbol_table);
+		 
 	}
 
 	return 0;
 
 }
 
+void analize_files(FILE *filePointer) {
 
 
-void analize_files(FILE* filePointer) {
+	first_pass(filePointer);
 
-	char file_to_read[MEM] = "";        /* file name that i read from*/
+	print_memory_table(memory_table);
 
-
-	first_pass( file_to_read);
-
-	second_pass( file_to_read);
-
-	create_files_output(file_to_read,memory_table,data_table,symbol_table);
-
+	second_pass(filePointer);
 
 }
 
-
-void first_pass(char file_to_read[]) {
+void first_pass(FILE* filePointer) {
 
 	char line_read[BUFFERSIZE] = "";     /* digit number string*/
 	char *output = "";                   /* output from the user */
-	FILE* filePointer = fopen(file_to_read, "r");
 
+	
     state.DC = 0;
 	state.IC = 100;
 	state.Pass_num = 1;
-
+	 
 	/* first pass*/
 	do {
 		printf("\n%s", line_read);
 		/* get the input from the file - read line by line*/
 		output = fgets(line_read, BUFFERSIZE, filePointer);
 		if (output != NULL) {
-			command_first_pass(output);
+			commands_first_pass(output);
 		}
 	} while (output != NULL);
 
-
+	/* update final position */
+	state.ICF = state.IC;
+	state.DCF = state.DC;
 
 	print_symbol_table(symbol_table);
 	print_data_table(data_table);
@@ -217,22 +138,6 @@ void commands_first_pass(char command_original[]) {
 			end_line = True;
 		}
 
-		else if (assert_command(command_section, &flag_legal, 6, "")) {
-			/* ist asymbol */
-			
-			next_command = strtok(NULL, seperator);
-
-			if (assert_command(next_command, &instructionType, 16, "")) {
-				type_symbol = code;
-			}
-			else if (assert_command(next_command, &guidanceType, 4, "")) {
-				type_symbol = data;
-
-			}
-
-			flag_manger(command_section, type_symbol);
-			 
-		}
 
 		else if (assert_command(command_section, &instructionType, 16, ""))
 		{
@@ -256,30 +161,51 @@ void commands_first_pass(char command_original[]) {
 			end_line = True;
 		}
 
+		else if (is_legal_label(command_section)) {
+			/* ist asymbol */
+
+			next_command = strtok(NULL, seperator);
+
+			if (assert_command(next_command, &instructionType, 16, "")) {
+				type_symbol = code;
+			}
+			else if (assert_command(next_command, &guidanceType, 4, "")) {
+				type_symbol = data;
+
+			}
+			remove_substring(command_section, ":");
+			flag_manger(command_section, type_symbol);
+
+		}
+
 	}
 
 }
 
-
-void second_pass(char file_to_read[]) {
+void second_pass(FILE* filePointer) {
 	
-	FILE* filePointer;
+
 	char line_read[BUFFERSIZE] = "";     /* digit number string*/
 	char *output = "";                   /* output from the user */
 
 	/* second pass*/
-	filePointer = fopen(file_to_read, "r");
+
 	state.DC = 0;
-	state.IC = 100;
+	state.IC = 99;
 	state.Pass_num = 2;
+
+	/* reset line read*/
+	fseek(filePointer, 0, SEEK_SET);
 	do {
 		printf("\n%s", line_read);
 		/* get the input from the file - read line by line*/
 		output = fgets(line_read, BUFFERSIZE, filePointer);
 		if (output != NULL) {
-			second_pass(output);
+			commands_second_pass(output);
 		}
 	} while (output != NULL);
+
+	
 
 	print_memory_table(memory_table);
 	print_symbol_table(symbol_table);
@@ -313,10 +239,7 @@ void commands_second_pass(char command_original[]) {
 			/* Empty sentence ?*/
 			end_line = True;
 		}
-		else if (assert_command(command_section, &flag_legal, 6, "")) {
-			 /* this is flag*/
-		}
-		 
+
 		else if (command_section[0] == ';') {
 			
 			/* comment sentence */
@@ -343,12 +266,17 @@ void commands_second_pass(char command_original[]) {
 			}
 			end_line = True;
 		}
+		
+		else
+		{
+				 
+			/* this is flag or somthing else */
+				 
+		}
 
 	}
 
 }
-
-
 
 void flag_manger(char symbol[], TypeSymbol type) {
 	
@@ -365,21 +293,21 @@ void instructional_sentence(char fun[], char input_str[], struct operationFunc *
 
 }
 
-void create_space_binary_machine_code(struct setupRegistretion setup, struct operationFunc *opcodeFunc) {
+void create_space_binary_machine_code(struct setupRegistretion setup, char instrction_name[]) {
 
 	int *binaryArray;
 	int  binary_machine_code[bitrray];
 	int i = 0, j = 0;
+	AdressType adress_take_more_space[] = {Immediate, Direct, Relative};
+		
+	push_memory_table(&memory_table, &state.IC, instrction_name);
 
- 
-	push_memory_table(&memory_table, &state.IC);
-
-	if (setup.firstValue.value != NULL) {
-		set_space_binary_machine_code(setup.firstType);
+	if (assertIsMember(setup.firstOperand.Type, adress_take_more_space,3)) {
+		set_space_binary_machine_code(setup.firstOperand.Type, setup.firstOperand.label);
 	}
 
-	if (setup.secondValue.value != NULL) {
-		set_space_binary_machine_code(setup.secondType);
+	if (assertIsMember(setup.secondOperand.Type, adress_take_more_space),3) {
+		set_space_binary_machine_code(setup.secondOperand.Type,setup.secondOperand.label);
 	}
 
 
@@ -387,23 +315,23 @@ void create_space_binary_machine_code(struct setupRegistretion setup, struct ope
 
 }
 
-void set_space_binary_machine_code(AdressType type) {
+void set_space_binary_machine_code(AdressType type,char lableName[]) {
 
 
 	switch (type)
 	{
 	case (Immediate):
 
-		push_memory_table(&memory_table, &state.IC);
+		push_memory_table(&memory_table, &state.IC, lableName);
 		break;
 
 	case (Direct):
 
-		push_memory_table(&memory_table, &state.IC);
+		push_memory_table(&memory_table, &state.IC, lableName);
 		break;
 	case (Relative):
 
-		push_memory_table(&memory_table, &state.IC);
+		push_memory_table(&memory_table, &state.IC, lableName);
 
 		break;
 	case (Register_Direct):
@@ -421,6 +349,7 @@ void set_binary_machine_code(struct setupRegistretion setup, struct operationFun
 	int *binaryArray  ;
 	int  binary_machine_code[bitrray];
 	int i = 0,  j = 0;
+	AdressType adress_take_more_space[] = { Immediate, Direct, Relative };
 
 	zeros(&binary_machine_code, bitrray);
 
@@ -434,12 +363,12 @@ void set_binary_machine_code(struct setupRegistretion setup, struct operationFun
 	printArray(binary_machine_code, bitrray);
 	update_memory_table(memory_table,++state.IC, binary_machine_code);
 
-	if (setup.firstValue.value != NULL) {
-		update_binary_machine_code(setup.firstType, setup.firstValue, opcodeFunc->ARE);
+	if (assertIsMember(setup.firstOperand.Type, adress_take_more_space, 3)) {
+		update_binary_machine_code(setup.firstOperand.Type, setup.firstOperand, opcodeFunc->ARE);
 	}
 
-	if (setup.secondValue.value != NULL) {
-		update_binary_machine_code(setup.secondType, setup.secondValue, opcodeFunc->ARE);
+	if (assertIsMember(setup.secondOperand.Type, adress_take_more_space, 3)) {
+		update_binary_machine_code(setup.secondOperand.Type, setup.secondOperand, opcodeFunc->ARE);
 	}
 
 
@@ -450,6 +379,7 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 	int *binaryArray;
 	int  binary_machine_code[bitrray], 
 		address_symbol;
+	char label[NAME];
 	struct symbolData symbol_data;
 
 
@@ -461,7 +391,7 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 			arrayAssign(&binary_machine_code, binaryArray, INDEX(23), INDEX(3));
 			arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
 			printArray(binary_machine_code, bitrray);
-			update_memory_table(memory_table,  ++state.IC,&binary_machine_code);
+			update_memory_table(memory_table, ++state.IC,&binary_machine_code);
 			break;
 
 		case (Direct):
@@ -482,12 +412,13 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 			}
 			arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
 			printArray(binary_machine_code, bitrray);
-			update_memory_table(memory_table, ++state.IC, &binary_machine_code);
+			update_memory_table(memory_table,++state.IC, &binary_machine_code);
 			break;
 
 		case (Relative):
 			/* get the label data*/
-			symbol_data = get_symbol_data(symbol_table, st.label);
+			strcpy(label, st.label);
+			symbol_data = get_symbol_data(symbol_table, strtok(label,"&"));
 			/* jump curent */
 			binaryArray = decimal2binaryArray(symbol_data.address - state.IC, 21);
 			arrayAssign(&binary_machine_code, binaryArray, INDEX(23), INDEX(3));
@@ -552,7 +483,7 @@ void string_sentence(char str[]) {
 		printf("%c:\t", str[i]);
 		printArray(binaryArr, bitrray);
 
-		push_and_update_memory_table(&memory_table, &state.IC, binaryArr);
+		push_and_update_memory_table(&memory_table, &state.IC, latter, binaryArr);
 		push_and_update_data_table(&data_table, &state.DC, latter, binaryArr);
 	 
 	}
@@ -561,10 +492,10 @@ void string_sentence(char str[]) {
 
 void data_sentence(char var[]) {
 
-	 
-	int i ;
+
+	int i;
 	int *binaryArr,
-		*arr, *length[1] ;
+		*arr, *length[2];
 	int len = 0;
 
 	arr = string2array(var,&length);
@@ -576,8 +507,10 @@ void data_sentence(char var[]) {
 		/* convert to binary array*/
 		binaryArr = decimal2binaryArray(arr[i], bitrray);
 		printArray(binaryArr, bitrray);
+		sprintf(var, "%d", arr[i]);
 		/* push data to the tables  */
-		push_and_update_memory_table(&memory_table, &state.IC, binaryArr);
+
+		push_and_update_memory_table(&memory_table, &state.IC, var, binaryArr);
 		push_and_update_data_table(&data_table, &state.DC, var, binaryArr);
 	 
 	}
@@ -672,11 +605,11 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 	if (input_num == 2) {
 		/* first input*/
 	
-		inputRegistretion.firstType = getAddresingType(inputs);
+		inputRegistretion.firstOperand.Type = getAddresingType(inputs);
 
-		binaryArr = decimal2binaryArray((int)inputRegistretion.firstType, 2);
+		binaryArr = decimal2binaryArray((int)inputRegistretion.firstOperand.Type, 2);
 		arrayAssign(opcodeFunc->addressSource, binaryArr, 0, 1);
-		switch (inputRegistretion.firstType) {
+		switch (inputRegistretion.firstOperand.Type) {
 
 		case Immediate:
 
@@ -684,8 +617,8 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 			binaryArr = decimal2binaryArray(4, 3);
 			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
 			/* value*/
-			inputRegistretion.firstValue.value = atoi(inputs);
-			printf("%d", inputRegistretion.firstValue.value);
+			inputRegistretion.firstOperand.value = atoi(inputs);
+			printf("%d", inputRegistretion.firstOperand.value);
 			break;
 
 		case Direct:
@@ -694,7 +627,7 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 			binaryArr = decimal2binaryArray(4, 3);
 			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
 			/* copy value*/
-			strcpy(inputRegistretion.firstValue.label, inputs);
+			strcpy(inputRegistretion.firstOperand.label, inputs);
 
 			break;
 
@@ -711,8 +644,13 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
 
 			regi = getRegisterVar(inputs);
-			inputRegistretion.firstValue.Register = regi[0];
-			binaryArr = decimal2binaryArray((int)inputRegistretion.firstValue.Register, 3);
+			/*Register*/
+			inputRegistretion.firstOperand.Register = regi[0];
+			/*value*/
+			inputRegistretion.firstOperand.value = (int)regi[0];
+			/*label*/
+			strcpy(inputRegistretion.firstOperand.label, inputs);
+			binaryArr = decimal2binaryArray(inputRegistretion.firstOperand.value, 3);
 			arrayAssign(opcodeFunc->registerSource, binaryArr, 0, 2);
 			break;
 		}
@@ -724,19 +662,22 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 
 	if (inputs != NULL) {
 
-		inputRegistretion.secondType = getAddresingType(inputs);
-
-		binaryArr = decimal2binaryArray((int)inputRegistretion.secondType, 2);
+		inputRegistretion.secondOperand.Type = getAddresingType(inputs);
+		
+		binaryArr = decimal2binaryArray((int)inputRegistretion.secondOperand.Type, 2);
 		arrayAssign(opcodeFunc->addressDestination, binaryArr, 0, 1);
-		switch (inputRegistretion.secondType) {
+		switch (inputRegistretion.secondOperand.Type) {
         
 		case Immediate:
 
 			/*ARE*/
 			binaryArr = decimal2binaryArray(4, 3);
 			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
+			strcpy(inputRegistretion.secondOperand.label, inputs);
 			/* value*/
-			inputRegistretion.secondValue.value = atoi(inputs);
+			remove_substring(inputs, "#");
+			inputRegistretion.secondOperand.value = atoi(inputs);
+			
 			break;
 		
 		case Direct:
@@ -744,8 +685,8 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 			binaryArr = decimal2binaryArray(4, 3);
 			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
 
-			/* copy value*/
-			strcpy(inputRegistretion.secondValue.label, inputs);
+			/* copy label*/
+			strcpy(inputRegistretion.secondOperand.label, inputs);
 
 			break;
 
@@ -753,7 +694,7 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 			/*ARE*/
 			binaryArr = decimal2binaryArray(4, 3);
 			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
-			strcpy(inputRegistretion.secondValue.label, inputs);
+			strcpy(inputRegistretion.secondOperand.label, inputs);
 			break;
 
 		case Register_Direct:
@@ -762,8 +703,8 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
 
 			regi = getRegisterVar(inputs);
-			inputRegistretion.secondValue.Register = regi[0];
-			binaryArr = decimal2binaryArray((int)inputRegistretion.secondValue.Register, 3);
+			inputRegistretion.secondOperand.Register = regi[0];
+			binaryArr = decimal2binaryArray((int)inputRegistretion.secondOperand.Register, 3);
 			arrayAssign(opcodeFunc->registerDestination, binaryArr, 0, 2);
 		}
 
@@ -782,8 +723,8 @@ void resetValues(struct setupRegistretion *inputRegistretion,struct operationFun
 
 	int *binaryArr;
 
-	inputRegistretion->firstValue.value  = NULL;
-	inputRegistretion->secondValue.value = NULL;
+	inputRegistretion->firstOperand.value  = NULL;
+	inputRegistretion->secondOperand.value = NULL;
 
 	/* reset  source*/
 	binaryArr = decimal2binaryArray(0, 2);
@@ -808,39 +749,41 @@ void resetValues(struct setupRegistretion *inputRegistretion,struct operationFun
 AdressType getAddresingType(char inputString[]) {
 
 	AdressType addresingType;
+	char str[NAME];
 	const char hashTag[] = "#";
 	const char andTag[] = "&";
 
+	strcpy(str, inputString);
 
-	if (char_apperance(inputString, hashTag[0]) == 1) {
-		remove_substring_parts(inputString, hashTag);
-		if (assert_number(inputString)) {
+	if (char_apperance(str, hashTag[0]) == 1) {
+		remove_substring_parts(str, hashTag);
+		if (assert_number(str)) {
 
 			addresingType = Immediate;
 		};
 	}
 
+	else if (str[0] == andTag[0]) {
 
-	else if ((assert_command(inputString, flag_legal, 6, ""))||
-	         (serach_symbol_type(symbol_table,inputString,external))) {
+		remove_substring_parts(str, andTag);
+
+		if (is_undefine_label(str)) {
+
+			addresingType = Relative;
+		}
+	}
+	else if (assert_command(str, register_leagal, 8, "")) {
+
+		addresingType = Register_Direct;
+	}
+	else if (is_undefine_label(str)) {
 		
 		addresingType = Direct;
 
 	}
 
-	else if (inputString[0] == andTag[0] ) {
 
-		remove_substring_parts(inputString, andTag);
 
-		if (assert_command(inputString, flag_legal, 6, "")) {
-
-			addresingType = Relative;
-		}
-	}
-	else if (assert_command(inputString, register_leagal, 8, "")) {
-
-		addresingType = Register_Direct;
-	}
 
 	return addresingType;
 

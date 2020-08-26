@@ -54,26 +54,26 @@ BOOL file_exists(char fileName[])
 }
 
 
-void open_files(int argc, char *argv, int filesNum, FILE *filePointer) {
+FILE * open_files(int argc, char fileName[]) {
 
 	char file_to_read[MEM] = "";        /* file name that i read from*/
 	BOOL is_file_read_exist = False;    /* is the file that i read from exist?*/
 	int  nargin = argc;                  /* number of input in */
-
+	FILE *filePointer = NULL;
 										 /* check file name inputs */
-	if ((nargin >= 2) && (argv[1] != NULL)) {
-		strcpy(file_to_read, argv[1]);
+	if ((nargin >= 2) && (fileName != NULL)) {
+
 		/* check if the file read exist*/
-		is_file_read_exist = file_exists(file_to_read);
+		is_file_read_exist = file_exists(fileName);
 		if (is_file_read_exist == True) {
-			filePointer = fopen(file_to_read, "r");
+			filePointer = fopen(fileName, "r");
 		}
 		else if (is_file_read_exist == False) {
 			/* if the file not exist the programe shoude stop*/
 			exit(1);
 		}
 	}
-
+	return filePointer;
 }
 
 void create_files_output(char file_to_read[],struct memoryTable *memory_table, struct dataTable *data_table, struct symbolTable *symbol_table) {
@@ -87,6 +87,10 @@ void create_files_output(char file_to_read[],struct memoryTable *memory_table, s
 	/* .ent */
 	file_to_write = strep(file_to_read, ".as", ".ent");
 	write_ent_file(file_to_write, symbol_table);
+
+	/* .ext*/
+	file_to_write = strep(file_to_read, ".as", ".ext");
+	write_ent_file(file_to_write, symbol_table, memory_table);
 
 }
 
@@ -177,4 +181,23 @@ void write_ent_file(char fileName[], struct symbolTable *symboltable) {
 	}
 
 	 
+}
+
+
+void write_ext_file(char fileName[],struct symbolTable *symboltable, struct memoryTable *memorytable) {
+
+	char text[15] = "";
+
+	/* clear text for the first time */
+	write_file(fileName, text, "w");
+
+	/* from symbol table find the external symbol*/
+
+	/* look up for the symbol in the memory table */
+
+	/* show ther address*/
+
+
+
+
 }
