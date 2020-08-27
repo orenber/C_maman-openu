@@ -1,7 +1,11 @@
 #pragma once
+#ifndef LINKLIST
+#define LINKLIST
 
-#include "assembler.h"
-
+#include <stdlib.h>
+#include "Data_structures.h"
+ 
+ 
 
 /* link list -----------------------------------*/
 
@@ -61,3 +65,4 @@ void print_memory_table(struct memoryTable* link_list);
 void print_data_table(struct dataTable* link_list);
 
 
+#endif

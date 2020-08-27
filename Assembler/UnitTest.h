@@ -1,6 +1,10 @@
 #pragma once
 
-#include "assembler.h"
+#ifndef UNITSTEST
+#define UNITSTEST
+
+#include "ArrayUtils.h"
+#include "Data_structures.h"
 
 
 /* unit test -------------------------------------*/
@@ -26,6 +30,6 @@ void test_num2string();
 void print_test_result(BOOL test);
 
 
- 
-
 void run_test();
+
+#endif 

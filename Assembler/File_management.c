@@ -1,5 +1,5 @@
 #include "File_management.h"
-
+extern struct state st;
 
 BOOL write_file(char fileName[], char word[], char write_type[]) {
 
@@ -90,7 +90,7 @@ void create_files_output(char file_to_read[],struct memoryTable *memory_table, s
 
 	/* .ext*/
 	file_to_write = strep(file_to_read, ".as", ".ext");
-	write_ent_file(file_to_write, symbol_table, memory_table);
+	write_ext_file(file_to_write, symbol_table, memory_table);
 
 }
 
@@ -189,15 +189,58 @@ void write_ext_file(char fileName[],struct symbolTable *symboltable, struct memo
 	char text[15] = "";
 
 	/* clear text for the first time */
+	strcpy(text, "");
 	write_file(fileName, text, "w");
 
-	/* from symbol table find the external symbol*/
 
-	/* look up for the symbol in the memory table */
-
-	/* show ther address*/
+	while (symboltable != NULL) {
+		/* from symbol table find the external symbol*/
+		if (symboltable->isInternal == False) {
+			
+			search_symbol_in_memory_table(fileName, symboltable->symbol, memorytable);
+		}
+		symboltable = symboltable->next;
+	}
 
 
 
 
 }
+
+void search_symbol_in_memory_table(char fileName[], char symbol[], struct memoryTable *memorytable) {
+	char text[15] = "";
+
+
+	while (memorytable != NULL) {
+		/* look up for the symbol in the memory table */
+		if (strcmp(memorytable->name, symbol) == 0) {
+
+			strcpy(text, "");
+			/* convert symbol to text */
+			strcat(text, memorytable->name);
+			strcat(text, " ");
+
+			/* convert address to string*/
+			strcat(text, num2string(memorytable->address));
+
+			/* write text file */
+			write_file(fileName, text, "a");
+
+
+		}
+		memorytable = memorytable->next;
+	}
+
+
+
+}
+
+void write_text() {
+
+	
+
+
+
+
+
+ }

@@ -1,5 +1,5 @@
 #include "ArrayUtils.h"
-
+ 
 
 void printArray(int arr[],int length)
 {
@@ -51,7 +51,7 @@ void array2string(int arrayNumber[], char* stringArray) {
 int * string2array(char stringArray[],int *length) {
 
 	const char seperetor[] = { ',' };
-	char *var = "" ,strArray[MEM] = "";
+	char *var = "" ,strArray[30] = "";
 	int i = 0, inputNum = 0;
 	int *arrayNumber;
 
@@ -349,25 +349,3 @@ int char_apperance(char text[], char token) {
 
 	return apperance;
 }
-
-
-BOOL compare_string(char *first, char *second)
-{
-	BOOL match = False;
-	while (*first == *second)
-	{
-		if (*first == '\0' || *second == '\0')
-			break;
-
-		first++;
-		second++;
-	}
-	if (*first == '\0' && *second == '\0') {
-		match = True;
-	}
- 
-	return match;
- 
-}
-
- 

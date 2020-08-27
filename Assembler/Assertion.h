@@ -1,5 +1,9 @@
 #pragma once
-#include "assembler.h"
+#include "Liberis.h"
+#include "Data_structures.h"
+#ifndef ASSERTION
+#define ASSERTION
+
 
 /* Assertion -----------------------------------*/
 
@@ -18,3 +22,6 @@ BOOL assertIsEqual(int num1, int num2);
 BOOL assert_command(char real_command[], const char *legal_command[], int  length, char error_messege[]);
 
 BOOL assertIsEmpty(char sentence[]);
+
+
+#endif

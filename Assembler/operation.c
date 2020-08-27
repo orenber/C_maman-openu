@@ -1,92 +1,5 @@
+
 #include "operation.h"
-
-void mov(int A, Register *operand) {
-
-	*operand = A;
-}
-
-
-BOOL cmp(int A, Register operand) {
-
-	BOOL Z;
-
-	if ((A - operand) == 0) {
-		Z = True;
-	}
-	else
-	{
-		Z = False;
-	}
-	return Z;
-}
-
-
-void add(int A, Register *operand) {
-
-	operand = operand + A;
-
-}
-
-void sub(int A, Register *operand) {
-
-	operand = operand - A;
-}
-
-
-void lea(char *word, Register *operand) {
-	operand = &word;
-}
-
-/* one operand*/
-
-void clr(Register *operand) {
-	operand = 0;
-}
-
-void not(Register *operand) {
-	operand = 0;
-}
-
-void inc(Register *operand) {
-	(*operand)++;
-}
-
-void dec(Register *operand) {
-	(*operand)--;
-}
-
-void jmp() {
-
-
-}
-
-void bne() {
-
-}
-
-
-void jsr() {
-
-}
-
-void red() {
-
-}
-
-void prn(int value) {
-
-	printf("%d", value);
-}
-
-/* no operands*/
-
-void rts() {
-
-}
-
-void stop() {
-
-}
 
 
 
@@ -511,3 +424,228 @@ void add_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 }
 
 
+struct setupRegistretion get_address_register_setup(char nargin_str[], struct operationFunc *opcodeFunc) {
+
+	char *inputs;
+	char command_input[MEM] = "";  /* copy of input string */
+								   /* number of input argument*/
+	int *binaryArr;
+	int input_num = 0;
+	Register *regi;
+
+	struct setupRegistretion inputRegistretion;
+	strcpy(command_input, nargin_str);
+
+	/* set defult values*/
+	resetValues(&inputRegistretion, opcodeFunc);
+
+	/* check for number of inputs */
+	input_num = inputs_check(nargin_str, ',');
+	inputs = strtok(command_input, ",");
+
+	if (input_num == 2) {
+		/* first input*/
+
+		inputRegistretion.firstOperand.Type = getAddresingType(inputs);
+
+		binaryArr = decimal2binaryArray((int)inputRegistretion.firstOperand.Type, 2);
+		arrayAssign(opcodeFunc->addressSource, binaryArr, 0, 1);
+		switch (inputRegistretion.firstOperand.Type) {
+
+		case Immediate:
+
+			/*ARE*/
+			binaryArr = decimal2binaryArray(4, 3);
+			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
+			/* value*/
+			inputRegistretion.firstOperand.value = atoi(inputs);
+			printf("%d", inputRegistretion.firstOperand.value);
+			break;
+
+		case Direct:
+
+			/*ARE*/
+			binaryArr = decimal2binaryArray(4, 3);
+			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
+			/* copy value*/
+			strcpy(inputRegistretion.firstOperand.label, inputs);
+
+			break;
+
+		case Relative:
+
+			/*ARE*/
+			binaryArr = decimal2binaryArray(4, 3);
+			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
+			break;
+
+		case Register_Direct:
+			/*ARE*/
+			binaryArr = decimal2binaryArray(4, 3);
+			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
+
+			regi = getRegisterVar(inputs);
+			/*Register*/
+			inputRegistretion.firstOperand.Register = regi[0];
+			/*value*/
+			inputRegistretion.firstOperand.value = (int)regi[0];
+			/*label*/
+			strcpy(inputRegistretion.firstOperand.label, inputs);
+			binaryArr = decimal2binaryArray(inputRegistretion.firstOperand.value, 3);
+			arrayAssign(opcodeFunc->registerSource, binaryArr, 0, 2);
+			break;
+		}
+
+
+		/* second input*/
+		inputs = strtok(NULL, ",");
+	}
+
+	if (inputs != NULL) {
+
+		inputRegistretion.secondOperand.Type = getAddresingType(inputs);
+
+		binaryArr = decimal2binaryArray((int)inputRegistretion.secondOperand.Type, 2);
+		arrayAssign(opcodeFunc->addressDestination, binaryArr, 0, 1);
+		switch (inputRegistretion.secondOperand.Type) {
+
+		case Immediate:
+
+			/*ARE*/
+			binaryArr = decimal2binaryArray(4, 3);
+			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
+			strcpy(inputRegistretion.secondOperand.label, inputs);
+			/* value*/
+			remove_substring(inputs, "#");
+			inputRegistretion.secondOperand.value = atoi(inputs);
+
+			break;
+
+		case Direct:
+
+			binaryArr = decimal2binaryArray(4, 3);
+			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
+
+			/* copy label*/
+			strcpy(inputRegistretion.secondOperand.label, inputs);
+
+			break;
+
+		case Relative:
+			/*ARE*/
+			binaryArr = decimal2binaryArray(4, 3);
+			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
+			strcpy(inputRegistretion.secondOperand.label, inputs);
+			break;
+
+		case Register_Direct:
+			/*ARE*/
+			binaryArr = decimal2binaryArray(4, 3);
+			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
+
+			regi = getRegisterVar(inputs);
+			inputRegistretion.secondOperand.Register = regi[0];
+			binaryArr = decimal2binaryArray((int)inputRegistretion.secondOperand.Register, 3);
+			arrayAssign(opcodeFunc->registerDestination, binaryArr, 0, 2);
+		}
+
+
+
+	}
+	else {
+
+
+	}
+	return inputRegistretion;
+
+}
+
+
+
+void mov(int A, Register *operand) {
+
+	*operand = A;
+}
+
+
+BOOL cmp(int A, Register operand) {
+
+	BOOL Z;
+
+	if ((A - operand) == 0) {
+		Z = True;
+	}
+	else
+	{
+		Z = False;
+	}
+	return Z;
+}
+
+
+void add(int A, Register *operand) {
+
+	operand = operand + A;
+
+}
+
+void sub(int A, Register *operand) {
+
+	operand = operand - A;
+}
+
+
+void lea(char *word, Register *operand) {
+	operand = &word;
+}
+
+/* one operand*/
+
+void clr(Register *operand) {
+	operand = 0;
+}
+
+void not(Register *operand) {
+	operand = 0;
+}
+
+void inc(Register *operand) {
+	(*operand)++;
+}
+
+void dec(Register *operand) {
+	(*operand)--;
+}
+
+void jmp() {
+
+
+}
+
+void bne() {
+
+}
+
+
+void jsr() {
+
+}
+
+void red() {
+
+}
+
+void prn(int value) {
+
+	printf("%d", value);
+}
+
+/* no operands*/
+
+void rts() {
+
+}
+
+void stop() {
+
+}

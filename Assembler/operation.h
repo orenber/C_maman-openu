@@ -1,7 +1,6 @@
 #pragma once
 
 #include "assembler.h"
-/* operation */
 
 
 void mov_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
@@ -36,7 +35,7 @@ void rts_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
 void stop_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
-
+struct setupRegistretion get_address_register_setup(char nargin_str[], struct operationFunc *opcodeFunc);
 
 
 void mov(int A, Register *operand);

@@ -1,5 +1,10 @@
-#pragma once
-#include "assembler.h"
+
+#ifndef ARR
+#define ARR
+
+#include "Liberis.h"
+#include "Data_structures.h"
+
 /* ArrayUtils ---------------------------------------*/
 
 char* strep(const char* s, const char* oldW, const char* newW);
@@ -31,3 +36,5 @@ void remove_substring_parts(char *main_string, char *sub_string_parts);
 void arrayAssign(int *arrtoChange, int subArray[], int initial_index, int final_index);
 
 int char_apperance(char text[], char token);
+
+#endif // !1

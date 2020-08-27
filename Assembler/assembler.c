@@ -11,8 +11,8 @@ Last Modified On : 23-08-2020
 **********************************************************************
 */
 
+#include "assembler.h"
 
-#include "Interface.h"
 
 
 
@@ -40,7 +40,9 @@ struct {
 		ICF,
 		DC,
 		DCF,
-		Pass_num;
+		Pass_num,
+	line_num;
+	BOOL pass;
 }state;
 
 
@@ -56,7 +58,7 @@ int main(int argc, char* argv[])
 		 
 		filepointer = open_files(argc, argv[filesNumber]);
 		analize_files(filepointer);
-		create_files_output(argv[filesNumber++], memory_table, symbol_table);
+		create_files_output(argv[filesNumber++], memory_table,data_table, symbol_table);
 		 
 	}
 
@@ -78,9 +80,10 @@ void analize_files(FILE *filePointer) {
 void first_pass(FILE* filePointer) {
 
 	char line_read[BUFFERSIZE] = "";     /* digit number string*/
-	char *output = "";                   /* output from the user */
+	char *output = ""; /* output from the user */
 
-	
+	state.line_num = 0;
+	state.pass = True;
     state.DC = 0;
 	state.IC = 100;
 	state.Pass_num = 1;
@@ -91,6 +94,7 @@ void first_pass(FILE* filePointer) {
 		/* get the input from the file - read line by line*/
 		output = fgets(line_read, BUFFERSIZE, filePointer);
 		if (output != NULL) {
+			state.line_num++;
 			commands_first_pass(output);
 		}
 	} while (output != NULL);
@@ -102,13 +106,11 @@ void first_pass(FILE* filePointer) {
 	print_symbol_table(symbol_table);
 	print_data_table(data_table);
 
-
-
 }
 
 void commands_first_pass(char command_original[]) {
 
-	static int line_num = 0;
+	
 	char *command_section = "", *next_command = "",
 		command[MEM] = "",
 		command_left[MEM], input_str[MEM];
@@ -116,11 +118,12 @@ void commands_first_pass(char command_original[]) {
 	struct operationFunc opcodeFunc;
 	TypeSymbol type_symbol;
 
+	
 	strcpy(command, command_original);
 	strcpy(command_left, command_original);
 
 	
-	line_num++;
+	
 	while (end_line != True) {
 
 		remove_substring(&command_left, command_section);
@@ -173,9 +176,15 @@ void commands_first_pass(char command_original[]) {
 				type_symbol = data;
 
 			}
-			remove_substring(command_section, ":");
+			
 			flag_manger(command_section, type_symbol);
 
+		}
+		else {
+
+			printf("undefine command: %s ", command_section);
+			printf("Error in line %d ", state.line_num);
+			state.pass = False;
 		}
 
 	}
@@ -190,6 +199,7 @@ void second_pass(FILE* filePointer) {
 
 	/* second pass*/
 
+	state.line_num = 0;
 	state.DC = 0;
 	state.IC = 99;
 	state.Pass_num = 2;
@@ -201,7 +211,10 @@ void second_pass(FILE* filePointer) {
 		/* get the input from the file - read line by line*/
 		output = fgets(line_read, BUFFERSIZE, filePointer);
 		if (output != NULL) {
+	
+			state.line_num++;
 			commands_second_pass(output);
+			
 		}
 	} while (output != NULL);
 
@@ -224,6 +237,7 @@ void commands_second_pass(char command_original[]) {
 	    	input_str[MEM] ;
 	BOOL end_line = False, isFlag;
 	struct operationFunc opcodeFunc;
+
 	strcpy(command, command_original);
 	strcpy(command_left, command_original);
 	
@@ -278,8 +292,12 @@ void commands_second_pass(char command_original[]) {
 
 }
 
-void flag_manger(char symbol[], TypeSymbol type) {
+void flag_manger(char label[], TypeSymbol type) {
 	
+	char symbol[NAME];
+	strcpy(symbol, label);
+
+	remove_substring(symbol, ":");
 	/* insert the flag in the table flage  - link list */
 	push_symbol_table(&symbol_table, state.IC, symbol, type,True);
 	 
@@ -395,7 +413,7 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 			break;
 
 		case (Direct):
-
+			
 			/* get the label data*/
 			symbol_data = get_symbol_data(symbol_table, st.label);
 
@@ -583,141 +601,7 @@ int * createBinaryArray(struct operationFunc *opcodeFunc) {
 
 }
 
-struct setupRegistretion get_address_register_setup(char nargin_str[], struct operationFunc *opcodeFunc) {
 
-	char *inputs;
-	char command_input[MEM] = "";  /* copy of input string */
-								   /* number of input argument*/
-	int *binaryArr;
-	int input_num = 0;
-	Register *regi;
-
-	struct setupRegistretion inputRegistretion;
-	strcpy(command_input, nargin_str);
-
-	/* set defult values*/
-	resetValues(&inputRegistretion, opcodeFunc);
-
-	/* check for number of inputs */
-	input_num = inputs_check(nargin_str, ',');
-	inputs = strtok(command_input, ",");
-
-	if (input_num == 2) {
-		/* first input*/
-	
-		inputRegistretion.firstOperand.Type = getAddresingType(inputs);
-
-		binaryArr = decimal2binaryArray((int)inputRegistretion.firstOperand.Type, 2);
-		arrayAssign(opcodeFunc->addressSource, binaryArr, 0, 1);
-		switch (inputRegistretion.firstOperand.Type) {
-
-		case Immediate:
-
-			/*ARE*/
-			binaryArr = decimal2binaryArray(4, 3);
-			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
-			/* value*/
-			inputRegistretion.firstOperand.value = atoi(inputs);
-			printf("%d", inputRegistretion.firstOperand.value);
-			break;
-
-		case Direct:
-			
-			/*ARE*/
-			binaryArr = decimal2binaryArray(4, 3);
-			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
-			/* copy value*/
-			strcpy(inputRegistretion.firstOperand.label, inputs);
-
-			break;
-
-		case Relative:
-
-			/*ARE*/
-			binaryArr = decimal2binaryArray(4, 3);
-			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
-			break;
-
-		case Register_Direct:
-			/*ARE*/
-			binaryArr = decimal2binaryArray(4, 3);
-			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
-
-			regi = getRegisterVar(inputs);
-			/*Register*/
-			inputRegistretion.firstOperand.Register = regi[0];
-			/*value*/
-			inputRegistretion.firstOperand.value = (int)regi[0];
-			/*label*/
-			strcpy(inputRegistretion.firstOperand.label, inputs);
-			binaryArr = decimal2binaryArray(inputRegistretion.firstOperand.value, 3);
-			arrayAssign(opcodeFunc->registerSource, binaryArr, 0, 2);
-			break;
-		}
-
-	
-	/* second input*/
-	inputs = strtok(NULL, ",");
-	}
-
-	if (inputs != NULL) {
-
-		inputRegistretion.secondOperand.Type = getAddresingType(inputs);
-		
-		binaryArr = decimal2binaryArray((int)inputRegistretion.secondOperand.Type, 2);
-		arrayAssign(opcodeFunc->addressDestination, binaryArr, 0, 1);
-		switch (inputRegistretion.secondOperand.Type) {
-        
-		case Immediate:
-
-			/*ARE*/
-			binaryArr = decimal2binaryArray(4, 3);
-			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
-			strcpy(inputRegistretion.secondOperand.label, inputs);
-			/* value*/
-			remove_substring(inputs, "#");
-			inputRegistretion.secondOperand.value = atoi(inputs);
-			
-			break;
-		
-		case Direct:
-
-			binaryArr = decimal2binaryArray(4, 3);
-			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
-
-			/* copy label*/
-			strcpy(inputRegistretion.secondOperand.label, inputs);
-
-			break;
-
-		case Relative:
-			/*ARE*/
-			binaryArr = decimal2binaryArray(4, 3);
-			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
-			strcpy(inputRegistretion.secondOperand.label, inputs);
-			break;
-
-		case Register_Direct:
-			/*ARE*/
-			binaryArr = decimal2binaryArray(4, 3);
-			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
-
-			regi = getRegisterVar(inputs);
-			inputRegistretion.secondOperand.Register = regi[0];
-			binaryArr = decimal2binaryArray((int)inputRegistretion.secondOperand.Register, 3);
-			arrayAssign(opcodeFunc->registerDestination, binaryArr, 0, 2);
-		}
-
-
-
-	}
-	else {
-
-
-	}
-	return inputRegistretion;
-
-}
 
 void resetValues(struct setupRegistretion *inputRegistretion,struct operationFunc *opcodeFunc) {
 
