@@ -12,9 +12,9 @@ BOOL is_legal_label(char label[]) {
 		 return is_legal;
 	 }
 	/* max length 31 chars */
-	 is_legal = length <= 31;
+	 is_legal = length - 1 <= NAME; /* extra one for ':' chars*/
 	 if (!is_legal) {
-		 printf("%s", "max length must be less than 31 chars");
+		 printf("max length must be less than %d chars", NAME);
 		 return is_legal;
 	 }
 	/* end with : only once*/

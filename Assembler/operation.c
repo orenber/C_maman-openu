@@ -427,7 +427,7 @@ void add_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 struct setupRegistretion get_address_register_setup(char nargin_str[], struct operationFunc *opcodeFunc) {
 
 	char *inputs;
-	char command_input[MEM] = "";  /* copy of input string */
+	char command_input[MAX_LINE_WIDTH] = "";  /* copy of input string */
 								   /* number of input argument*/
 	int *binaryArr;
 	int input_num = 0;
@@ -460,6 +460,8 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 			/* value*/
 			inputRegistretion.firstOperand.value = atoi(inputs);
 			printf("%d", inputRegistretion.firstOperand.value);
+			/*label*/
+			strcpy(inputRegistretion.firstOperand.label, inputs);
 			break;
 
 		case Direct:
@@ -467,7 +469,7 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 			/*ARE*/
 			binaryArr = decimal2binaryArray(4, 3);
 			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
-			/* copy value*/
+			/*label*/
 			strcpy(inputRegistretion.firstOperand.label, inputs);
 
 			break;
@@ -553,8 +555,10 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 
 	}
 	else {
-
-
+		/* ther is no operands*/
+		/*ARE*/
+		binaryArr = decimal2binaryArray(4, 3);
+		arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
 	}
 	return inputRegistretion;
 

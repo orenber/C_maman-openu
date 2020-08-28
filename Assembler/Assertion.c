@@ -7,10 +7,10 @@ expected_nargin - expected number of argument input ..</summary> */
 BOOL assert_nargin(char text[], int expected_nargin) {
 
 	BOOL valid_inputs = False;
-	char messege[MEM] = "", *sep = "";
+	char messege[NAME] = "", *sep = "";
 	int nargin = 0;
-	char seperator[] = { ',','\n','\t',':',' ','\r' };
-	char command_input[MEM] = "";  /* copy of input string */
+	char seperator[] = { ',','\n','\t',':',' ','\r','\0'};
+	char command_input[MAX_LINE_WIDTH] = "";  /* copy of input string */
 	
 	strcpy(command_input, text);
 	sep = strtok(command_input, seperator);
@@ -125,7 +125,7 @@ comma_sum - number of cummas that need to be in the text..</summary> */
 BOOL assert_comma(char text[], int comma_sum) {
 
 	BOOL llegal_comma = False;
-	char error_messege[MEM] = "", clean_string[MEM] = "";
+	char error_messege[MAX_LINE_WIDTH] = "", clean_string[MAX_LINE_WIDTH] = "";
 	int length = 0;
 	char *illgal_comma = ",,";
 
@@ -210,7 +210,7 @@ BOOL assertIsEmpty(char sentence[]) {
 
 	/* seperator for parsing text*/
     const char seperator[] = {' ','\t','\r','\n','\0'};
-	char text[MEM] = " ";
+	char text[MAX_LINE_WIDTH] = " ";
 	int length ;
 	BOOL IsEmpty = False;
 

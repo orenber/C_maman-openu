@@ -14,13 +14,9 @@ Last Modified On : 23-08-2020
 #include "assembler.h"
 
 
-
-
 static struct symbolTable *symbol_table;
 static struct memoryTable *memory_table;
 static struct dataTable *data_table;
-
-
 
 Register R0 = r0, R1 = r1, R2 = r2,
 R3 = r3, R4 = r4, R5 = r5,
@@ -35,15 +31,7 @@ struct {
 { "r6",&R6 },{ "r7",&R7 },{ "#",NULL }
 };
 
- struct {
-	int IC,
-		ICF,
-		DC,
-		DCF,
-		Pass_num,
-	line_num;
-	BOOL pass;
-}state;
+struct STATE state;
 
 
 int main(int argc, char* argv[])
@@ -79,7 +67,7 @@ void analize_files(FILE *filePointer) {
 
 void first_pass(FILE* filePointer) {
 
-	char line_read[BUFFERSIZE] = "";     /* digit number string*/
+	char line_read[MAX_LINE_WIDTH] = "";     /* digit number string*/
 	char *output = ""; /* output from the user */
 
 	state.line_num = 0;
@@ -92,7 +80,7 @@ void first_pass(FILE* filePointer) {
 	do {
 		printf("\n%s", line_read);
 		/* get the input from the file - read line by line*/
-		output = fgets(line_read, BUFFERSIZE, filePointer);
+		output = fgets(line_read, MAX_LINE_WIDTH, filePointer);
 		if (output != NULL) {
 			state.line_num++;
 			commands_first_pass(output);
@@ -112,8 +100,8 @@ void commands_first_pass(char command_original[]) {
 
 	
 	char *command_section = "", *next_command = "",
-		command[MEM] = "",
-		command_left[MEM], input_str[MEM];
+		command[MAX_LINE_WIDTH] = "",
+		command_left[MAX_LINE_WIDTH], input_str[NAME];
 	BOOL end_line = False, isFlag;
 	struct operationFunc opcodeFunc;
 	TypeSymbol type_symbol;
@@ -194,7 +182,7 @@ void commands_first_pass(char command_original[]) {
 void second_pass(FILE* filePointer) {
 	
 
-	char line_read[BUFFERSIZE] = "";     /* digit number string*/
+	char line_read[MAX_LINE_WIDTH] = "";     /* digit number string*/
 	char *output = "";                   /* output from the user */
 
 	/* second pass*/
@@ -209,7 +197,7 @@ void second_pass(FILE* filePointer) {
 	do {
 		printf("\n%s", line_read);
 		/* get the input from the file - read line by line*/
-		output = fgets(line_read, BUFFERSIZE, filePointer);
+		output = fgets(line_read, MAX_LINE_WIDTH, filePointer);
 		if (output != NULL) {
 	
 			state.line_num++;
@@ -232,9 +220,9 @@ void commands_second_pass(char command_original[]) {
 
 
 	char *command_section = "";
-	char command[MEM] = "",
-		 command_left[MEM],
-	    	input_str[MEM] ;
+	char command[MAX_LINE_WIDTH] = "",
+		 command_left[MAX_LINE_WIDTH],
+	    	input_str[MAX_LINE_WIDTH] ;
 	BOOL end_line = False, isFlag;
 	struct operationFunc opcodeFunc;
 
@@ -294,7 +282,7 @@ void commands_second_pass(char command_original[]) {
 
 void flag_manger(char label[], TypeSymbol type) {
 	
-	char symbol[NAME];
+	char symbol[NAME+1];    /*  more 1 for extra ':' char*/
 	strcpy(symbol, label);
 
 	remove_substring(symbol, ":");
@@ -633,7 +621,7 @@ void resetValues(struct setupRegistretion *inputRegistretion,struct operationFun
 AdressType getAddresingType(char inputString[]) {
 
 	AdressType addresingType;
-	char str[NAME];
+	char str[NAME+1];
 	const char hashTag[] = "#";
 	const char andTag[] = "&";
 

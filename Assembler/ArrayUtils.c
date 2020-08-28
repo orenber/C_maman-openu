@@ -51,7 +51,7 @@ void array2string(int arrayNumber[], char* stringArray) {
 int * string2array(char stringArray[],int *length) {
 
 	const char seperetor[] = { ',' };
-	char *var = "" ,strArray[30] = "";
+	char *str = "" ,strArray[MAX_LINE_WIDTH] = "";
 	int i = 0, inputNum = 0;
 	int *arrayNumber;
 
@@ -60,12 +60,11 @@ int * string2array(char stringArray[],int *length) {
 	arrayNumber = (int*)calloc(length, sizeof(int));
 
 	strcpy(strArray, stringArray);
-	var = strtok(strArray, seperetor);
+	str = strtok(strArray, seperetor);
 	
-	while (var != NULL) {
-		
-		arrayNumber[i] = atoi(var);
-		var = strtok(NULL, seperetor);
+	while (str != NULL) {
+		sscanf(str, "%d", &arrayNumber[i]);
+		str = strtok(NULL, seperetor);
 		i++;
 
 	}

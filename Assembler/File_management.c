@@ -1,8 +1,8 @@
 #include "File_management.h"
-extern struct state st;
+
 
 BOOL write_file(char fileName[], char word[], char write_type[]) {
-
+	
 	FILE *filePointer;
 	BOOL is_file_exist = True;  /* is the file that i write to, exist?*/
 
@@ -56,7 +56,7 @@ BOOL file_exists(char fileName[])
 
 FILE * open_files(int argc, char fileName[]) {
 
-	char file_to_read[MEM] = "";        /* file name that i read from*/
+	char file_to_read[NAME] = "";        /* file name that i read from*/
 	BOOL is_file_read_exist = False;    /* is the file that i read from exist?*/
 	int  nargin = argc;                  /* number of input in */
 	FILE *filePointer = NULL;
@@ -154,7 +154,7 @@ void write_ob_file(char fileName[], struct addressTable* addresstable,struct dat
 void write_ent_file(char fileName[], struct symbolTable *symboltable) {
 
 
-	char text[15] = "";
+	char text[MAX_LINE_WIDTH] = "";
 
 	/* clear text for the first time */
 	write_file(fileName, text, "w");
@@ -186,7 +186,7 @@ void write_ent_file(char fileName[], struct symbolTable *symboltable) {
 
 void write_ext_file(char fileName[],struct symbolTable *symboltable, struct memoryTable *memorytable) {
 
-	char text[15] = "";
+	char text[MAX_LINE_WIDTH] = "";
 
 	/* clear text for the first time */
 	strcpy(text, "");
@@ -208,7 +208,7 @@ void write_ext_file(char fileName[],struct symbolTable *symboltable, struct memo
 }
 
 void search_symbol_in_memory_table(char fileName[], char symbol[], struct memoryTable *memorytable) {
-	char text[15] = "";
+	char text[MAX_LINE_WIDTH] = "";
 
 
 	while (memorytable != NULL) {
@@ -235,12 +235,3 @@ void search_symbol_in_memory_table(char fileName[], char symbol[], struct memory
 
 }
 
-void write_text() {
-
-	
-
-
-
-
-
- }

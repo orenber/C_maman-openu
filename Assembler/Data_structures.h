@@ -4,10 +4,8 @@
 #ifndef CONSTANTS;
 #define CONSTANTS
 
- 
-#define NAME 10
-#define MEM 31
-#define BUFFERSIZE 81
+#define NAME 32
+#define MAX_LINE_WIDTH 81
 #define bitrray 24
 #define INITIAL_ADDRESS  100
 
@@ -34,7 +32,6 @@ typedef enum {
 	Register_Direct = 3
 }AdressType;
 
-
 typedef struct ARE {
 	BOOL x[3];
 } ARE;
@@ -44,7 +41,6 @@ typedef enum {
 	r3 = 3, r4 = 4, r5 = 5,
 	r6 = 6, r7 = 7
 }Register;
-
 
 typedef struct
 {
@@ -58,9 +54,6 @@ typedef struct
 typedef enum {
 	code = 0, data = 1, external = 2, entry = 3
 }TypeSymbol;
-
-
-
 
 
 struct operationFunc {
@@ -78,7 +71,7 @@ struct operationFunc {
 };
 
 struct symbolTable {
-	char symbol[10];
+	char symbol[NAME];
 	int address;
 	TypeSymbol characterization;
 	BOOL isInternal;
@@ -87,20 +80,18 @@ struct symbolTable {
 
 struct memoryTable {
 	int address;
-	char name[MEM];
+	char name[NAME];
 	int binaryMachineCode[24];
 	struct memoryTable *next;
 }*top_node;
 
-
 struct dataTable {
 	int address;
-	char name[10];
+	char name[NAME];
 	int binaryMachineCode[24];
 	struct dataTable *next;
 
 }*head;
-
 
 struct addressData {
 	int address;
@@ -108,9 +99,8 @@ struct addressData {
 
 };
 
-
 struct symbolData {
-	char symbol[10];
+	char symbol[NAME];
 	int address;
 	TypeSymbol characterization;
 	BOOL isInternal;
@@ -121,6 +111,16 @@ struct  setupRegistretion {
 	polymorfType firstOperand;
 	polymorfType secondOperand;
 
+};
+
+struct STATE {
+	int IC,
+		ICF,
+		DC,
+		DCF,
+		Pass_num,
+		line_num;
+	BOOL pass;
 };
 
 
