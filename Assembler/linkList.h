@@ -64,5 +64,5 @@ void print_memory_table(struct memoryTable* link_list);
 
 void print_data_table(struct dataTable* link_list);
 
-
+void reverseUtil(struct dataTable* curr, struct dataTable* prev, struct dataTable** head);
 #endif

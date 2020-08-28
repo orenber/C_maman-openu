@@ -319,7 +319,7 @@ int array_string_length(char *names[]) {
 	return namesLen;
 }
 
-void remove_substring_parts(char *main_string,const char *sub_string_parts) {
+void remove_substring_parts(char *main_string, char sub_string_parts[]) {
 
 	int i = 0;
 	int len = strlen(sub_string_parts);
@@ -347,4 +347,25 @@ int char_apperance(char text[], char token) {
 	}
 
 	return apperance;
+}
+
+void str_inside(char* oldW, const char inside) {
+
+	int i = 0;
+	BOOL del = True;
+
+	while (oldW[i] != '\0') {
+
+		if (oldW[i] == inside) {
+
+			del = (del == False);
+		}
+
+		if (del){
+			memmove(oldW, oldW + 1, strlen(oldW));;
+		}
+		i++;
+	}
+
+
 }

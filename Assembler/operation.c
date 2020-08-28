@@ -85,7 +85,7 @@ void mov_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 	int *binaryArr;
 	int nargin = 2;
 	BOOL is_leagal_address;
-
+	
 	/* assert number of inputs */
 	if (assert_nargin(nargin_str, nargin) == False) { return; }
 	/* assert legal comma */
@@ -457,11 +457,14 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 			/*ARE*/
 			binaryArr = decimal2binaryArray(4, 3);
 			arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
-			/* value*/
-			inputRegistretion.firstOperand.value = atoi(inputs);
-			printf("%d", inputRegistretion.firstOperand.value);
+			
 			/*label*/
 			strcpy(inputRegistretion.firstOperand.label, inputs);
+
+			/* value*/
+			remove_substring(inputs, "#");
+			inputRegistretion.firstOperand.value = atoi(inputs);
+			printf("%d", inputRegistretion.firstOperand.value);
 			break;
 
 		case Direct:

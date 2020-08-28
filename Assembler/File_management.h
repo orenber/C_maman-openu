@@ -9,6 +9,7 @@
 
 
 /* File management ---------------------------------*/
+extern struct STATE state;
 
 BOOL file_exists(char fileName[]);
 

@@ -90,11 +90,20 @@ void first_pass(FILE* filePointer) {
 	/* update final position */
 	state.ICF = state.IC;
 	state.DCF = state.DC;
-
 	print_symbol_table(symbol_table);
 	print_data_table(data_table);
+	/*print_memory_table(memory_table);*/
+
+	update_symbol_table_address(symbol_table, data, state.ICF);
+	print_symbol_table(symbol_table);
+	update_memory_table_from_data_table(&memory_table, data_table, state.ICF);
+	
+	print_data_table(data_table);
+	print_memory_table(memory_table);
 
 }
+
+
 
 void commands_first_pass(char command_original[]) {
 
@@ -146,7 +155,7 @@ void commands_first_pass(char command_original[]) {
 		{
 			/* Guidance sentence */
 			remove_substring(&command_left, command_section);
-			remove_substring_parts(&command_left, seperator);
+			
 
 			guidance_sentence(command_section, command_left);
 			end_line = True;
@@ -282,12 +291,25 @@ void commands_second_pass(char command_original[]) {
 
 void flag_manger(char label[], TypeSymbol type) {
 	
-	char symbol[NAME+1];    /*  more 1 for extra ':' char*/
+	char symbol[NAME+1];/*  more 1 for extra ':' char*/
+	char sep[] = { ':','\n',' ','\0'};
 	strcpy(symbol, label);
 
-	remove_substring(symbol, ":");
+
+	remove_substring_parts(symbol, sep);
 	/* insert the flag in the table flage  - link list */
-	push_symbol_table(&symbol_table, state.IC, symbol, type,True);
+	switch (type) {
+	case code:
+		push_symbol_table(&symbol_table, state.IC, symbol, type, True);
+		break;
+	case data:
+		push_symbol_table(&symbol_table, state.DC, symbol, type, True);
+		break;
+	case external:
+		push_symbol_table(&symbol_table, 0, symbol, type, False);
+		break;
+	}
+	
 	 
 }
 
@@ -474,9 +496,11 @@ void string_sentence(char str[]) {
 		ascii;
 	int *binaryArr;
 	char latter[] = { ' ','\0' };
-	const char seperetor[] = { '/','"' };
+	
 
-	remove_substring_parts(str, seperetor);
+	str_inside(str, '"');
+	remove_substring(str, "\"");
+	strtok(str, "\n");
 	length = strlen(str);
 
 	for (i; i <= length; ++i) {
@@ -489,7 +513,7 @@ void string_sentence(char str[]) {
 		printf("%c:\t", str[i]);
 		printArray(binaryArr, bitrray);
 
-		push_and_update_memory_table(&memory_table, &state.IC, latter, binaryArr);
+		/*push_and_update_memory_table(&memory_table, &state.IC, latter, binaryArr);*/
 		push_and_update_data_table(&data_table, &state.DC, latter, binaryArr);
 	 
 	}
@@ -514,9 +538,9 @@ void data_sentence(char var[]) {
 		binaryArr = decimal2binaryArray(arr[i], bitrray);
 		printArray(binaryArr, bitrray);
 		sprintf(var, "%d", arr[i]);
-		/* push data to the tables  */
+		/* push data to the table  */
 
-		push_and_update_memory_table(&memory_table, &state.IC, var, binaryArr);
+		/*push_and_update_memory_table(&memory_table, &state.IC, var, binaryArr);*/
 		push_and_update_data_table(&data_table, &state.DC, var, binaryArr);
 	 
 	}
@@ -524,8 +548,8 @@ void data_sentence(char var[]) {
 }
 
 void extern_sentence(char symbol[]) {
-
-	push_symbol_table(&symbol_table, 0, symbol, external,False);
+	flag_manger(symbol, external);
+	
 }
 
 void entry_sentence(char symbol[]) {

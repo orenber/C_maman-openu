@@ -1,6 +1,7 @@
 #pragma once
 
 #include "assembler.h"
+extern struct STATE state;
 
 
 void mov_from_user(char nargin_str[], struct operationFunc *opcodeFunc);

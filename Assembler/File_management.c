@@ -7,7 +7,7 @@ BOOL write_file(char fileName[], char word[], char write_type[]) {
 	BOOL is_file_exist = True;  /* is the file that i write to, exist?*/
 
 	filePointer = fopen(fileName, write_type);
-
+	
 	if (filePointer == NULL)
 	{
 		is_file_exist = False;
@@ -108,18 +108,18 @@ void write_ob_file(char fileName[], struct addressTable* addresstable,struct dat
 	char text[15] = "";
 	
 	/* get number of command*/
-	  commands = size_memory_table(addresstable);
-	  instruction = INITIAL_ADDRESS + commands;
+	  data_size = state.ICF + state.DCF;
+	  instruction = state.ICF -INITIAL_ADDRESS ;
 
 	/* get number of data */
-	  data_size = size_data_table(dataTable);
-	  guidlines = commands - data_size;
+	  
+	  guidlines =  state.DCF;
 	 
 	  /* convert  num to string */
-	  sprintf(snum,"%7d", guidlines);
+	  sprintf(snum,"%7d", instruction);
 	  strcat(text, snum);
 	  strcat(text, " ");
-	  sprintf(snum, "%d", data_size);
+	  sprintf(snum, "%d", guidlines );
 	  strcat(text, snum);
 	  /* write text row*/
 	  write_file(fileName, text, "w");
@@ -127,7 +127,7 @@ void write_ob_file(char fileName[], struct addressTable* addresstable,struct dat
 	/* write text row*/
 	/*-------------------------*/
 
-	for (address = INITIAL_ADDRESS; address < instruction; ++address) {
+	for (address = INITIAL_ADDRESS; address < data_size; ++address) {
 		/* initilize text*/
 		strcpy(text,"");
 		/* get address*/
