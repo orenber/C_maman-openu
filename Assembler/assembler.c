@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
 
 	int filesNumber = 1;
 	FILE *filepointer = NULL; 
-	
+	run_test();
 
 	while (argv[filesNumber] != NULL) {
 
@@ -136,7 +136,7 @@ void commands_first_pass(char command_original[]) {
 	
 	while (end_line != True) {
 
-		remove_substring(&command_left, command_section);
+		remove_substring(command_left, command_section);
 		strcpy(command, command_left);
 		/* parse the command into 5 category */
 		command_section = strtok(command, seperator);
@@ -152,11 +152,11 @@ void commands_first_pass(char command_original[]) {
 		}
 
 
-		else if (assert_command(command_section, &instructionType, 16, ""))
+		else if (assert_command(command_section, instructionType, 16, ""))
 		{
 			/*Instructional sentence*/
-			remove_substring(&command_left, command_section);
-			remove_substring_parts(&command_left, seperator);
+			remove_substring(command_left, command_section);
+			remove_substring_parts(command_left, seperator);
 
 			instructional_sentence(command_section, command_left, &opcodeFunc);
 			
@@ -164,10 +164,10 @@ void commands_first_pass(char command_original[]) {
 
 		}
 
-		else if (assert_command(command_section, &guidanceType, 4, ""))
+		else if (assert_command(command_section, guidanceType, 4, ""))
 		{
 			/* Guidance sentence */
-			remove_substring(&command_left, command_section);
+			remove_substring(command_left, command_section);
 			
 
 			guidance_sentence(command_section, command_left);
@@ -179,10 +179,10 @@ void commands_first_pass(char command_original[]) {
 
 			next_command = strtok(NULL, seperator);
 
-			if (assert_command(next_command, &instructionType, 16, "")) {
+			if (assert_command(next_command, instructionType, 16, "")) {
 				type_symbol = code;
 			}
-			else if (assert_command(next_command, &guidanceType, 4, "")) {
+			else if (assert_command(next_command, guidanceType, 4, "")) {
 				type_symbol = data;
 
 			}
@@ -243,9 +243,8 @@ void commands_second_pass(char command_original[]) {
 
 	char *command_section = "";
 	char command[MAX_LINE_WIDTH] = "",
-		 command_left[MAX_LINE_WIDTH],
-	    	input_str[MAX_LINE_WIDTH] ;
-	BOOL end_line = False, isFlag;
+		command_left[MAX_LINE_WIDTH];
+	BOOL end_line = False;
 	struct operationFunc opcodeFunc;
 
 	strcpy(command, command_original);
@@ -254,7 +253,7 @@ void commands_second_pass(char command_original[]) {
 
 	while (end_line != True) {
 
-		remove_substring(&command_left, command_section);
+		remove_substring(command_left, command_section);
 		strcpy(command, command_left);
 		/* parse the command into 5 category */
 		command_section = strtok(command, seperator);
@@ -269,21 +268,21 @@ void commands_second_pass(char command_original[]) {
 			/* comment sentence */
 			end_line = True;
 		}
-		else if (assert_command(command_section, &instructionType, 16, ""))
+		else if (assert_command(command_section, instructionType, 16, ""))
 		{
 			/*Instructional sentence*/
-			remove_substring(&command_left, command_section);
-			remove_substring_parts(&command_left, seperator);
+			remove_substring(command_left, command_section);
+			remove_substring_parts(command_left, seperator);
 
 			instructional_sentence(command_section, command_left, &opcodeFunc);
 			end_line = True;
 
 		}
-		else if (assert_command(command_section, &guidanceType, 4, ""))
+		else if (assert_command(command_section, guidanceType, 4, ""))
 		{
 			/* Guidance sentence */
-			remove_substring(&command_left, command_section);
-			remove_substring_parts(&command_left, seperator);
+			remove_substring(command_left, command_section);
+			remove_substring_parts(command_left, seperator);
 			 if (strcmp(command_section, ".entry") == 0) {
 
 				entry_sentence(command_left);
@@ -419,7 +418,7 @@ void data_sentence(char var[]) {
 		printError(CANNOT_PARSE_LINE);
 		return;
 	}
-	arr = string2array(var,&length);
+	arr = string2array(var,length);
 	len = (int)length[0];
 	 
 	
@@ -472,11 +471,11 @@ void entry_sentence(char symbol[]) {
 
 void free_memory() {
 
-	free_symbol_table(&symbol_table);
+	free_symbol_table(symbol_table);
 
-	free_data_table_table(&data_table);
+	free_data_table_table(data_table);
 
-	free_memory_table(&memory_table);
+	free_memory_table(memory_table);
 
 }
 
@@ -484,8 +483,8 @@ void free_memory() {
 
 int * createBinaryArray(struct operationFunc *opcodeFunc) {
 
-	int binaryArray[24];
-	zeros(&binaryArray, 24);
+	int binaryArray[BITARRAY];
+	zeros(binaryArray, BITARRAY);
 	/*ARE*/
 	arrayAssign(binaryArray, opcodeFunc->ARE.x, INDEX(2), INDEX(0));
 
@@ -560,8 +559,8 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 	{
 	case (Immediate):
 		binaryArray = decimal2binaryArray(st.value, 21);
-		arrayAssign(&binary_machine_code, binaryArray, INDEX(23), INDEX(3));
-		arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
+		arrayAssign(binary_machine_code, binaryArray, INDEX(23), INDEX(3));
+		arrayAssign(binary_machine_code, are.x, INDEX(2), INDEX(0));
 
 		update_memory_table(memory_table, ++state.IC, &binary_machine_code);
 		break;
@@ -572,7 +571,7 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 		symbol_data = get_symbol_data(symbol_table, st.label);
 
 		binaryArray = decimal2binaryArray(symbol_data.address, 21);
-		arrayAssign(&binary_machine_code, binaryArray, INDEX(23), INDEX(3));
+		arrayAssign(binary_machine_code, binaryArray, INDEX(23), INDEX(3));
 		/*ARE */
 		/* if internal ARE = 010*/
 		if (symbol_data.isInternal) {
@@ -582,9 +581,9 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 			/* f external ARE = 001*/
 			are.x[0] = False; are.x[1] = False; are.x[2] = True;
 		}
-		arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
+		arrayAssign(binary_machine_code, are.x, INDEX(2), INDEX(0));
 
-		update_memory_table(memory_table, ++state.IC, &binary_machine_code);
+		update_memory_table(memory_table, ++state.IC, binary_machine_code);
 		break;
 
 	case (Relative):
@@ -593,7 +592,7 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 		symbol_data = get_symbol_data(symbol_table, strtok(label, "&"));
 		/* jump curent */
 		binaryArray = decimal2binaryArray(symbol_data.address - state.IC, 21);
-		arrayAssign(&binary_machine_code, binaryArray, INDEX(23), INDEX(3));
+		arrayAssign(binary_machine_code, binaryArray, INDEX(23), INDEX(3));
 		/*ARE */
 		are.x[0] = True;
 		are.x[1] = False;
@@ -702,8 +701,8 @@ AdressType getAddresingType(char inputString[]) {
 
 	AdressType addresingType;
 	char str[NAME+1];
-	const char hashTag[] = "#";
-	const char andTag[] = "&";
+    char hashTag[] = "#";
+    char andTag[] = "&";
 
 	strcpy(str, inputString);
 

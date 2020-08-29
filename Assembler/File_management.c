@@ -144,7 +144,7 @@ void write_ob_file(char fileName[], struct addressTable* addresstable,struct dat
 		strcat(text, " ");
 
 		/* convert binary machine code to hexadecimal sring*/
-		hexadecimal = binaryArray2Hexadecimal(data.binaryMachineCode, 24);
+		hexadecimal = binaryArray2Hexadecimal(data.binaryMachineCode, BITARRAY);
 		strcat(text, hexadecimal);
 
 		/* write text row*/

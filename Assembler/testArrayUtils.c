@@ -82,7 +82,7 @@ void test_assertIsEmpty() {
 void test_binaryArray2Hexadecimal( ) {
 	
 	int binaryArray[] = { 0,0,0,0,1,0,1,1,0,1,1,0,1,0,0,0,0,0,0,1,1,0,0,1 };
-	char *result ,test[] = "0B6819";
+	char *result ,test[] = "0b6819";
 	BOOL test_pass;
 
 	result = binaryArray2Hexadecimal(binaryArray,24);

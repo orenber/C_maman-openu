@@ -200,7 +200,7 @@ void operand_manager(char nargin_str[],int expected_nargin, struct operationFunc
 		printError(WRONG_ADDRESSING_MODE);
 		return;
 	}
-	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
+	update_or_insert_machine_code(register_setup, opcodeFunc->name);
 
 }
 

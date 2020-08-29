@@ -124,7 +124,7 @@ int * decimal2binaryArray(signed int decimalNumber,unsigned int digits) {
 
 }
 
-int binaryArray2decimal(int binaryArray[], unsigned int digits){
+int binaryArray2decimal(int binaryArray[],  int digits){
 
 	int decimal , result = 0;
 	int i = digits - 1,j =0;
@@ -239,7 +239,7 @@ int numSize(int number) {
 	int numsize = -1, result;
 	do {
 
-		result = number / pow(10, ++numsize);
+		result = number / (int)pow(10, ++numsize);
 
 
 	} while (result != 0);
@@ -319,7 +319,7 @@ int array_string_length(char *names[]) {
 	return namesLen;
 }
 
-void remove_substring_parts(char *main_string, char sub_string_parts[]) {
+void remove_substring_parts(char *main_string, const  char sub_string_parts[]) {
 
 	int i = 0;
 	int len = strlen(sub_string_parts);
