@@ -20,21 +20,34 @@ struct dataTable* create_data_table();
 
 /* push */
 
-void push_memory_table(struct memoryTable** link_list, int *memory);
+void push_memory_table(struct memoryTable** link_list, int *address, char sorceCode[]);
 
 void push_symbol_table(struct symbolTable ** link_list, int memory, char symbol[] , TypeSymbol type, BOOL isInternal);
 
 /* push and update*/
 
-void push_and_update_data_table(struct dataTable ** link_list, int *memory, char label[], int binaryArray[]);
-
 void push_and_update_memory_table(struct memoryTable** link_list, int *memory, char label[], int binaryArray[]);
 
+void push_and_update_data_table(struct dataTable ** link_list, int *memory, char label[], int binaryArray[]);
+
+
 /* update */
+
+void update_memory_table_from_data_table(struct memoryTable ** memory_table, struct dataTable * data_table, int ICF);
 
 void update_memory_table(struct memoryTable * link_list, int memory, int binaryArray[]);
 
 void update_symbol_table(struct symbolTable * link_list, char symbol[], TypeSymbol type, BOOL isInternal);
+
+void update_symbol_table_address(struct symbolTable * link_list, TypeSymbol type, int factor);
+
+
+// A simple and tail recursive function to reverse 
+// a linked list.  prev is passed as NULL initially.
+
+void reverse(struct dataTable**  head);
+
+void reverseUtil(struct dataTable* curr, struct dataTable* prev, struct dataTable** head);
 
 /* size */
 
@@ -74,5 +87,4 @@ void print_memory_table(struct memoryTable* link_list);
 
 void print_data_table(struct dataTable* link_list);
 
-void reverseUtil(struct dataTable* curr, struct dataTable* prev, struct dataTable** head);
 #endif

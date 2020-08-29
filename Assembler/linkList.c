@@ -113,40 +113,13 @@ void push_and_update_data_table(struct dataTable ** link_list, int *address, cha
 
 
 /* update */
-void reverse(struct dataTable**  head)
-{
-	if (!head)
-		return;
-	reverseUtil(*head, NULL, head);
-}
 
-// A simple and tail recursive function to reverse 
-// a linked list.  prev is passed as NULL initially. 
-void reverseUtil(struct dataTable* curr, struct dataTable* prev, struct dataTable** head)
-{
-	/* If last node mark it head*/
-	if (!curr->next) {
-		*head = curr;
-
-		/* Update next to prev node */
-		curr->next = prev;
-		return;
-	}
-
-	/* Save curr->next node for recursive call */
-	struct dataTable *next  = curr->next;
-
-	/* and update next ..*/
-	curr->next = prev;
-
-	reverseUtil(next, curr, head);
-}
 void update_memory_table_from_data_table(struct memoryTable ** memory_table, struct dataTable * data_table, int ICF) {
 	int address;
 	reverse(&data_table);
-	address = data_table->address +  ICF;
+	address = data_table->address + ICF;
 	while (data_table != NULL) {
-	
+
 		push_and_update_memory_table(memory_table, &address, data_table->name, data_table->binaryMachineCode);
 		data_table = data_table->next;
 	}
@@ -154,17 +127,17 @@ void update_memory_table_from_data_table(struct memoryTable ** memory_table, str
 }
 
 void update_memory_table(struct memoryTable * link_list, int address, int binaryArray[]) {
-	
+
 	while (link_list != NULL) {
 
-		if (link_list->address== address){
+		if (link_list->address == address) {
 			arrayAssign(link_list->binaryMachineCode, binaryArray, 0, 23);
 			/*printf("\n Address: %d update .\n", address);*/
 			break;
 		}
 		link_list = link_list->next;
 	}
- }
+}
 
 void update_symbol_table(struct symbolTable * link_list, char symbol[], TypeSymbol type, BOOL isInternal) {
 
@@ -184,14 +157,44 @@ void update_symbol_table_address(struct symbolTable * link_list, TypeSymbol type
 
 	while (link_list != NULL) {
 
-		if (link_list->characterization== type) {
+		if (link_list->characterization == type) {
 			link_list->address = link_list->address + factor;
 
-			
+
 		}
 		link_list = link_list->next;
 	}
 }
+
+// A simple and tail recursive function to reverse 
+// a linked list.  prev is passed as NULL initially.
+void reverse(struct dataTable**  head)
+{
+	if (!head)
+		return;
+	reverseUtil(*head, NULL, head);
+}
+ 
+void reverseUtil(struct dataTable* curr, struct dataTable* prev, struct dataTable** head)
+{
+	/* If last node mark it head*/
+	if (!curr->next) {
+		*head = curr;
+
+		/* Update next to prev node */
+		curr->next = prev;
+		return;
+	}
+
+	/* Save curr->next node for recursive call */
+	struct dataTable *next  = curr->next;
+
+	/* and update next ..*/
+	curr->next = prev;
+
+	reverseUtil(next, curr, head);
+}
+
 
 /* size */
 
@@ -330,6 +333,9 @@ BOOL is_symbol_exist(struct symbolTable  *link_list, char symbol[]) {
 
 	return exist;
 }
+
+
+/* free memory*/
 
 void free_symbol_table(struct symbolTable* head)
 {

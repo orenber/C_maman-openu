@@ -53,7 +53,6 @@ BOOL file_exists(char fileName[])
 	return state;
 }
 
-
 FILE * open_files(int argc, char fileName[]) {
 
 	char file_to_read[NAME] = "";        /* file name that i read from*/
@@ -76,6 +75,8 @@ FILE * open_files(int argc, char fileName[]) {
 	return filePointer;
 }
 
+
+
 void create_files_output(char file_to_read[],struct memoryTable *memory_table, struct dataTable *data_table, struct symbolTable *symbol_table) {
 
 	char *file_to_write;         /* file name that i write to */
@@ -93,6 +94,7 @@ void create_files_output(char file_to_read[],struct memoryTable *memory_table, s
 	write_ext_file(file_to_write, symbol_table, memory_table);
 
 }
+
 
 void write_ob_file(char fileName[], struct addressTable* addresstable,struct dataTable* dataTable) {
 
@@ -150,7 +152,6 @@ void write_ob_file(char fileName[], struct addressTable* addresstable,struct dat
 	}
 }
 
-
 void write_ent_file(char fileName[], struct symbolTable *symboltable) {
 
 
@@ -183,7 +184,6 @@ void write_ent_file(char fileName[], struct symbolTable *symboltable) {
 	 
 }
 
-
 void write_ext_file(char fileName[],struct symbolTable *symboltable, struct memoryTable *memorytable) {
 
 	char text[MAX_LINE_WIDTH] = "";
@@ -206,6 +206,7 @@ void write_ext_file(char fileName[],struct symbolTable *symboltable, struct memo
 
 
 }
+
 
 void search_symbol_in_memory_table(char fileName[], char symbol[], struct memoryTable *memorytable) {
 	char text[MAX_LINE_WIDTH] = "";

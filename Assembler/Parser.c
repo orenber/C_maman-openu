@@ -47,7 +47,6 @@ BOOL is_legal_label(char label[]) {
 	 return is_legal;
 }
 
-
 BOOL is_legal_symbol(char symbol[]) {
 
 	BOOL is_legal;
@@ -121,6 +120,7 @@ BOOL is_undefine_label(char label[]) {
 	return is_legal;
 }
 
+
 BOOL is_legel_string_data(char str[]) {
 	BOOL legal = True;
 	/* ther must be double qute in the data*/
@@ -132,7 +132,6 @@ BOOL is_legel_string_data(char str[]) {
 
 	return legal;
 }
-
 
 BOOL is_legal_number(char var[]) {
 

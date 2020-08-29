@@ -1,8 +1,9 @@
 #pragma once
 
 #include "assembler.h"
-extern struct STATE state;
+ 
 
+void set_operation_command(char func[], char input_str[], struct operationFunc *opcodeFunc);
 
 void mov_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
@@ -37,6 +38,7 @@ void rts_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 void stop_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
 void operand_manager(char nargin_str[], int expected_nargin, struct operationFunc *opcodeFunc);
+
 
 struct setupRegistretion get_address_register_setup(char nargin_str[], struct operationFunc *opcodeFunc);
 

@@ -7,39 +7,58 @@
 
 /* ArrayUtils ---------------------------------------*/
 
-char* strep(const char* s, const char* oldW, const char* newW);
-
-char * num2string(int number);
-
-char * binaryArray2Hexadecimal(int binaryArray[], unsigned int digits);
-
-int * string2array(char stringArray[]);
-
+/* print */
 void printArray(int arr[], int size);
 
 void printArrayReverse(int arr[], int length);
 
-int* decimal2binaryArray(int decimalNumber, int digits);
-
-int binaryArray2decimal(int binaryArray[], unsigned int digits);
-
-void array2string(int arrayNumber[], char *stringArray);
-
-int  array_string_length(char *names[]);
+/* array manipulation*/
 
 void zeros(int *arr, int numberZeros);
 
+void array2string(int arrayNumber[], char *stringArray);
+
+int * string2array(char stringArray[], int *length);
+
+char * num2string(int number);
+
+void arrayAssign(int *arrtoChange, int subArray[], int initial_index, int final_index);
+
+
+/* convertion*/
+
+int * decimal2binaryArray(signed int decimalNumber, unsigned int digits);
+
+int binaryArray2decimal(int binaryArray[], unsigned int digits);
+
+char * binaryArray2Hexadecimal(int binaryArray[], unsigned int digits);
+
+char * binaryArray2Hexadecimal(int binaryArray[], unsigned int digits);
+
+char *decimal2Hexadecimal(long int decimalNumber);
+
+
+/* get size*/
+int numSize(int number);
+
+int  array_string_length(char *names[]);
+
+
+/* string manipulation*/
+
+char* strep(const char* s, const char* oldW, const char* newW);
+
+int inputs_check(char input_str[], char token);
+
 void remove_substring(char *text, char *sub_string);
 
-void remove_substring_parts(char *main_string, char *sub_string_parts);
+void remove_substring_parts(char *main_string, char sub_string_parts[]);
+
+int char_apperance(char text[], char token);
 
 void str_inside(const char* oldW, const char inside);
 
 BOOL checkString(const char s[]);
  
-
-void arrayAssign(int *arrtoChange, int subArray[], int initial_index, int final_index);
-
-int char_apperance(char text[], char token);
 
 #endif // !1

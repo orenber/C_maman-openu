@@ -6,13 +6,13 @@
 
 #define NAME 32
 #define MAX_LINE_WIDTH 81
-#define bitrray 24
+#define BITARRAY 24
 #define INITIAL_ADDRESS  100
 
 #define LEN_Register 8
 /* macro*/
 #define LENGTH(x)  (sizeof(x) / sizeof((x)[0]))
-#define INDEX(x)   ((bitrray-1)-x)
+#define INDEX(x)   ((BITARRAY-1)-x)
 
 const char *register_leagal[];
 const char *instructionType[];
@@ -33,7 +33,7 @@ typedef enum {
 }AdressType;
 
 typedef struct ARE {
-	BOOL x[3];
+	unsigned int x[3];
 } ARE;
 
 typedef enum {
@@ -59,14 +59,14 @@ typedef enum {
 struct operationFunc {
 
 	char name[5];
-	int  funct;
-	int  opcode;
-	int  functBinaryArr[5];
-	int  opcodeBinaryArr[6];
-	int  addressSource[2];
-	int  registerSource[3];
-	int  addressDestination[2];
-	int  registerDestination[3];
+	unsigned int  funct;
+	unsigned int  opcode;
+	unsigned int  functBinaryArr[5];
+	unsigned int  opcodeBinaryArr[6];
+	unsigned int  addressSource[2];
+	unsigned int  registerSource[3];
+	unsigned int  addressDestination[2];
+	unsigned int  registerDestination[3];
 	ARE  ARE;
 };
 

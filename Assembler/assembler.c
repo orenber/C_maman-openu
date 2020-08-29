@@ -74,15 +74,7 @@ void analize_files(FILE *filePointer,char filename[]) {
 
 }
 
-void free_memory() {
 
-	free_symbol_table(&symbol_table);
-
-	free_data_table_table(&data_table);
-
-	free_memory_table(&memory_table);
-
-}
 
 void first_pass(FILE* filePointer) {
 
@@ -125,8 +117,6 @@ void first_pass(FILE* filePointer) {
 	print_memory_table(memory_table);*/
 
 }
-
-
 
 void commands_first_pass(char command_original[]) {
 
@@ -312,40 +302,7 @@ void commands_second_pass(char command_original[]) {
 
 }
 
-void flag_manger(char label[], TypeSymbol type) {
-	
-	char symbol[NAME+1];/*  more 1 for extra ':' char*/
-	char sep[] = { ':','\n',' ','\0'};
 
-	
-	strcpy(symbol, label);
-	remove_substring_parts(symbol, sep);
-
-	if (!is_legal_symbol(symbol)) {
-		printError(INVALID_SYMBOL);
-		return;
-	}
-	/* check if symbol already difine in the symbol table */
-	if (is_symbol_exist(symbol_table, symbol)) {
-		printError(SYMBOL_ALREADY_EXISTS);
-	 return;
-	}
-
-	/* insert the flag in the table flage  - link list */
-	switch (type) {
-	case code:
-		push_symbol_table(&symbol_table, state.IC, symbol, type, True);
-		break;
-	case data:
-		push_symbol_table(&symbol_table, state.DC, symbol, type, True);
-		break;
-	case external:
-		push_symbol_table(&symbol_table, 0, symbol, type, False);
-		break;
-	}
-	
-	 
-}
 
 void instructional_sentence(char fun[], char input_str[], struct operationFunc *opcodeFunc) {
 
@@ -354,152 +311,6 @@ void instructional_sentence(char fun[], char input_str[], struct operationFunc *
 	 
 
 }
-
-void create_space_binary_machine_code(struct setupRegistretion setup, char instrction_name[]) {
-
-	int *binaryArray;
-	int  binary_machine_code[bitrray];
-	int i = 0, j = 0;
-	AdressType adress_take_more_space[] = {Immediate, Direct, Relative};
-		
-	push_memory_table(&memory_table, &state.IC, instrction_name);
-
-	if (assertIsMember(setup.firstOperand.Type, adress_take_more_space,3)) {
-		set_space_binary_machine_code(setup.firstOperand.Type, setup.firstOperand.label);
-	}
-
-	if (assertIsMember(setup.secondOperand.Type, adress_take_more_space),3) {
-		set_space_binary_machine_code(setup.secondOperand.Type,setup.secondOperand.label);
-	}
-
-
-
-
-}
-
-void set_space_binary_machine_code(AdressType type,char lableName[]) {
-
-
-	switch (type)
-	{
-	case (Immediate):
-
-		push_memory_table(&memory_table, &state.IC, lableName);
-		break;
-
-	case (Direct):
-
-		push_memory_table(&memory_table, &state.IC, lableName);
-		break;
-	case (Relative):
-
-		push_memory_table(&memory_table, &state.IC, lableName);
-
-		break;
-	case (Register_Direct):
-
-		break;
-
-	default:
-		break;
-	}
-}
-
-void set_binary_machine_code(struct setupRegistretion setup, struct operationFunc *opcodeFunc) {
-
-
-	int *binaryArray  ;
-	int  binary_machine_code[bitrray];
-	int i = 0,  j = 0;
-	AdressType adress_take_more_space[] = { Immediate, Direct, Relative };
-
-	zeros(&binary_machine_code, bitrray);
-
-	binaryArray =  createBinaryArray(opcodeFunc);
-	
-	for ( i = 0, j = 0; bitrray - 1 >= i; ++i, j++) {
-		binary_machine_code[i] = binaryArray[j];
-
-	};
- 
-	update_memory_table(memory_table,++state.IC, binary_machine_code);
-
-	if (assertIsMember(setup.firstOperand.Type, adress_take_more_space, 3)) {
-		update_binary_machine_code(setup.firstOperand.Type, setup.firstOperand, opcodeFunc->ARE);
-	}
-
-	if (assertIsMember(setup.secondOperand.Type, adress_take_more_space, 3)) {
-		update_binary_machine_code(setup.secondOperand.Type, setup.secondOperand, opcodeFunc->ARE);
-	}
-
-
-}
- 
-void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
-		
-	int *binaryArray;
-	int  binary_machine_code[bitrray], 
-		address_symbol;
-	char label[NAME];
-	struct symbolData symbol_data;
-
-
-	zeros(&binary_machine_code, bitrray);
-		switch(type)
-		{
-		case (Immediate):
-			binaryArray = decimal2binaryArray(st.value, 21);
-			arrayAssign(&binary_machine_code, binaryArray, INDEX(23), INDEX(3));
-			arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
-			 
-			update_memory_table(memory_table, ++state.IC,&binary_machine_code);
-			break;
-
-		case (Direct):
-			
-			/* get the label data*/
-			symbol_data = get_symbol_data(symbol_table, st.label);
-
-			binaryArray = decimal2binaryArray(symbol_data.address, 21);
-			arrayAssign(&binary_machine_code, binaryArray, INDEX(23), INDEX(3));
-			/*ARE */
-			/* if internal ARE = 010*/
-			if (symbol_data.isInternal) {
-				are.x[0] = False; are.x[1] = True; are.x[2] = False;
-			}
-			else {
-				/* f external ARE = 001*/
-				are.x[0] = False; are.x[1] = False; are.x[2] = True;
-			}
-			arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
-		 
-			update_memory_table(memory_table,++state.IC, &binary_machine_code);
-			break;
-
-		case (Relative):
-			/* get the label data*/
-			strcpy(label, st.label);
-			symbol_data = get_symbol_data(symbol_table, strtok(label,"&"));
-			/* jump curent */
-			binaryArray = decimal2binaryArray(symbol_data.address - state.IC, 21);
-			arrayAssign(&binary_machine_code, binaryArray, INDEX(23), INDEX(3));
-			/*ARE */
-			are.x[0] = True;
-			are.x[1] = False;
-			are.x[2] = False;
-
-			arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
-		 
-			update_memory_table(memory_table, ++state.IC, &binary_machine_code);
-			break;
-		case (Register_Direct):
-
-			break;
-
-		default:
-			break;
-		}
-	}
 
 void guidance_sentence(char varType[], char var[]) {
 
@@ -519,6 +330,42 @@ void guidance_sentence(char varType[], char var[]) {
 
 
 }
+
+void flag_manger(char label[], TypeSymbol type) {
+
+	char symbol[NAME + 1];/*  more 1 for extra ':' char*/
+	char sep[] = { ':','\n',' ','\0' };
+
+
+	strcpy(symbol, label);
+	remove_substring_parts(symbol, sep);
+
+	if (!is_legal_symbol(symbol)) {
+		printError(INVALID_SYMBOL);
+		return;
+	}
+	/* check if symbol already difine in the symbol table */
+	if (is_symbol_exist(symbol_table, symbol)) {
+		printError(SYMBOL_ALREADY_EXISTS);
+		return;
+	}
+
+	/* insert the flag in the table flage  - link list */
+	switch (type) {
+	case code:
+		push_symbol_table(&symbol_table, state.IC, symbol, type, True);
+		break;
+	case data:
+		push_symbol_table(&symbol_table, state.DC, symbol, type, True);
+		break;
+	case external:
+		push_symbol_table(&symbol_table, 0, symbol, type, False);
+		break;
+	}
+
+
+}
+
 
 void string_sentence(char str[]) {
 
@@ -547,7 +394,7 @@ void string_sentence(char str[]) {
 		ascii = (int)str[i];
 		latter[0] = str[i];
 		/* convert to binary array*/
-		binaryArr = decimal2binaryArray(ascii, bitrray);
+		binaryArr = decimal2binaryArray(ascii, BITARRAY);
 		 
 		 
 
@@ -579,7 +426,7 @@ void data_sentence(char var[]) {
 	for (i = 0; i<len; ++i) {
 	
 		/* convert to binary array*/
-		binaryArr = decimal2binaryArray(arr[i], bitrray);
+		binaryArr = decimal2binaryArray(arr[i], BITARRAY);
 		 
 		sprintf(var, "%d", arr[i]);
 		/* push data to the table  */
@@ -621,21 +468,19 @@ void entry_sentence(char symbol[]) {
    
 }
 
-void update_or_insert_machine_code(struct setupRegistretion register_setup, struct operationFunc *opcodeFunc) {
-	
-	if (valid.pass_successful) {
 
-		switch (valid.pass_num) {
-		case 1:
-			create_space_binary_machine_code(register_setup, opcodeFunc);
-			break;
-		case 2:
-			set_binary_machine_code(register_setup, opcodeFunc);
-			break;
-		}
-	}
+
+void free_memory() {
+
+	free_symbol_table(&symbol_table);
+
+	free_data_table_table(&data_table);
+
+	free_memory_table(&memory_table);
 
 }
+
+
 
 int * createBinaryArray(struct operationFunc *opcodeFunc) {
 
@@ -666,7 +511,164 @@ int * createBinaryArray(struct operationFunc *opcodeFunc) {
 
 }
 
+void update_or_insert_machine_code(struct setupRegistretion register_setup, struct operationFunc *opcodeFunc) {
 
+	if (valid.pass_successful) {
+
+		switch (valid.pass_num) {
+		case 1:
+			create_space_binary_machine_code(register_setup, opcodeFunc);
+			break;
+		case 2:
+			set_binary_machine_code(register_setup, opcodeFunc);
+			break;
+		}
+	}
+
+}
+
+void create_space_binary_machine_code(struct setupRegistretion setup, char instrction_name[]) {
+
+	int *binaryArray;
+	int  binary_machine_code[BITARRAY];
+	int i = 0, j = 0;
+	AdressType adress_take_more_space[] = { Immediate, Direct, Relative };
+
+	push_memory_table(&memory_table, &state.IC, instrction_name);
+
+	if (assertIsMember(setup.firstOperand.Type, adress_take_more_space, 3)) {
+		set_space_binary_machine_code(setup.firstOperand.Type, setup.firstOperand.label);
+	}
+
+	if (assertIsMember(setup.secondOperand.Type, adress_take_more_space, 3)) {
+		set_space_binary_machine_code(setup.secondOperand.Type, setup.secondOperand.label);
+	}
+
+}
+
+void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
+
+	int *binaryArray;
+	int  binary_machine_code[BITARRAY],
+		address_symbol;
+	char label[NAME];
+	struct symbolData symbol_data;
+
+
+	zeros(&binary_machine_code, BITARRAY);
+	switch (type)
+	{
+	case (Immediate):
+		binaryArray = decimal2binaryArray(st.value, 21);
+		arrayAssign(&binary_machine_code, binaryArray, INDEX(23), INDEX(3));
+		arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
+
+		update_memory_table(memory_table, ++state.IC, &binary_machine_code);
+		break;
+
+	case (Direct):
+
+		/* get the label data*/
+		symbol_data = get_symbol_data(symbol_table, st.label);
+
+		binaryArray = decimal2binaryArray(symbol_data.address, 21);
+		arrayAssign(&binary_machine_code, binaryArray, INDEX(23), INDEX(3));
+		/*ARE */
+		/* if internal ARE = 010*/
+		if (symbol_data.isInternal) {
+			are.x[0] = False; are.x[1] = True; are.x[2] = False;
+		}
+		else {
+			/* f external ARE = 001*/
+			are.x[0] = False; are.x[1] = False; are.x[2] = True;
+		}
+		arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
+
+		update_memory_table(memory_table, ++state.IC, &binary_machine_code);
+		break;
+
+	case (Relative):
+		/* get the label data*/
+		strcpy(label, st.label);
+		symbol_data = get_symbol_data(symbol_table, strtok(label, "&"));
+		/* jump curent */
+		binaryArray = decimal2binaryArray(symbol_data.address - state.IC, 21);
+		arrayAssign(&binary_machine_code, binaryArray, INDEX(23), INDEX(3));
+		/*ARE */
+		are.x[0] = True;
+		are.x[1] = False;
+		are.x[2] = False;
+
+		arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
+
+		update_memory_table(memory_table, ++state.IC, &binary_machine_code);
+		break;
+	case (Register_Direct):
+
+		break;
+
+	default:
+		break;
+	}
+}
+
+void set_space_binary_machine_code(AdressType type, char lableName[]) {
+
+
+	switch (type)
+	{
+	case (Immediate):
+
+		push_memory_table(&memory_table, &state.IC, lableName);
+		break;
+
+	case (Direct):
+
+		push_memory_table(&memory_table, &state.IC, lableName);
+		break;
+	case (Relative):
+
+		push_memory_table(&memory_table, &state.IC, lableName);
+
+		break;
+	case (Register_Direct):
+
+		break;
+
+	default:
+		break;
+	}
+}
+
+void set_binary_machine_code(struct setupRegistretion setup, struct operationFunc *opcodeFunc) {
+
+
+	int *binaryArray;
+	int  binary_machine_code[BITARRAY];
+	int i = 0, j = 0;
+	AdressType adress_take_more_space[] = { Immediate, Direct, Relative };
+
+	zeros(&binary_machine_code, BITARRAY);
+
+	binaryArray = createBinaryArray(opcodeFunc);
+
+	for (i = 0, j = 0; BITARRAY - 1 >= i; ++i, j++) {
+		binary_machine_code[i] = binaryArray[j];
+
+	};
+
+	update_memory_table(memory_table, ++state.IC, binary_machine_code);
+
+	if (assertIsMember(setup.firstOperand.Type, adress_take_more_space, 3)) {
+		update_binary_machine_code(setup.firstOperand.Type, setup.firstOperand, opcodeFunc->ARE);
+	}
+
+	if (assertIsMember(setup.secondOperand.Type, adress_take_more_space, 3)) {
+		update_binary_machine_code(setup.secondOperand.Type, setup.secondOperand, opcodeFunc->ARE);
+	}
+
+
+}
 
 void resetValues(struct setupRegistretion *inputRegistretion,struct operationFunc *opcodeFunc) {
 
@@ -694,6 +696,7 @@ void resetValues(struct setupRegistretion *inputRegistretion,struct operationFun
 	arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
 
 }
+
 
 AdressType getAddresingType(char inputString[]) {
 

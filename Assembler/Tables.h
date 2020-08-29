@@ -9,6 +9,5 @@
 
 void table_funct_opcode(char func[], struct operationFunc *opcodeFunc);
 
-void push_update_data_table(struct dataTable * link_list, int *address, char name[], int binaryArray[]);
-
+BOOL cheak_legal_address(char func[], AdressType  sourceOperand, AdressType destinationOperand);
 #endif
