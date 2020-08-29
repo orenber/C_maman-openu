@@ -228,7 +228,7 @@ BOOL cheak_legal_address(char func[], AdressType  sourceOperand, AdressType dest
 		 
 
 		/* Destination */
-		legalDestination[0] = 0;legalDestination[1] = 1, legalDestination[1] = 3;
+		legalDestination[0] = 0;legalDestination[1] = 1, legalDestination[2] = 3;
 
 		ok2 = assertIsMember(destinationOperand, legalDestination, 3);
 

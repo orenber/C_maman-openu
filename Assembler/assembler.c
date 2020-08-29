@@ -113,15 +113,14 @@ void first_pass(FILE* filePointer) {
 	state.ICF = state.IC;
 	state.DCF = state.DC;
 
-	valid.pass_successful = True;
 	/*print_symbol_table(symbol_table);
 	print_data_table(data_table);
 	/*print_memory_table(memory_table);*/
-
-	update_symbol_table_address(symbol_table, data, state.ICF);
-	/*print_symbol_table(symbol_table);*/
-	update_memory_table_from_data_table(&memory_table, data_table, state.ICF);
-	
+	if (valid.pass_successful) {
+		update_symbol_table_address(symbol_table, data, state.ICF);
+		/*print_symbol_table(symbol_table);*/
+		update_memory_table_from_data_table(&memory_table, data_table, state.ICF);
+	}
 	/*print_data_table(data_table);
 	print_memory_table(memory_table);*/
 
@@ -623,15 +622,17 @@ void entry_sentence(char symbol[]) {
 }
 
 void update_or_insert_machine_code(struct setupRegistretion register_setup, struct operationFunc *opcodeFunc) {
+	
+	if (valid.pass_successful) {
 
-	switch (valid.pass_num) {
-	case 1:
-		create_space_binary_machine_code(register_setup, opcodeFunc);
-		break;
-	case 2:
-		set_binary_machine_code(register_setup, opcodeFunc);
-		break;
-
+		switch (valid.pass_num) {
+		case 1:
+			create_space_binary_machine_code(register_setup, opcodeFunc);
+			break;
+		case 2:
+			set_binary_machine_code(register_setup, opcodeFunc);
+			break;
+		}
 	}
 
 }

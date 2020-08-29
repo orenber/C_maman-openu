@@ -55,7 +55,7 @@ void printError(ERROR_TYPE errorCode) {
 		break;
 
 	default:
-		printf("\nError at file: %s, line %d, ", valid.file_name);
+		printf("\nError at file: %s, fail to parse the file! ", valid.file_name);
 		break;
 	}
 }

@@ -1,10 +1,6 @@
 
 #include "operation.h"
 
-
-
-
-
 void set_operation_command(char func[], char input_str[], struct operationFunc *opcodeFunc) {
 
 	if (strcmp(func, "mov") == 0) {
@@ -81,524 +77,104 @@ void set_operation_command(char func[], char input_str[], struct operationFunc *
 
 void mov_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
-	struct setupRegistretion register_setup;
-	int *binaryArr;
 	int nargin = 2;
-	BOOL is_leagal_address;
-	
-	/* assert number of inputs */
-	if (assert_nargin(nargin_str, nargin) == False) {
-		printf("Error in %s\n", opcodeFunc->name);
-		printError(WRONG_NUMBER_OF_OPERATORS);
-		return;
-	}
-
-	/* assert legal comma */
-	if (!assert_comma(nargin_str, nargin - 1)) {
-		printf("Error in %s %s", opcodeFunc->name, nargin_str);
-		printError(COMMAS_FIX_WRONG);
-		return;
-	}
-
-	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-	
-	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
-	if (!is_leagal_address){
-		printError(WRONG_ADDRESSING_MODE);
-		return;
-	}
-	update_or_insert_machine_code(register_setup, opcodeFunc->name);
-
+	operand_manager(nargin_str, nargin, opcodeFunc);
 }
 
 void cmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
-	struct setupRegistretion register_setup;
-	int *binaryArr;
 	int nargin = 2;
-	BOOL is_leagal_address;
-
-	/* assert number of inputs */
-	if (assert_nargin(nargin_str, nargin) == False) {
-		printf("Error in %s", opcodeFunc->name);
-		printError(WRONG_NUMBER_OF_OPERATORS);
-		return;
-	}
-	/* assert legal comma */
-	if (!assert_comma(nargin_str, nargin - 1)) {
-		printf("Error in %s %s", opcodeFunc->name, nargin_str);
-		printError(COMMAS_FIX_WRONG);
-		return;
-	}
-	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-	
-	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
-	if (!is_leagal_address) {
-		printError(WRONG_ADDRESSING_MODE);
-		return;
-	}
-	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
+	operand_manager(nargin_str, nargin, opcodeFunc);
 
 }
 
 void add_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
-	struct setupRegistretion register_setup;
-	int *binaryArr;
 	int nargin = 2;
-	BOOL is_leagal_address;
-
-	/* assert number of inputs */
-	if (assert_nargin(nargin_str, nargin) == False) {
-		printf("Error in %s", opcodeFunc->name);
-		printError(WRONG_NUMBER_OF_OPERATORS);
-		return;
-	}
-	/* assert legal comma */
-	if (!assert_comma(nargin_str, nargin - 1)) {
-		printf("Error in %s", opcodeFunc->name);
-		printError(COMMAS_FIX_WRONG);
-		return;
-	}
-
-	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-
-	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
-	if (!is_leagal_address) {
-		printf("Error in %s", opcodeFunc->name);
-		printError(WRONG_ADDRESSING_MODE);
-		return;
-	}
-	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
+	operand_manager(nargin_str, nargin, opcodeFunc);
 }
 
 void sub_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
-
-	struct setupRegistretion register_setup;
-	int *binaryArr;
+	
 	int nargin = 2;
-	BOOL is_leagal_address;
-
-	/* assert number of inputs */
-	if (assert_nargin(nargin_str, nargin) == False) {
-		printf("Error in %s", opcodeFunc->name);
-		printError(WRONG_NUMBER_OF_OPERATORS);
-		return;
-	}
-	/* assert legal comma */
-	if (!assert_comma(nargin_str, nargin - 1)) {
-		printf("Error in %s %s", opcodeFunc->name, nargin_str);
-		printError(COMMAS_FIX_WRONG);
-		return;
-	}
-	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-
-	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
-	if (!is_leagal_address) {
-		printError(WRONG_ADDRESSING_MODE);
-		return;
-	}
-	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
-
+	operand_manager(nargin_str, nargin, opcodeFunc);
 }
 
 void lea_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
-	struct setupRegistretion register_setup;
-	int *binaryArr;
 	int nargin = 2;
-	BOOL is_leagal_address;
-
-	/* assert number of inputs */
-	if (assert_nargin(nargin_str, nargin) == False) {
-		printf("Error in %s", opcodeFunc->name);
-		printError(WRONG_NUMBER_OF_OPERATORS);
-		return;
-	}
-	/* assert legal comma */
-	if (!assert_comma(nargin_str, nargin - 1)) {
-		printf("Error in %s %s", opcodeFunc->name, nargin_str);
-		printError(COMMAS_FIX_WRONG);
-		return;
-	}
-	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-
-	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
-	if (!is_leagal_address) {
-		printError(WRONG_ADDRESSING_MODE);
-		return;
-	}
-	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
-
+	operand_manager(nargin_str, nargin, opcodeFunc);
 }
 
 void clr_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
-	struct setupRegistretion register_setup;
-	int *binaryArr;
 	int nargin = 1;
-	BOOL is_leagal_address;
-
-	/* assert number of inputs */
-	if (assert_nargin(nargin_str, nargin) == False) {
-		printf("Error in %s", opcodeFunc->name);
-		printError(WRONG_NUMBER_OF_OPERATORS);
-		return;
-	}
-	/* assert legal comma */
-	if (!assert_comma(nargin_str, nargin - 1)) {
-		printf("Error in %s %s", opcodeFunc->name, nargin_str);
-		printError(COMMAS_FIX_WRONG);
-		return;
-	}
-	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-
-	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
-	if (!is_leagal_address) {
-		printError(WRONG_ADDRESSING_MODE);
-		return;
-	}
-
-	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
-
+	operand_manager(nargin_str, nargin, opcodeFunc);
 }
 
 void not_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
-	struct setupRegistretion register_setup;
-	int *binaryArr;
 	int nargin = 1;
-	BOOL is_leagal_address;
-
-	/* assert number of inputs */
-	if (assert_nargin(nargin_str, nargin) == False) {
-		printf("\nError in %s", opcodeFunc->name);
-		printError(WRONG_NUMBER_OF_OPERATORS);
-		return;
-	}
-	
-	  
-	/* assert legal comma */
-	if (!assert_comma(nargin_str, nargin - 1)) {
-		printf("Error in %s %s", opcodeFunc->name, nargin_str);
-		printError(COMMAS_FIX_WRONG);
-		return;
-	}
-	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
- 
-	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
-	if (!is_leagal_address) {
-		printError(WRONG_ADDRESSING_MODE);
-		return;
-	}
-	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
-
+	operand_manager(nargin_str, nargin, opcodeFunc);
 }
-
 
 void inc_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
-	struct setupRegistretion register_setup;
-	int *binaryArr;
 	int nargin = 1;
-	BOOL is_leagal_address;
-
-	/* assert number of inputs */
-	if (assert_nargin(nargin_str, nargin) == False) {
-		printf("Error in %s\n", opcodeFunc->name);
-		printError(WRONG_NUMBER_OF_OPERATORS);
-		return;
-	}
-	
-	/* assert legal comma */
-	if (!assert_comma(nargin_str, nargin - 1)) {
-		printf("Error in %s %s", opcodeFunc->name, nargin_str);
-		printError(COMMAS_FIX_WRONG);
-		return;
-	}
-	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
- 
-	/* call function that check the operand leagllety */
-	 is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
-	 if (!is_leagal_address) {
-		 printError(WRONG_ADDRESSING_MODE);
-		 return;
-	 }
-
-	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
-
+	operand_manager(nargin_str, nargin, opcodeFunc);
 }
-
 
 void dec_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
-	struct setupRegistretion register_setup;
-	int *binaryArr;
 	int nargin = 1;
-	BOOL is_leagal_address;
-
-	/* assert number of inputs */
-	if (assert_nargin(nargin_str, nargin) == False) {
-		printf("Error in %s\n", opcodeFunc->name);
-		printError(WRONG_NUMBER_OF_OPERATORS);
-		return;
-	}
-	/* assert legal comma */
-	if (!assert_comma(nargin_str, nargin - 1)) {
-		printf("Error in %s %s", opcodeFunc->name, nargin_str);
-		printError(COMMAS_FIX_WRONG);
-		return;
-	}
-	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-  
-	/* call function that check the operand leagllety */
-	 is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
-	 if (!is_leagal_address) {
-		 printError(WRONG_ADDRESSING_MODE);
-		 return;
-	 }
-
-	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
-
+	operand_manager(nargin_str, nargin, opcodeFunc);
 }
-
 
 void jmp_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
-	struct setupRegistretion register_setup;
-	int *binaryArr;
 	int nargin = 1;
-	BOOL is_leagal_address;
-
-	/* assert number of inputs */
-	if (assert_nargin(nargin_str, nargin) == False) {
-		printf("Error in %s\n", opcodeFunc->name);
-		printError(WRONG_NUMBER_OF_OPERATORS);
-		return;
-	}
-	/* assert legal comma */
-	if (!assert_comma(nargin_str, nargin - 1)) {
-		printf("Error in %s %s", opcodeFunc->name, nargin_str);
-		printError(COMMAS_FIX_WRONG);
-		return;
-	}
-	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
- 
-	/* call function that check the operand leagllety */
-	 is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
-	 if (!is_leagal_address) {
-		 printError(WRONG_ADDRESSING_MODE);
-		 return;
-	 }
-	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
-
+	operand_manager(nargin_str, nargin, opcodeFunc);
 }
 
 void bne_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
-	struct setupRegistretion register_setup;
-	int *binaryArr;
-	int nargin = 1;
-	BOOL is_leagal_address;
-
-	/* assert number of inputs */
-	if (assert_nargin(nargin_str, nargin) == False) {
-		printf("Error in %s\n", opcodeFunc->name);
-		printError(WRONG_NUMBER_OF_OPERATORS);
-		return;
-	}
-	/* assert legal comma */
-	if (!assert_comma(nargin_str, nargin - 1)) {
-		printf("Error in %s %s", opcodeFunc->name, nargin_str);
-		printError(COMMAS_FIX_WRONG);
-		return;
-	}
-	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
- 
-	/* call function that check the operand leagllety */
-	 is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
-	 if (!is_leagal_address) {
-		 printError(WRONG_ADDRESSING_MODE);
-		 return;
-	 }
-	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
-
+	int nargin = 1; 
+	operand_manager(nargin_str, nargin, opcodeFunc);
 }
-
 
 void jsr_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
-	struct setupRegistretion register_setup;
-	int *binaryArr;
 	int nargin = 1;
-	BOOL is_leagal_address;
-
-	/* assert number of inputs */
-	if (assert_nargin(nargin_str, nargin) == False) {
-		printf("Error in %s\n", opcodeFunc->name);
-		printError(WRONG_NUMBER_OF_OPERATORS);
-		return;
-	}
-	/* assert legal comma */
-	if (!assert_comma(nargin_str, nargin - 1)) {
-		printf("Error in %s %s", opcodeFunc->name, nargin_str);
-		printError(COMMAS_FIX_WRONG);
-		return;
-	}
-
-	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-    
-	/* call function that check the operand leagllety */
-	 is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
-	 if (!is_leagal_address) {
-		 printError(WRONG_ADDRESSING_MODE);
-		 return;
-	 }
-	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
-
+	operand_manager(nargin_str, nargin, opcodeFunc);
+	 
 }
-
 
 void red_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
-	struct setupRegistretion register_setup;
-	int *binaryArr;
 	int nargin = 1;
-	BOOL is_leagal_address;
-
-	/* assert number of inputs */
- 
-	if (assert_nargin(nargin_str, nargin) == False) {
-		printf("Error in %s\n", opcodeFunc->name);
-		printError(WRONG_NUMBER_OF_OPERATORS);
-		return;
-	}
-	/* assert legal comma */
-	if (!assert_comma(nargin_str, nargin - 1)) {
-		printf("Error in %s %s", opcodeFunc->name, nargin_str);
-		printError(COMMAS_FIX_WRONG);
-		return;
-	}
-
-	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-	
-	/* call function that check the operand leagllety */
-	 is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
-	 if (!is_leagal_address) {
-		 printError(WRONG_ADDRESSING_MODE);
-		 return;
-	 }
-	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
-
+	operand_manager(nargin_str, nargin, opcodeFunc);
 }
 
-
 void prn_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
-
-	struct setupRegistretion register_setup;
-	int *binaryArr;
+	 
 	int nargin = 1;
-	BOOL is_leagal_address;
-
-	/* assert number of inputs */
-	if (assert_nargin(nargin_str, nargin) == False) {
-		printf("Error in %s\n", opcodeFunc->name);
-		printError(WRONG_NUMBER_OF_OPERATORS);
-		return;
-	}
-	/* assert legal comma */
-	if (!assert_comma(nargin_str, nargin - 1)) {
-		printf("Error in %s %s", opcodeFunc->name, nargin_str);
-		printError(COMMAS_FIX_WRONG);
-		return;
-	}
-	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
- 
-	/* call function that check the operand leagllety */
-	 is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
-	 if (!is_leagal_address) {
-		 printf("Error in %s", opcodeFunc->name);
-		 printError(WRONG_ADDRESSING_MODE);
-		 return;
-	 }
-	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
-
+	operand_manager(nargin_str, nargin, opcodeFunc);
 }
 
 void rts_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
-	struct setupRegistretion register_setup;
-	int *binaryArr;
 	int nargin = 0;
-	BOOL is_leagal_address;
-
-	/* assert number of inputs */
-	if (assert_nargin(nargin_str, nargin) == False) {
-		printf("Error in %s\n", opcodeFunc->name);
-		printError(WRONG_NUMBER_OF_OPERATORS);
-		return;
-	}
-	/* assert legal comma */
-	if (!assert_comma(nargin_str, nargin)) {
-		printf("Error in %s", opcodeFunc->name);
-		printError(COMMAS_FIX_WRONG);
-		return;
-	}
-	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-	
-	/* call function that check the operand leagllety */
-	 is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
-	 if (!is_leagal_address) {
-		 printf("Error in %s", opcodeFunc->name);
-		 printError(WRONG_ADDRESSING_MODE);
-		 return;
-	 }
-	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
-
+	operand_manager(nargin_str, nargin, opcodeFunc);
 }
-
 
 void stop_from_user(char nargin_str[], struct operationFunc *opcodeFunc) {
 
-	
-	struct setupRegistretion register_setup;
-	BOOL is_leagal_address;
 	int nargin = 0;
-	operand_operation(nargin_str , nargin, opcodeFunc);
-
-	/* assert number of inputs */
-	if (assert_nargin(nargin_str, nargin) == False) {
-		printf("Error in %s\n", opcodeFunc->name);
-		printError(WRONG_NUMBER_OF_OPERATORS);
-		return;
-	}
-	/* assert legal comma */
-	if (!assert_comma(nargin_str, nargin)) {
-		printf("Error in %s", opcodeFunc->name);
-		printError(COMMAS_FIX_WRONG);
-		return;
-	}
-	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
-    
-	/* call function that check the operand leagllety */
-	 is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
-	 if (!is_leagal_address) {
-		 printf("Error in %s", opcodeFunc->name);
-		 printError(WRONG_ADDRESSING_MODE);
-		 return;
-	 }
-	update_or_insert_machine_code(register_setup, &opcodeFunc->name);
-
+	operand_manager(nargin_str , nargin, opcodeFunc);
+	  
 }
 
-void operand_operation(char nargin_str[],int expected_nargin, struct operationFunc *opcodeFunc) {
+void operand_manager(char nargin_str[],int expected_nargin, struct operationFunc *opcodeFunc) {
 	
 	struct setupRegistretion register_setup;
 	BOOL is_leagal_address;
@@ -769,6 +345,3 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 	return inputRegistretion;
 
 }
-
-
- 

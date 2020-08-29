@@ -1,106 +1,89 @@
-;; first pass tester - By @AvivNaaman. Please NOT Re-use this input file in your project. I Share it so you can use it for testing. (c)
+; All the valid commands/instruction:
+; Some data at start..
+X: .string "Hello, World! *()"
+label00: .data -1, 1, -2, 78, 90, 45328, -95743
+label89: .string "StrCatChrTokLen.h"
+.extern label1
+XYZ123XYZ: .data 0	 ,  	0 	,	 0  ,  0,	0 	
+.entry XYZ123XYZ
 
-; label errors
-LABEL: .data -2,-0,9470,+02894,+94,-12
-CODELABEL: mov r0,r1
-LOCALCODE: add r0,r1
-LOCALDATA: .string "Let's Put some chars in here: !)@(#*$^%&"
-LABEL: .string "That should make a small problem..."
-CODELABEL: .data "WHY AGAIN?!"
-.extern LOCALCODE
-.extern LOCALDATA
-.extern WHATEVEREXT
-.extern LONGLONGLONGLONGLONGLONGLABEL
-.extern 1nvalidLabel
-.extern L@bel
-.extern
-WHATEVEREXT: .string "Another definition!"
-VERY_VERY_VERY_VERY_VERY_LONG_LABEL_DEFINITION_SO_ITS_ILLEGAL: .data 0
-SIGNS^ARE)HERE!: .data 5
-1abelWithNumAgain: .data -6
+; mov 013,13
+mov #0, label00
+mov #-1, r0
+mov r0, r1
+mov r0, label00
+mov label00, label1
+mov label00, r0
 
-; data and string errors
-.string "No closing
-.string No opening"
-.string Not at all
-.data ,1,-9,7
-.data 1,-9,,7
-.data 1,-9,7,
-.data 1 -9 , 7
-.data 1.9
-.data -0.1
-.data .1
-.data 1.
+; cmp 013,013
+cmp #-1, r0
+cmp r0, r1
+cmp r0, label00
+cmp label00, label1
+cmp label00, r0
+;.;;,; ; Complicated;;;;;4321489352@!$&#(%$*) Comment
 
-; Operand count errors
-mov
-mov r0
-cmp #-0,MYLABEL,HERE
-add
-add #-4,#-9,#7
-sub LABEL
-lea operand
-clr
-not
-inc r-9,r1,r4
-dec
-jmp
-bne &realtivelyjump,notToday
-jsr
-red alpha,beta
-prn
-rts hello
-stop myprog
+; add 013,13
+add #3957, label00
+add r7, label89
+add label00, r6
 
-; Addressing type errors (by booklet p.34)
+sub #-1, r0
+sub r2, r3
+sub fasdiu3245dghfgshdsf78dhkj12345, label11
+sub label00, r6
 
+lea label00, fasdiu3245dghfgshdsf78dhkj12345
+lea label11, r4
 
-mov &op0, op1
-mov &op0, &op1
-mov op0, &op1
-mov &op0, #2
-mov op0, #2
-mov #-4,#2
+; Although the symbol is defined later, that should not be a problem!
+clr LLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
 
-cmp &op0, op1
-cmp &op0, r0
-cmp r0, &op1
+not r6
+not X
 
-add &op0, #2
-add &op0, op1
-add #-4, &op1
-add r0, &op1
-add #-4,#2
+inc r7
+inc X1234YZASFJKFDSA524bsdasfjdgdaf
 
-sub &op0, #2
-sub &op0, op1
-sub &op0, &op1
-sub r0, &op1
-sub op0, #2
+dec r0
+dec fasdiu3245dghfgshdsf78dhkj12345
 
-lea #-4, #2
-lea #-4, r0
-lea r0, op1
-lea r0, &op1
-lea &op0, r0
+C0: jmp label00
+jmp &C0
 
-clr &op0
-not &op0
-inc #-1
-dec &op0
-red &op0
+; Put some data here randomally:
 
-jmp op0
-bne op0
-jsr #-1
+DataIsNiceSoLearnDataSc: .string "DataIsNiceSoLearnDataSc"
+.entry DataIsNiceSoLearnDataSc
 
-prn &op0
+; bne 12
+CCC1: bne X
+bne &CCC1
 
-; More General syntax errors
-mov $,#-4
-mov -9.7
-mov 123
-mov THISISAVERYVERYLONGLABELWHICHISINVALIDHERE
-.entry THISISAVERYVERYLONGLABELWHICHISINVALIDHERE
-op operand,operand
-label .data "Hello World!" mov r0,#-4
+; jsr 12
+C5: jsr X
+jsr &C5
+
+; red 13
+red r4
+red label00
+
+; prn 013
+prn r5
+prn #-32
+prn mychars
+
+rts
+rts
+
+stop
+
+label11: .data 9
+LLLLLLLLLLLLLLLLLLLLLLLLLLLLLL: .string " "
+.entry LLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+X1234YZASFJKFDSA524bsdasfjdgdaf: .data 5
+.entry X1234YZASFJKFDSA524bsdasfjdgdaf
+label01: .data -000000, +000000, +000001, -000004
+mychars: .string "RANDOM1234567890!*&#(@%!&E(1"
+	
+.extern fasdiu3245dghfgshdsf78dhkj12345

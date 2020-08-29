@@ -36,37 +36,7 @@ void rts_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
 void stop_from_user(char nargin_str[], struct operationFunc *opcodeFunc);
 
+void operand_manager(char nargin_str[], int expected_nargin, struct operationFunc *opcodeFunc);
+
 struct setupRegistretion get_address_register_setup(char nargin_str[], struct operationFunc *opcodeFunc);
 
-
-void mov(int A, Register *operand);
-
-BOOL cmp(int A, Register operand);
-
-void add(int A, Register *operand);
-
-void sub(int A, Register *operand);
-
-void lea(char *word, Register *operand);
-
-void clr(Register *operand);
-
-void not(Register *operand);
-
-void inc(Register *operand);
-
-void dec(Register *operand);
-
-void jmp();
-
-void bne();
-
-void jsr();
-
-void red();
-
-void prn(int value);
-
-void rts();
-
-void stop();
