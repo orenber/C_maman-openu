@@ -1,5 +1,5 @@
 #pragma once
-#ifndef FILEHANDLER;
+#ifndef FILEHANDLER
 #define FILEHANDLER
 
 #include<stdlib.h>

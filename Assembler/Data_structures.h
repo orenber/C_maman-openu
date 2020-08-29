@@ -1,7 +1,7 @@
 #pragma once
 
 
-#ifndef CONSTANTS;
+#ifndef CONSTANTS
 #define CONSTANTS
 
 #define NAME 32

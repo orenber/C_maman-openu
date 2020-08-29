@@ -9,13 +9,10 @@ void printError(ERROR_TYPE errorCode) {
 		printf("\nPlease specify file name.\n");
 		break;
 	case NO_SUCH_FILE:
-		fprintf(stderr, "\nError opening file: %s, %s \n", valid.file_name);
+		fprintf(stderr, "\nError opening file: %s \n", valid.file_name);
 		break;
 	case LINE_TOO_LONG:
-		printf("\nError at file: %s, line %d, exceeded max permitted size, 80 chars\n",valid.line_num);
-		break;
-	case DATA_NOT_NUMBER | NUMBER_OUT_OF_BOUNDS_12BITS:
-		printf("\nError at file: %s, line %d, all data values should be numbers in a range from %d to %d\n", valid.file_name,valid.line_num);
+		printf("\nError at file: %s, line %d, exceeded max permitted size, 80 chars\n", valid.file_name,valid.line_num);
 		break;
 	case CANNOT_PARSE_LINE:
 		printf("\nError at file: %s, line %d, couldn't find any valid directive or command\n", valid.file_name, valid.line_num);
@@ -32,9 +29,6 @@ void printError(ERROR_TYPE errorCode) {
 	case WRONG_ADDRESSING_MODE:
 		printf("\nError at file: %s, line %d, Wrong addressing mode\n", valid.file_name, valid.line_num);
 		break;
-	case NUMBER_OUT_OF_BOUNDS_10BITS:
-		printf("\nError at file: %s, line %d, all data values should be numbers in a range from %d to %d\n", valid.file_name, valid.line_num);
-		break;
 	case SYMBOL_DOESNT_EXISTS:
 		printf("\nError at file: %s, line %d, You're trying reference to symbol which does't exist\n", valid.file_name, valid.line_num);
 		break;
@@ -50,9 +44,6 @@ void printError(ERROR_TYPE errorCode) {
 		printf("\nError at file: %s,line %d, commas fix wrong! \n", valid.file_name, valid.line_num);
 		break;
 
-	case MAX_RAM_SIZE_EXCEEDED:
-		printf("\nError at file: %s, You exceded max RAM size of %d words\n", valid.file_name);
-		break;
 
 	default:
 		printf("\nError at file: %s, fail to parse the file! ", valid.file_name);

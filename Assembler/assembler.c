@@ -123,8 +123,8 @@ void commands_first_pass(char command_original[]) {
 	
 	char *command_section = "", *next_command = "",
 		command[MAX_LINE_WIDTH] = "",
-		command_left[MAX_LINE_WIDTH], input_str[NAME];
-	BOOL end_line = False, isFlag;
+		command_left[MAX_LINE_WIDTH];
+	BOOL end_line = False;
 	struct operationFunc opcodeFunc;
 	TypeSymbol type_symbol;
 

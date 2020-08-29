@@ -4,6 +4,8 @@
 
 #include "Liberis.h"
 #include "Data_structures.h"
+#include "Assertion.h"
+
 
 /* ArrayUtils ---------------------------------------*/
 
