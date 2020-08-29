@@ -369,3 +369,13 @@ void str_inside(char* oldW, const char inside) {
 
 
 }
+
+
+BOOL checkString(const char s[])
+{
+	unsigned char c;
+
+	while ((c = *s) && (isalpha(c) || isdigit(c))) ++s;
+
+	return *s == '\0';
+}

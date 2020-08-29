@@ -56,6 +56,16 @@ BOOL serach_symbol_type(struct symbolTable  *link_list, char symbol[], TypeSymbo
 
 BOOL is_symbol_exist(struct symbolTable  *link_list, char symbol[]);
 
+
+/* free memory*/
+void free_symbol_table(struct symbolTable* head);
+
+void free_memory_table(struct memoryTable* head);
+ 
+void free_data_table_table(struct dataTable* head);
+ 
+
+
 /* print */
 
 void print_symbol_table(struct symbolTable * link_list);

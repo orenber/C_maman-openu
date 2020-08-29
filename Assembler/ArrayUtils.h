@@ -35,6 +35,9 @@ void remove_substring_parts(char *main_string, char *sub_string_parts);
 
 void str_inside(const char* oldW, const char inside);
 
+BOOL checkString(const char s[]);
+ 
+
 void arrayAssign(int *arrtoChange, int subArray[], int initial_index, int final_index);
 
 int char_apperance(char text[], char token);

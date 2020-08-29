@@ -5,6 +5,7 @@
 #include<string.h>
 #include "Data_structures.h"
 #include "Assertion.h"
+#include "Errors.h"
 
 BOOL is_legal_label(char label[]);
 

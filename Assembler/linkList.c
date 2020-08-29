@@ -39,7 +39,7 @@ void push_memory_table(struct memoryTable** link_list, int *address,char sorceCo
 	// Make sure new node is always at top
 	*link_list = newNode;
 	
-	printf("\nData: %d pushed to stack.\n", (*address));
+	/*printf("\nData: %d pushed to stack.\n", (*address));*/
 
 	(*address)++;
 }
@@ -61,11 +61,11 @@ void push_symbol_table(struct symbolTable ** link_list, int address, char symbol
 	// Make sure new node is always at top
 	*link_list = newNode;
 
-	printf("\nSymbol: %s", symbol);
+	/*printf("\nSymbol: %s", symbol);
 	printf("\tAddress: %d", address);
 	printf("\tType: %d", type);
 
-	printf("Data pushed to stack.\n");
+	printf("Data pushed to stack.\n");*/
 
 }
 
@@ -85,7 +85,7 @@ void push_and_update_memory_table(struct memoryTable** link_list, int *address,c
 	// Make sure new node is always at top
 	*link_list = newNode;
 
-	printf("\nData: %d pushed to stack.\n", (*address));
+	/*printf("\nData: %d pushed to stack.\n", (*address));*/
 
 	(*address)++;
 }
@@ -106,7 +106,7 @@ void push_and_update_data_table(struct dataTable ** link_list, int *address, cha
 	// Make sure new node is always at top
 	*link_list = newNode;
 
-	printf("\nData: %d pushed to stack.\n", (*address));
+	/*printf("\nData: %d pushed to stack.\n", (*address));*/
 	(*address)++;
 
 }
@@ -159,7 +159,7 @@ void update_memory_table(struct memoryTable * link_list, int address, int binary
 
 		if (link_list->address== address){
 			arrayAssign(link_list->binaryMachineCode, binaryArray, 0, 23);
-			printf("\n Address: %d update .\n", address);
+			/*printf("\n Address: %d update .\n", address);*/
 			break;
 		}
 		link_list = link_list->next;
@@ -331,7 +331,46 @@ BOOL is_symbol_exist(struct symbolTable  *link_list, char symbol[]) {
 	return exist;
 }
 
- 
+void free_symbol_table(struct symbolTable* head)
+{
+	struct symbolTable* tmp;
+
+	while (head != NULL)
+	{
+		tmp = head;
+		head = head->next;
+		free(tmp);
+	}
+
+}
+
+void free_memory_table(struct memoryTable* head)
+{
+	struct memoryTable* tmp;
+
+	while (head != NULL)
+	{
+		tmp = head;
+		head = head->next;
+		free(tmp);
+	}
+
+}
+
+void free_data_table_table(struct dataTable* head)
+{
+	struct dataTable* tmp;
+
+	while (head != NULL)
+	{
+		tmp = head;
+		head = head->next;
+		free(tmp);
+	}
+
+}
+
+
 
 /* print */
 

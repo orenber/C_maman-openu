@@ -32,6 +32,7 @@ struct {
 };
 
 struct STATE state;
+struct ERROR_HANDLER valid;
 
 
 int main(int argc, char* argv[])
@@ -45,8 +46,8 @@ int main(int argc, char* argv[])
 
 		 
 		filepointer = open_files(argc, argv[filesNumber]);
-		analize_files(filepointer);
-		create_files_output(argv[filesNumber++], memory_table,data_table, symbol_table);
+		analize_files(filepointer, argv[filesNumber++]);
+		
 		 
 	}
 
@@ -54,14 +55,32 @@ int main(int argc, char* argv[])
 
 }
 
-void analize_files(FILE *filePointer) {
+void analize_files(FILE *filePointer,char filename[]) {
 
-
+	strcpy(valid.file_name, filename);
+	 
 	first_pass(filePointer);
-
+	if (!valid.pass_successful) {
+		printError(GENERAL);
+		return;
+	}
+	 
 	print_memory_table(memory_table);
 
 	second_pass(filePointer);
+
+	create_files_output(filename, memory_table, data_table, symbol_table);
+	 
+
+}
+
+void free_memory() {
+
+	free_symbol_table(&symbol_table);
+
+	free_data_table_table(&data_table);
+
+	free_memory_table(&memory_table);
 
 }
 
@@ -70,19 +89,22 @@ void first_pass(FILE* filePointer) {
 	char line_read[MAX_LINE_WIDTH] = "";     /* digit number string*/
 	char *output = ""; /* output from the user */
 
-	state.line_num = 0;
-	state.pass = True;
+	valid.line_num = 0;
+	valid.pass_num = 1;
+	valid.pass_successful = True;
+
     state.DC = 0;
 	state.IC = 100;
-	state.Pass_num = 1;
+	
 	 
 	/* first pass*/
 	do {
-		printf("\n%s", line_read);
+		printf("%d %s\n ", valid.line_num, line_read );
 		/* get the input from the file - read line by line*/
 		output = fgets(line_read, MAX_LINE_WIDTH, filePointer);
 		if (output != NULL) {
-			state.line_num++;
+			valid.line_num++;
+			
 			commands_first_pass(output);
 		}
 	} while (output != NULL);
@@ -90,16 +112,18 @@ void first_pass(FILE* filePointer) {
 	/* update final position */
 	state.ICF = state.IC;
 	state.DCF = state.DC;
-	print_symbol_table(symbol_table);
+
+	valid.pass_successful = True;
+	/*print_symbol_table(symbol_table);
 	print_data_table(data_table);
 	/*print_memory_table(memory_table);*/
 
 	update_symbol_table_address(symbol_table, data, state.ICF);
-	print_symbol_table(symbol_table);
+	/*print_symbol_table(symbol_table);*/
 	update_memory_table_from_data_table(&memory_table, data_table, state.ICF);
 	
-	print_data_table(data_table);
-	print_memory_table(memory_table);
+	/*print_data_table(data_table);
+	print_memory_table(memory_table);*/
 
 }
 
@@ -179,9 +203,8 @@ void commands_first_pass(char command_original[]) {
 		}
 		else {
 
-			printf("undefine command: %s ", command_section);
-			printf("Error in line %d ", state.line_num);
-			state.pass = False;
+			printError(CANNOT_PARSE_LINE);
+			end_line = True;
 		}
 
 	}
@@ -195,11 +218,12 @@ void second_pass(FILE* filePointer) {
 	char *output = "";                   /* output from the user */
 
 	/* second pass*/
-
-	state.line_num = 0;
+	valid.pass_num = 2;
+	valid.line_num = 0;
+	
 	state.DC = 0;
 	state.IC = 99;
-	state.Pass_num = 2;
+	
 
 	/* reset line read*/
 	fseek(filePointer, 0, SEEK_SET);
@@ -209,7 +233,7 @@ void second_pass(FILE* filePointer) {
 		output = fgets(line_read, MAX_LINE_WIDTH, filePointer);
 		if (output != NULL) {
 	
-			state.line_num++;
+			valid.line_num++;
 			commands_second_pass(output);
 			
 		}
@@ -293,10 +317,21 @@ void flag_manger(char label[], TypeSymbol type) {
 	
 	char symbol[NAME+1];/*  more 1 for extra ':' char*/
 	char sep[] = { ':','\n',' ','\0'};
+
+	
 	strcpy(symbol, label);
-
-
 	remove_substring_parts(symbol, sep);
+
+	if (!is_legal_symbol(symbol)) {
+		printError(INVALID_SYMBOL);
+		return;
+	}
+	/* check if symbol already difine in the symbol table */
+	if (is_symbol_exist(symbol_table, symbol)) {
+		printError(SYMBOL_ALREADY_EXISTS);
+	 return;
+	}
+
 	/* insert the flag in the table flage  - link list */
 	switch (type) {
 	case code:
@@ -317,7 +352,7 @@ void instructional_sentence(char fun[], char input_str[], struct operationFunc *
 
 	table_funct_opcode(fun, opcodeFunc);
 	set_operation_command(fun, input_str, opcodeFunc);
-	print_memory_table(memory_table);
+	 
 
 }
 
@@ -387,8 +422,7 @@ void set_binary_machine_code(struct setupRegistretion setup, struct operationFun
 		binary_machine_code[i] = binaryArray[j];
 
 	};
-	/*arrayAssign(binary_machine_code, binaryArray, 0, 23);*/
-	printArray(binary_machine_code, bitrray);
+ 
 	update_memory_table(memory_table,++state.IC, binary_machine_code);
 
 	if (assertIsMember(setup.firstOperand.Type, adress_take_more_space, 3)) {
@@ -418,7 +452,7 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 			binaryArray = decimal2binaryArray(st.value, 21);
 			arrayAssign(&binary_machine_code, binaryArray, INDEX(23), INDEX(3));
 			arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
-			printArray(binary_machine_code, bitrray);
+			 
 			update_memory_table(memory_table, ++state.IC,&binary_machine_code);
 			break;
 
@@ -439,7 +473,7 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 				are.x[0] = False; are.x[1] = False; are.x[2] = True;
 			}
 			arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
-			printArray(binary_machine_code, bitrray);
+		 
 			update_memory_table(memory_table,++state.IC, &binary_machine_code);
 			break;
 
@@ -456,7 +490,7 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 			are.x[2] = False;
 
 			arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
-			printArray(binary_machine_code, bitrray);
+		 
 			update_memory_table(memory_table, ++state.IC, &binary_machine_code);
 			break;
 		case (Register_Direct):
@@ -470,9 +504,7 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 
 void guidance_sentence(char varType[], char var[]) {
 
-	printf("\nthis is varType: %s\n", varType);
-
-	printf("\nthis is var: %s\n", var);
+	 
 	if (strcmp(varType, ".string") == 0) {
 		
 		string_sentence(var);
@@ -497,6 +529,13 @@ void string_sentence(char str[]) {
 	int *binaryArr;
 	char latter[] = { ' ','\0' };
 	
+	/* check if ther is quate in the string */
+	if (!is_legel_string_data(str)) {
+
+		printError(MISSING_QUATS);
+		return;
+	}
+
 
 	str_inside(str, '"');
 	remove_substring(str, "\"");
@@ -510,8 +549,8 @@ void string_sentence(char str[]) {
 		latter[0] = str[i];
 		/* convert to binary array*/
 		binaryArr = decimal2binaryArray(ascii, bitrray);
-		printf("%c:\t", str[i]);
-		printArray(binaryArr, bitrray);
+		 
+		 
 
 		/*push_and_update_memory_table(&memory_table, &state.IC, latter, binaryArr);*/
 		push_and_update_data_table(&data_table, &state.DC, latter, binaryArr);
@@ -527,16 +566,22 @@ void data_sentence(char var[]) {
 	int *binaryArr,
 		*arr, *length[2];
 	int len = 0;
+	char sep[] = { ' ','\t','\n','\0' };
 
+	remove_substring_parts(var, sep);
+	if (!is_legal_number(var)) {
+		printError(CANNOT_PARSE_LINE);
+		return;
+	}
 	arr = string2array(var,&length);
 	len = (int)length[0];
-	printArray(arr,len);
+	 
 	
 	for (i = 0; i<len; ++i) {
 	
 		/* convert to binary array*/
 		binaryArr = decimal2binaryArray(arr[i], bitrray);
-		printArray(binaryArr, bitrray);
+		 
 		sprintf(var, "%d", arr[i]);
 		/* push data to the table  */
 
@@ -548,6 +593,13 @@ void data_sentence(char var[]) {
 }
 
 void extern_sentence(char symbol[]) {
+	
+	char sep[] = {'\n',' ','\0' };
+	remove_substring_parts(symbol, sep);
+	if (!is_legal_symbol(symbol)) {
+		printError(INVALID_SYMBOL);
+		return;
+	}
 	flag_manger(symbol, external);
 	
 }
@@ -572,7 +624,7 @@ void entry_sentence(char symbol[]) {
 
 void update_or_insert_machine_code(struct setupRegistretion register_setup, struct operationFunc *opcodeFunc) {
 
-	switch (state.Pass_num) {
+	switch (valid.pass_num) {
 	case 1:
 		create_space_binary_machine_code(register_setup, opcodeFunc);
 		break;

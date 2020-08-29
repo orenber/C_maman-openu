@@ -7,7 +7,7 @@ expected_nargin - expected number of argument input ..</summary> */
 BOOL assert_nargin(char text[], int expected_nargin) {
 
 	BOOL valid_inputs = False;
-	char messege[NAME] = "", *sep = "";
+	char  *sep = "";
 	int nargin = 0;
 	char seperator[] = { ',','\n','\t',':',' ','\r','\0'};
 	char command_input[MAX_LINE_WIDTH] = "";  /* copy of input string */
@@ -28,17 +28,13 @@ BOOL assert_nargin(char text[], int expected_nargin) {
 	}
 	else if (nargin > expected_nargin) {
 		valid_inputs = False;
-		strcpy(messege, "Extraneous text after end of command\n");
+		printf("\nToo many operands, requires %d operands (got %d)\n", expected_nargin, nargin);
 	}
 	else if (nargin < expected_nargin) {
 		valid_inputs = False;
-		strcpy(messege, "Missing parameter\n");
+		printf("\nMissing operands, requires %d operands (got %d)\n", expected_nargin, nargin);
 	}
 
-
-	if (valid_inputs == False) {
-		printf("%s", messege);
-	}
 
 	return valid_inputs;
 }
@@ -137,6 +133,7 @@ BOOL assert_comma(char text[], int comma_sum) {
 	if (clean_string[0] == ',') {
 
 		/* not allow to be in the first index*/
+		
 		strcpy(error_messege, "Illegal comma\n");
 		llegal_comma = False;
 	}

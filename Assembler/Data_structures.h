@@ -117,11 +117,11 @@ struct STATE {
 	int IC,
 		ICF,
 		DC,
-		DCF,
-		Pass_num,
-		line_num;
-	BOOL pass;
+		DCF;
+	
 };
+
+
 
 
 #endif // !1

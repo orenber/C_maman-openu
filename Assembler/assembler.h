@@ -8,6 +8,7 @@
 
 
 /* assembler ----------------------------------*/
+void free_memory();
 
 void update_or_insert_machine_code(struct setupRegistretion register_setup, struct operationFunc *opcodeFunc);
 

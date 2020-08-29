@@ -101,7 +101,7 @@ void table_funct_opcode(char func[], struct operationFunc *opcodeFunc) {
 BOOL cheak_legal_address(char func[], AdressType  sourceOperand, AdressType destinationOperand) {
 	
 	int *binaryArr;
-	BOOL ok1 = False, ok2 = False,legal;	
+	BOOL ok1 = True, ok2 = True,legal;	
 	AdressType  legalSource[3], legalDestination[3];
  
 
@@ -244,6 +244,20 @@ BOOL cheak_legal_address(char func[], AdressType  sourceOperand, AdressType dest
 
 		legal = True;
 	}
+
+	if (legal == False) {
+
+		if (!ok1) {
+			printf("Error in %s operands"
+				"\nInvalid addressing mode for first operand\n", func);
+		}
+		if (!ok2) {
+			printf("Error in %s operands"
+				"\nInvalid addressing mode for second operand\n", func);
+		}
+	}
+
+
 	return legal;
 
 }
