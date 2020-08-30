@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 	int filesNumber = 1;
 	FILE *filepointer = NULL; 
 	
-	run_test();
+	
 	while (argv[filesNumber] != NULL) {
 
 		 
