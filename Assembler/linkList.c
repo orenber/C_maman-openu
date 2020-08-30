@@ -78,7 +78,7 @@ void push_and_update_memory_table(struct memoryTable** link_list, int *address,c
 	/* Assign data to new node in stack */
 	newNode->address = *address;
 	strcpy(newNode->name, sorceCode);
-	arrayAssign(newNode->binaryMachineCode, binaryArray, 0, 23);
+	arrayAssign((int)newNode->binaryMachineCode, binaryArray, 0, 23);
 
 	/* Next element after new node should be current top element */
 	newNode->next = *link_list;
@@ -99,7 +99,7 @@ void push_and_update_data_table(struct dataTable ** link_list, int *address, cha
 	/* Assign data to new node in stack */
 	newNode->address = (*address);
 	strcpy(newNode->name, name);
-	arrayAssign(newNode->binaryMachineCode, binaryArray, 0, 23);
+	arrayAssign((int)newNode->binaryMachineCode, (int)binaryArray, 0, 23);
 
 	/* Next element after new node should be current top element */
 	newNode->next = *link_list;
@@ -131,7 +131,7 @@ void update_memory_table(struct memoryTable * link_list, int address, int binary
 	while (link_list != NULL) {
 
 		if (link_list->address == address) {
-			arrayAssign(link_list->binaryMachineCode, binaryArray, 0, 23);
+			arrayAssign((int)link_list->binaryMachineCode, binaryArray, 0, 23);
 			/*printf("\n Address: %d update .\n", address);*/
 			break;
 		}
@@ -251,7 +251,7 @@ struct addressData get_memory_row_data(struct memoryTable* link_list, int addres
 
 		if (link_list->address == address) {
 			data.address = link_list->address;
-			arrayAssign(data.binaryMachineCode, link_list->binaryMachineCode, 0, 23);
+			arrayAssign((int)data.binaryMachineCode, (int)link_list->binaryMachineCode, 0, 23);
 
 			break;
 

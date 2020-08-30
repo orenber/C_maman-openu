@@ -24,7 +24,7 @@ int * string2array(char stringArray[], int *length);
 
 /*char * num2string(int number);*/
 
-void arrayAssign(unsigned int *arrtoChange, int subArray[], int initial_index, int final_index);
+void arrayAssign( int *arrtoChange, int subArray[], int initial_index, int final_index);
 
 
 /* convertion*/

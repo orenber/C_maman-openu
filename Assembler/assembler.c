@@ -491,25 +491,25 @@ int * createBinaryArray(struct operationFunc *opcodeFunc) {
 	int binaryArray[BITARRAY];
 	zeros(binaryArray, BITARRAY);
 	/*ARE*/
-	arrayAssign(binaryArray, opcodeFunc->ARE.x, INDEX(2), INDEX(0));
+	arrayAssign(binaryArray, (int)opcodeFunc->ARE.x, INDEX(2), INDEX(0));
 
 	/*funct*/
-	arrayAssign(binaryArray, opcodeFunc->functBinaryArr, INDEX(7), INDEX(3));
+	arrayAssign(binaryArray, (int)opcodeFunc->functBinaryArr, INDEX(7), INDEX(3));
 
 	/* register Destination */
-	arrayAssign(binaryArray, opcodeFunc->registerDestination, INDEX(10), INDEX(8));
+	arrayAssign(binaryArray, (int)opcodeFunc->registerDestination, INDEX(10), INDEX(8));
 
 	/* address Destination */
-	arrayAssign(binaryArray, opcodeFunc->addressDestination, INDEX(12), INDEX(11));
+	arrayAssign(binaryArray, (int)opcodeFunc->addressDestination, INDEX(12), INDEX(11));
 
 	/* register source */
-	arrayAssign(binaryArray, opcodeFunc->registerSource, INDEX(15), INDEX(13));
+	arrayAssign(binaryArray, (int)opcodeFunc->registerSource, INDEX(15), INDEX(13));
 
 	/* address source */
-	arrayAssign(binaryArray, opcodeFunc->addressSource, INDEX(17), INDEX(16));
+	arrayAssign(binaryArray, (int)opcodeFunc->addressSource, INDEX(17), INDEX(16));
 
 	/* opcode */
-	arrayAssign(binaryArray, opcodeFunc->opcodeBinaryArr, INDEX(23), INDEX(18));
+	arrayAssign(binaryArray, (int)opcodeFunc->opcodeBinaryArr, INDEX(23), INDEX(18));
 
 	return  binaryArray;
 
@@ -550,7 +550,7 @@ void create_space_binary_machine_code(struct setupRegistretion setup, char instr
 void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 
 	int *binaryArray;
-	int  binary_machine_code[BITARRAY];
+	unsigned int  binary_machine_code[BITARRAY];
 	char label[NAME];
 	struct symbolData symbol_data;
 
@@ -560,8 +560,8 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 	{
 	case (Immediate):
 		binaryArray = decimal2binaryArray(st.value, 21);
-		arrayAssign(binary_machine_code, binaryArray, INDEX(23), INDEX(3));
-		arrayAssign(binary_machine_code, are.x, INDEX(2), INDEX(0));
+		arrayAssign((int)binary_machine_code,(int)binaryArray, INDEX(23), INDEX(3));
+		arrayAssign((int)binary_machine_code, (int)are.x, INDEX(2), INDEX(0));
 
 		update_memory_table(memory_table, ++state.IC, binary_machine_code);
 		break;
@@ -572,7 +572,7 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 		symbol_data = get_symbol_data(symbol_table, st.label);
 
 		binaryArray = decimal2binaryArray(symbol_data.address, 21);
-		arrayAssign(binary_machine_code, binaryArray, INDEX(23), INDEX(3));
+		arrayAssign((int)binary_machine_code, binaryArray, INDEX(23), INDEX(3));
 		/*ARE */
 		/* if internal ARE = 010*/
 		if (symbol_data.isInternal) {
@@ -582,7 +582,7 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 			/* f external ARE = 001*/
 			are.x[0] = False; are.x[1] = False; are.x[2] = True;
 		}
-		arrayAssign(binary_machine_code, are.x, INDEX(2), INDEX(0));
+		arrayAssign((int)binary_machine_code, are.x, INDEX(2), INDEX(0));
 
 		update_memory_table(memory_table, ++state.IC, binary_machine_code);
 		break;
@@ -593,13 +593,13 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 		symbol_data = get_symbol_data(symbol_table, strtok(label, "&"));
 		/* jump curent */
 		binaryArray = decimal2binaryArray(symbol_data.address - state.IC, 21);
-		arrayAssign(binary_machine_code, binaryArray, INDEX(23), INDEX(3));
+		arrayAssign((int)binary_machine_code, (int)binaryArray, INDEX(23), INDEX(3));
 		/*ARE */
 		are.x[0] = True;
 		are.x[1] = False;
 		are.x[2] = False;
 
-		arrayAssign(binary_machine_code, are.x, INDEX(2), INDEX(0));
+		arrayAssign((int)binary_machine_code, (int)are.x, INDEX(2), INDEX(0));
 
 		update_memory_table(memory_table, ++state.IC, binary_machine_code);
 		break;
@@ -677,21 +677,21 @@ void resetValues(struct setupRegistretion *inputRegistretion,struct operationFun
 
 	/* reset  source*/
 	binaryArr = decimal2binaryArray(0, 2);
-	arrayAssign(opcodeFunc->addressDestination, binaryArr, 0, 1);
+	arrayAssign((int)opcodeFunc->addressDestination,(int)binaryArr, 0, 1);
 
 	binaryArr = decimal2binaryArray(0, 2);
-	arrayAssign(opcodeFunc->addressSource, binaryArr, 0, 2);
+	arrayAssign((int)opcodeFunc->addressSource, (int)binaryArr, 0, 2);
 	
 	/* reset  register*/
 	binaryArr = decimal2binaryArray(0, 3);
-	arrayAssign(opcodeFunc->registerSource, binaryArr, 0, 2);
+	arrayAssign((int)opcodeFunc->registerSource, (int)binaryArr, 0, 2);
 
 	binaryArr = decimal2binaryArray(0, 3);
-	arrayAssign(opcodeFunc->registerDestination, binaryArr, 0, 2);
+	arrayAssign((int)opcodeFunc->registerDestination, (int)binaryArr, 0, 2);
 	
 	/*ARE*/
 	binaryArr = decimal2binaryArray(0, 3);
-	arrayAssign(opcodeFunc->ARE.x, binaryArr, 0, 2);
+	arrayAssign((int)opcodeFunc->ARE.x, (int)binaryArr, 0, 2);
 
 }
 

@@ -173,7 +173,7 @@ void write_ent_file(char fileName[], struct symbolTable *symboltable) {
 			strcat(text, " ");
 			
 			/* convert address to string*/
-			sprintf(snum, "%07d", symboltable->address );
+			sprintf(snum, "%d", symboltable->address );
 			strcat(text, snum);
 			
 			/* write text file */

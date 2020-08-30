@@ -82,7 +82,7 @@ void table_funct_opcode(char func[], struct operationFunc *opcodeFunc) {
 	}
 
 	binaryArr = decimal2binaryArray(opcodeFunc->opcode, 6);
-	arrayAssign(opcodeFunc->opcodeBinaryArr, binaryArr, 0, 5);
+	arrayAssign((int)opcodeFunc->opcodeBinaryArr, binaryArr, 0, 5);
 
 	if (funcEmpty) {
 		opcodeFunc->funct = 0;
@@ -93,7 +93,7 @@ void table_funct_opcode(char func[], struct operationFunc *opcodeFunc) {
 		binaryArr = decimal2binaryArray(0, 5);
 	}
 
-	arrayAssign(opcodeFunc->functBinaryArr, binaryArr, 0, 4);
+	arrayAssign((int)opcodeFunc->functBinaryArr, binaryArr, 0, 4);
 	
 }
 

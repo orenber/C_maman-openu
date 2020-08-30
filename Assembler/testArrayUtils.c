@@ -63,7 +63,7 @@ void test_arrayAssign() {
 		arr_test[] = { 0,0,0,0,1,2,3,4,0,0,0};
 	BOOL test_pass;
 
-	arrayAssign( arr_assign, arr_sub, 4, 7);
+	arrayAssign((int)arr_assign, (int)arr_sub, 4, 7);
 	printArray(arr_assign,10);
 	test_pass = assertArrayIsEqual(arr_test, arr_assign,10);
 	print_test_result(test_pass);

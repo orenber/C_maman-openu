@@ -74,7 +74,7 @@ int * string2array(char stringArray[],int *length) {
 
 }
 
-void arrayAssign(unsigned int *arrtoChange, int subArray[], int initial_index, int final_index) {
+void arrayAssign( int *arrtoChange, int subArray[], int initial_index, int final_index) {
 	int i, j = 0;
 
 	for (i = initial_index, j = 0; final_index >= i; ++i, j++) {
