@@ -1,3 +1,7 @@
+#include "Constant.h"
+
+
+
 /* all legal function*/
 const char *instructionType[] = {
 	"mov","cmp","add",

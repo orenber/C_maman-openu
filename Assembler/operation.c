@@ -194,13 +194,13 @@ void operand_manager(char nargin_str[],int expected_nargin, struct operationFunc
 	register_setup = get_address_register_setup(nargin_str, opcodeFunc);
 
 	/* call function that check the operand leagllety */
-	is_leagal_address = cheak_legal_address(&opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
+	is_leagal_address = cheak_legal_address(opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
 	if (!is_leagal_address) {
 		printf("Error in %s", opcodeFunc->name);
 		printError(WRONG_ADDRESSING_MODE);
 		return;
 	}
-	update_or_insert_machine_code(register_setup, opcodeFunc->name);
+	update_or_insert_machine_code(register_setup, opcodeFunc);
 
 }
 

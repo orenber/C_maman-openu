@@ -3,7 +3,7 @@
 #ifndef ERROR
 #define ERROR
 
-#include<stdio.h> 
+#include <stdio.h> 
 #include "Data_structures.h"
 extern struct ERROR_HANDLER valid;
 

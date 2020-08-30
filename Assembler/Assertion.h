@@ -1,6 +1,11 @@
 #pragma once
-#include "Liberis.h"
+#include<stdio.h> 
+#include<stdlib.h>
+#include<string.h>
+#include<ctype.h>
+#include <math.h>
 #include "Data_structures.h"
+#include "ArrayUtils.h"
 #ifndef ASSERTION
 #define ASSERTION
 

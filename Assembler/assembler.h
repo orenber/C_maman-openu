@@ -3,8 +3,23 @@
 #define ASS
 
  
-#include "Liberis.h"
-#include "Interface.h"
+#include<stdio.h> 
+#include<stdlib.h>
+#include<string.h>
+#include<ctype.h>
+#include <math.h>
+
+#include "ArrayUtils.h"
+#include "Data_structures.h"
+#include "Assertion.h"
+#include "Constant.h"
+#include "linkList.h"
+#include "File_management.h"
+#include "operation.h"
+#include "Tables.h"
+#include "Errors.h"
+#include "Parser.h"
+#include "UnitTest.h"
 
 
 /* assembler ----------------------------------*/

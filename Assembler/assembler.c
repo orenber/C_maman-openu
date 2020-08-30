@@ -40,8 +40,8 @@ int main(int argc, char* argv[])
 
 	int filesNumber = 1;
 	FILE *filepointer = NULL; 
+	
 	run_test();
-
 	while (argv[filesNumber] != NULL) {
 
 		 
@@ -453,7 +453,7 @@ void entry_sentence(char symbol[]) {
 
 
 	/* check if the symbol exist*/
-	if (serach_symbol_address(symbol_table, symbol) != NULL) {
+	if (serach_symbol_address(symbol_table, symbol) != -1) {
 	   
 		/* update symbol table */
 		update_symbol_table(symbol_table, symbol, entry, True);
@@ -506,7 +506,7 @@ int * createBinaryArray(struct operationFunc *opcodeFunc) {
 	/* opcode */
 	arrayAssign(binaryArray, opcodeFunc->opcodeBinaryArr, INDEX(23), INDEX(18));
 
-	return binaryArray;
+	return  binaryArray;
 
 }
 
@@ -527,19 +527,16 @@ void update_or_insert_machine_code(struct setupRegistretion register_setup, stru
 }
 
 void create_space_binary_machine_code(struct setupRegistretion setup, char instrction_name[]) {
-
-	int *binaryArray;
-	int  binary_machine_code[BITARRAY];
-	int i = 0, j = 0;
-	AdressType adress_take_more_space[] = { Immediate, Direct, Relative };
+ 
+	int adress_take_more_space[] = { Immediate, Direct, Relative };
 
 	push_memory_table(&memory_table, &state.IC, instrction_name);
 
-	if (assertIsMember(setup.firstOperand.Type, adress_take_more_space, 3)) {
+	if (assertIsMember( setup.firstOperand.Type,  adress_take_more_space, 3)) {
 		set_space_binary_machine_code(setup.firstOperand.Type, setup.firstOperand.label);
 	}
 
-	if (assertIsMember(setup.secondOperand.Type, adress_take_more_space, 3)) {
+	if (assertIsMember(setup.secondOperand.Type,adress_take_more_space, 3)) {
 		set_space_binary_machine_code(setup.secondOperand.Type, setup.secondOperand.label);
 	}
 
@@ -548,13 +545,12 @@ void create_space_binary_machine_code(struct setupRegistretion setup, char instr
 void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 
 	int *binaryArray;
-	int  binary_machine_code[BITARRAY],
-		address_symbol;
+	int  binary_machine_code[BITARRAY];
 	char label[NAME];
 	struct symbolData symbol_data;
 
 
-	zeros(&binary_machine_code, BITARRAY);
+	zeros(binary_machine_code, BITARRAY);
 	switch (type)
 	{
 	case (Immediate):
@@ -562,7 +558,7 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 		arrayAssign(binary_machine_code, binaryArray, INDEX(23), INDEX(3));
 		arrayAssign(binary_machine_code, are.x, INDEX(2), INDEX(0));
 
-		update_memory_table(memory_table, ++state.IC, &binary_machine_code);
+		update_memory_table(memory_table, ++state.IC, binary_machine_code);
 		break;
 
 	case (Direct):
@@ -598,9 +594,9 @@ void update_binary_machine_code(AdressType type, polymorfType st, ARE are) {
 		are.x[1] = False;
 		are.x[2] = False;
 
-		arrayAssign(&binary_machine_code, are.x, INDEX(2), INDEX(0));
+		arrayAssign(binary_machine_code, are.x, INDEX(2), INDEX(0));
 
-		update_memory_table(memory_table, ++state.IC, &binary_machine_code);
+		update_memory_table(memory_table, ++state.IC, binary_machine_code);
 		break;
 	case (Register_Direct):
 
@@ -645,9 +641,9 @@ void set_binary_machine_code(struct setupRegistretion setup, struct operationFun
 	int *binaryArray;
 	int  binary_machine_code[BITARRAY];
 	int i = 0, j = 0;
-	AdressType adress_take_more_space[] = { Immediate, Direct, Relative };
+	int adress_take_more_space[] = { Immediate, Direct, Relative };
 
-	zeros(&binary_machine_code, BITARRAY);
+	zeros(binary_machine_code, BITARRAY);
 
 	binaryArray = createBinaryArray(opcodeFunc);
 
@@ -658,11 +654,11 @@ void set_binary_machine_code(struct setupRegistretion setup, struct operationFun
 
 	update_memory_table(memory_table, ++state.IC, binary_machine_code);
 
-	if (assertIsMember(setup.firstOperand.Type, adress_take_more_space, 3)) {
+	if (assertIsMember(setup.firstOperand.Type,  adress_take_more_space, 3) == True) {
 		update_binary_machine_code(setup.firstOperand.Type, setup.firstOperand, opcodeFunc->ARE);
 	}
 
-	if (assertIsMember(setup.secondOperand.Type, adress_take_more_space, 3)) {
+	if (assertIsMember( setup.secondOperand.Type,  adress_take_more_space, 3)==True) {
 		update_binary_machine_code(setup.secondOperand.Type, setup.secondOperand, opcodeFunc->ARE);
 	}
 
@@ -672,10 +668,7 @@ void set_binary_machine_code(struct setupRegistretion setup, struct operationFun
 void resetValues(struct setupRegistretion *inputRegistretion,struct operationFunc *opcodeFunc) {
 
 	int *binaryArr;
-
-	inputRegistretion->firstOperand.value  = NULL;
-	inputRegistretion->secondOperand.value = NULL;
-
+ 
 	/* reset  source*/
 	binaryArr = decimal2binaryArray(0, 2);
 	arrayAssign(opcodeFunc->addressDestination, binaryArr, 0, 1);
@@ -700,9 +693,9 @@ void resetValues(struct setupRegistretion *inputRegistretion,struct operationFun
 AdressType getAddresingType(char inputString[]) {
 
 	AdressType addresingType;
-	char str[NAME+1];
-    char hashTag[] = "#";
-    char andTag[] = "&";
+	char str[NAME+1]; /* one more hashtag char*/
+    const char hashTag[] = "#";
+    const char andTag[] = "&";
 
 	strcpy(str, inputString);
 
@@ -744,12 +737,12 @@ AdressType getAddresingType(char inputString[]) {
 Register* getRegisterVar(char registerName[]) {
 
 	int i;
-	for (i = 0; LEN_Register > i; i++) {
+	for (i = 0; REGISTER_NUM > i; i++) {
 		if (strcmp(registerDictionary[i].name, registerName) == 0) {
 			return registerDictionary[i].reg;
 		}
 	}
 
-	return registerDictionary[LEN_Register].reg;
+	return registerDictionary[REGISTER_NUM].reg;
 }
 

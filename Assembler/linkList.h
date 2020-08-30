@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include "Data_structures.h"
+#include "ArrayUtils.h"
  
  
 
@@ -42,8 +43,8 @@ void update_symbol_table(struct symbolTable * link_list, char symbol[], TypeSymb
 void update_symbol_table_address(struct symbolTable * link_list, TypeSymbol type, int factor);
 
 
-// A simple and tail recursive function to reverse 
-// a linked list.  prev is passed as NULL initially.
+/* A simple and tail recursive function to reverse 
+ a linked list.  prev is passed as NULL initially.*/
 
 void reverse(struct dataTable**  head);
 
@@ -58,8 +59,8 @@ int size_data_table(struct dataTable * link_list);
 int size_memory_table(struct memoryTable * link_list);
 
 /* serach */
-/* get date from list*/
-struct addressData get_code_data(struct memoryTable* link_list, int memory[]);
+/* get data from list*/
+struct addressData get_memory_row_data(struct memoryTable* link_list, int address);
 
 struct symbolData get_symbol_data(struct symbolTable * link_list, char symbol[]);
 

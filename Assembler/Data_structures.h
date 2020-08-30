@@ -9,7 +9,7 @@
 #define BITARRAY 24
 #define INITIAL_ADDRESS  100
 
-#define LEN_Register 8
+#define REGISTER_NUM 8
 /* macro*/
 #define LENGTH(x)  (sizeof(x) / sizeof((x)[0]))
 #define INDEX(x)   ((BITARRAY-1)-x)
@@ -124,4 +124,4 @@ struct STATE {
 
 
 
-#endif // !1
+#endif  

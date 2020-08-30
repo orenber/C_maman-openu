@@ -55,7 +55,7 @@ BOOL file_exists(char fileName[])
 
 FILE * open_files(int argc, char fileName[]) {
 
-	char file_to_read[NAME] = "";        /* file name that i read from*/
+	 
 	BOOL is_file_read_exist = False;    /* is the file that i read from exist?*/
 	int  nargin = argc;                  /* number of input in */
 	FILE *filePointer = NULL;
@@ -96,16 +96,15 @@ void create_files_output(char file_to_read[],struct memoryTable *memory_table, s
 }
 
 
-void write_ob_file(char fileName[], struct addressTable* addresstable,struct dataTable* dataTable) {
+void write_ob_file(char fileName[], struct memoryTable* addresstable,struct dataTable* dataTable) {
 
 	 
-	int commands,
-		data_size,
+	int data_size,
 		instruction,
 		guidlines, address;
-	struct addressData data;
-	char *hexadecimal="",
-		*straddress ="";
+	struct addressData address_data;
+	unsigned int decimal;
+	char *straddress = " ";
 	char snum[10];
 	char text[15] = "";
 	
@@ -132,20 +131,22 @@ void write_ob_file(char fileName[], struct addressTable* addresstable,struct dat
 	for (address = INITIAL_ADDRESS; address < data_size; ++address) {
 		/* initilize text*/
 		strcpy(text,"");
-		/* get address*/
-		data = get_code_data(addresstable, address);
 
+		/* get row data of the current address*/
+		address_data = get_memory_row_data(addresstable, address);
 
 		/* convert addres to string*/
-		straddress = num2string(data.address);
+		sprintf(straddress, "%07d", address_data.address);
 		strcat(text,straddress);
 
 		/* concatinate to one row */
 		strcat(text, " ");
 
 		/* convert binary machine code to hexadecimal sring*/
-		hexadecimal = binaryArray2Hexadecimal(data.binaryMachineCode, BITARRAY);
-		strcat(text, hexadecimal);
+		decimal = binaryArray2decimal(address_data.binaryMachineCode, BITARRAY);
+		sprintf(snum, "%06x", decimal);
+
+		strcat(text, snum);
 
 		/* write text row*/
 		write_file(fileName, text, "a");
@@ -153,7 +154,7 @@ void write_ob_file(char fileName[], struct addressTable* addresstable,struct dat
 }
 
 void write_ent_file(char fileName[], struct symbolTable *symboltable) {
-
+	char snum[10];
 
 	char text[MAX_LINE_WIDTH] = "";
 
@@ -172,7 +173,8 @@ void write_ent_file(char fileName[], struct symbolTable *symboltable) {
 			strcat(text, " ");
 			
 			/* convert address to string*/
-			strcat(text, num2string(symboltable->address));
+			sprintf(snum, "%07d", symboltable->address );
+			strcat(text, snum);
 			
 			/* write text file */
 			write_file(fileName, text, "a");
@@ -209,6 +211,8 @@ void write_ext_file(char fileName[],struct symbolTable *symboltable, struct memo
 
 
 void search_symbol_in_memory_table(char fileName[], char symbol[], struct memoryTable *memorytable) {
+	
+	char strAaddress[10] = "";
 	char text[MAX_LINE_WIDTH] = "";
 
 
@@ -222,7 +226,8 @@ void search_symbol_in_memory_table(char fileName[], char symbol[], struct memory
 			strcat(text, " ");
 
 			/* convert address to string*/
-			strcat(text, num2string(memorytable->address));
+			sprintf(strAaddress, "%07d", memorytable->address);
+			strcat(text, strAaddress);
 
 			/* write text file */
 			write_file(fileName, text, "a");

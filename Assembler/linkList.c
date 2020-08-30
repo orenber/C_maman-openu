@@ -1,7 +1,7 @@
 
 #include "linkList.h"
 
-// Stack size
+/* Stack size */
 
 struct symbolTable* create_symbol_table() {
 	struct symbolTable* newNode = malloc(sizeof(struct symbolTable));
@@ -34,9 +34,9 @@ void push_memory_table(struct memoryTable** link_list, int *address,char sorceCo
 	newNode->address = *address;
 	strcpy(newNode->name, sorceCode);
  
-	// Next element after new node should be current top element
+	/* Next element after new node should be current top element */
 	newNode->next = *link_list;
-	// Make sure new node is always at top
+	/* Make sure new node is always at top*/
 	*link_list = newNode;
 	
 	/*printf("\nData: %d pushed to stack.\n", (*address));*/
@@ -47,18 +47,18 @@ void push_memory_table(struct memoryTable** link_list, int *address,char sorceCo
 void push_symbol_table(struct symbolTable ** link_list, int address, char symbol[], TypeSymbol type, BOOL isInternal)
 {
 
-	// Create a new node and push to stack
+	/* Create a new node and push to stack */
 	struct symbolTable * newNode = (struct symbolTable *) malloc(sizeof(struct symbolTable));
 
-	// Assign data to new node in stack
+	/* Assign data to new node in stack*/
 	newNode->address = address;
 	strcpy(newNode->symbol, symbol);
 	newNode->characterization = type;
 	newNode->isInternal = isInternal;
 
-	// Next element after new node should be current top element
+	/* Next element after new node should be current top element */
 	newNode->next = *link_list;
-	// Make sure new node is always at top
+	/* Make sure new node is always at top */
 	*link_list = newNode;
 
 	/*printf("\nSymbol: %s", symbol);
@@ -80,9 +80,9 @@ void push_and_update_memory_table(struct memoryTable** link_list, int *address,c
 	strcpy(newNode->name, sorceCode);
 	arrayAssign(newNode->binaryMachineCode, binaryArray, 0, 23);
 
-	// Next element after new node should be current top element
+	/* Next element after new node should be current top element */
 	newNode->next = *link_list;
-	// Make sure new node is always at top
+	/* Make sure new node is always at top */
 	*link_list = newNode;
 
 	/*printf("\nData: %d pushed to stack.\n", (*address));*/
@@ -93,20 +93,20 @@ void push_and_update_memory_table(struct memoryTable** link_list, int *address,c
 void push_and_update_data_table(struct dataTable ** link_list, int *address, char name[], int binaryArray[]) {
 
 
-	// Create a new node and push to stack
+	/* Create a new node and push to stack */
 	struct dataTable * newNode = (struct dataTable *) malloc(sizeof(struct dataTable));
 
-	// Assign data to new node in stack
+	/* Assign data to new node in stack */
 	newNode->address = (*address);
 	strcpy(newNode->name, name);
 	arrayAssign(newNode->binaryMachineCode, binaryArray, 0, 23);
 
-	// Next element after new node should be current top element
+	/* Next element after new node should be current top element */
 	newNode->next = *link_list;
-	// Make sure new node is always at top
+	/* Make sure new node is always at top*/
 	*link_list = newNode;
 
-	/*printf("\nData: %d pushed to stack.\n", (*address));*/
+	/*  printf("\nData: %d pushed to stack.\n", (*address));*/
 	(*address)++;
 
 }
@@ -166,8 +166,8 @@ void update_symbol_table_address(struct symbolTable * link_list, TypeSymbol type
 	}
 }
 
-// A simple and tail recursive function to reverse 
-// a linked list.  prev is passed as NULL initially.
+/* A simple and tail recursive function to reverse 
+ a linked list.  prev is passed as NULL initially.*/
 void reverse(struct dataTable**  head)
 {
 	if (!head)
@@ -240,10 +240,12 @@ int size_memory_table(struct memoryTable * link_list) {
 
 /* serach */
 
-struct addressData get_code_data(struct memoryTable* link_list, int address[]) {
+struct addressData get_memory_row_data(struct memoryTable* link_list, int address) {
 
 
 	struct addressData  data;
+	/* Initialize struct with -1 address*/
+	data.address = -1;
 
 	while (link_list != NULL) {
 
@@ -284,7 +286,7 @@ struct symbolData get_symbol_data(struct symbolTable * link_list, char symbol[])
 
 int serach_symbol_address(struct symbolTable  *link_list, char symbol[]) {
 
-	int address = NULL;
+	int address = -1;
 	while (link_list != NULL) {
 		
 		if (strcmp(link_list->symbol, symbol)==0) {
@@ -393,7 +395,7 @@ void print_symbol_table(struct symbolTable * link_list) {
 }
  
 void print_memory_table(struct memoryTable* link_list) {
-	char tempstr[100];
+	
 	while (link_list != NULL) {
  
 		printf("\naddress: %d:", link_list->address);

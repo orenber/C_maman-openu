@@ -52,7 +52,7 @@ void test_binaryArray2decimal() {
 
 	decimal = binaryArray2decimal(arr_test, 5);
 	printf("%d", decimal);
-	test_pass = assertIsEqual(decimal, 23, 5);
+	test_pass = assertIsEqual(decimal, 23);
 	print_test_result(test_pass);
 }
 
@@ -82,22 +82,25 @@ void test_assertIsEmpty() {
 void test_binaryArray2Hexadecimal( ) {
 	
 	int binaryArray[] = { 0,0,0,0,1,0,1,1,0,1,1,0,1,0,0,0,0,0,0,1,1,0,0,1 };
-	char *result ,test[] = "0b6819";
+	char *result="" ,test[] = "0b6819";
 	BOOL test_pass;
 
-	result = binaryArray2Hexadecimal(binaryArray,24);
+	sprintf(result,"%06x",binaryArray2decimal(binaryArray,24));
+	
 	test_pass = (strcmp(result, test)==0);
 	print_test_result(test_pass);
 }
 
 void test_num2string() {
 
-
+	BOOL test_pass;
 	int number = 123;
-	char * str ="";
+	char * result ="";
+	char test[] = "0000123";
 
-	str = num2string(number);
-	 
+	sprintf(result,"%07d", number);
+	test_pass = (strcmp(result, test) == 0);
+
 
 
 }

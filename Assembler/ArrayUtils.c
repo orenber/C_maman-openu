@@ -18,7 +18,7 @@ void printArrayReverse(int arr[], int length)
 
 	int i = length - 1;
 
-	for (i; i >= 0; i--)
+	for (; i >= 0; i--)
 	{
 		printf("%d, ", arr[i]);
 	}
@@ -29,8 +29,8 @@ void zeros(int *arr, int numberZeros) {
 	int i;
 	for (i = 0; numberZeros > i; ++i ) {
 		arr[i] = 0;
-	};
-};
+	}
+} 
 
 void array2string(int arrayNumber[], char* stringArray) {
 
@@ -46,7 +46,7 @@ void array2string(int arrayNumber[], char* stringArray) {
 	/* */
 	return;
 
-};
+} 
 
 int * string2array(char stringArray[],int *length) {
 
@@ -87,11 +87,12 @@ int * decimal2binaryArray(signed int decimalNumber,unsigned int digits) {
 
 
 	int number;
+	int n;
 	int* arr = (int*)calloc(digits, sizeof(int));
 
 	number = decimalNumber;
 	if (number >= 0) {
-		for (int n = digits - 1; n >= 0; --n) {
+		for (  n = digits - 1; n >= 0; --n) {
 
 			arr[n] = number % 2;
 			number = number / 2;
@@ -99,14 +100,14 @@ int * decimal2binaryArray(signed int decimalNumber,unsigned int digits) {
 		}
 	}
 	else if (number < 0) {
-		for (int n = digits - 1; n >= 0; --n) {
+		for ( n = digits - 1; n >= 0; --n) {
 			/*Binary signed 1's complement:*/
 			arr[n] = (number % 2) == 0? 1: 0;
 
 			number = number / 2;
 		
 		}
-		for (int n = digits - 1; n >= 0; --n) {
+		for ( n = digits - 1; n >= 0; --n) {
 			/*Binary signed 2's complement:*/
 			if (arr[n] == 0) {
 				arr[n] = 1;
@@ -129,16 +130,16 @@ int binaryArray2decimal(int binaryArray[],  int digits){
 	int decimal , result = 0;
 	int i = digits - 1,j =0;
 
-	for (i,j; i >=0, j<digits ; --i,++j) {
+	for ( ; i >=0, j<digits ; --i,++j) {
 
-		decimal = binaryArray[i] * pow(2, j);
+		decimal = binaryArray[i] * (int)pow(2, j);
 		result = result + decimal;
 
 	}
 
 	return result;
 }
-
+ /*
 char * binaryArray2Hexadecimal(int binaryArray[], unsigned int digits) {
 
 	int decimal, result = 0;
@@ -147,10 +148,10 @@ char * binaryArray2Hexadecimal(int binaryArray[], unsigned int digits) {
 	n= strlen(hexadecimal);
 
 	printArray(binaryArray, digits);
-	for (i, j; i >= 0; --i, ++j)
+	for ( ; i >= 0; --i, ++j)
 	{
 
-		decimal = binaryArray[i] * pow(2, j);
+		decimal = binaryArray[i] * (int)pow(2, j);
 		result = result + decimal;
 		
 		if (( (j+1) % 4 == 0) || (i == 0))
@@ -185,17 +186,16 @@ char * binaryArray2Hexadecimal(int binaryArray[], unsigned int digits) {
 				break;
 
 			}
-		
-			/* reset values */
+ 
 			result = 0;
 			j = -1;
 		}
 	}
-
- /*	printf("Equivalent hexadecimal value: %s", hexadecimal);*/
-
+ 
 	return hexadecimal;
 }
+*/
+
 
 char *decimal2Hexadecimal(long int decimalNumber)
 {
@@ -218,7 +218,7 @@ char *decimal2Hexadecimal(long int decimalNumber)
 	return hexDecNum;
 }
 
-char * num2string(int number) {
+/*char * num2string(int number) {
 
 	char * padding = "0000000";
 	char strnum[6];
@@ -232,13 +232,13 @@ char * num2string(int number) {
 	strcat(strC, strnum);
 	 
 	return strC;
-}
+}*/
 
 int numSize(int number) {
 
 	int numsize = -1, result;
 	do {
-
+		
 		result = number / (int)pow(10, ++numsize);
 
 
@@ -282,23 +282,23 @@ char* strep(const char* s, const char* oldW, const char* newW)
 	int newWlen = strlen(newW);
 	int oldWlen = strlen(oldW);
 
-	// Counting the number of times old word 
-	// occur in the string 
+	/* Counting the number of times old word  occur in the string*/ 
+	
 	for (i = 0; s[i] != '\0'; i++) {
 		if (strstr(&s[i], oldW) == &s[i]) {
 			cnt++;
 
-			// Jumping to index after the old word. 
+			/* Jumping to index after the old word.*/ 
 			i += oldWlen - 1;
 		}
 	}
 
-	// Making new string of enough length 
+	/* Making new string of enough length*/ 
 	result = (char*)malloc(i + cnt * (newWlen - oldWlen) + 1);
 
 	i = 0;
 	while (*s) {
-		// compare the substring with the result 
+		/* compare the substring with the result */ 
 		if (strstr(s, oldW) == s) {
 			strcpy(&result[i], newW);
 			i += newWlen;
@@ -319,12 +319,12 @@ int array_string_length(char *names[]) {
 	return namesLen;
 }
 
-void remove_substring_parts(char *main_string, const  char sub_string_parts[]) {
+void remove_substring_parts(char *main_string, const char sub_string_parts[]) {
 
 	int i = 0;
 	int len = strlen(sub_string_parts);
 	char latter[] = { ' ','\0' };
-	for (i; i < len; ++i) {
+	for ( ; i < len; ++i) {
 		latter[0] = sub_string_parts[i];
 		remove_substring(main_string, latter);
 	}
@@ -349,7 +349,7 @@ int char_apperance(char text[], char token) {
 	return apperance;
 }
 
-void str_inside(char* oldW, const char inside) {
+void str_inside(char* oldW,  char inside) {
 
 	int i = 0;
 	BOOL del = True;

@@ -2,8 +2,7 @@
 #ifndef FILEHANDLER
 #define FILEHANDLER
 
-#include<stdlib.h>
-#include<stdio.h> 
+#include <stdlib.h>
 #include "Data_structures.h"
 #include "linkList.h"
 
@@ -23,7 +22,7 @@ void create_files_output(char file_to_read[], struct memoryTable *memory_table, 
 
 
 
-void write_ob_file(char fileName[], struct addressTable* addresstable, struct dataTable* dataTable);
+void write_ob_file(char fileName[], struct memoryTable* addresstable, struct dataTable* dataTable);
 
 void write_ent_file(char fileName[], struct symbolTable *symboltable);
 

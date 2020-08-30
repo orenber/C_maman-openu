@@ -2,7 +2,11 @@
 #ifndef ARR
 #define ARR
 
-#include "Liberis.h"
+#include<stdio.h> 
+#include<stdlib.h>
+#include<string.h>
+#include<ctype.h>
+#include <math.h>
 #include "Data_structures.h"
 #include "Assertion.h"
 
@@ -22,7 +26,7 @@ void array2string(int arrayNumber[], char *stringArray);
 
 int * string2array(char stringArray[], int *length);
 
-char * num2string(int number);
+/*char * num2string(int number);*/
 
 void arrayAssign(int *arrtoChange, int subArray[], int initial_index, int final_index);
 
@@ -31,7 +35,7 @@ void arrayAssign(int *arrtoChange, int subArray[], int initial_index, int final_
 
 int * decimal2binaryArray(signed int decimalNumber, unsigned int digits);
 
-int binaryArray2decimal(int binaryArray[], unsigned int digits);
+int binaryArray2decimal(int binaryArray[],  int digits);
 
 char * binaryArray2Hexadecimal(int binaryArray[], unsigned int digits);
 
@@ -52,15 +56,15 @@ char* strep(const char* s, const char* oldW, const char* newW);
 
 int inputs_check(char input_str[], char token);
 
-void remove_substring(char *text, char *sub_string);
+void remove_substring(char *text, const char *sub_string);
 
-void remove_substring_parts(char *main_string, char sub_string_parts[]);
+void remove_substring_parts(char *main_string, const char sub_string_parts[]);
 
 int char_apperance(char text[], char token);
 
-void str_inside(const char* oldW, const char inside);
+void str_inside(char* oldW,  char inside);
 
 BOOL checkString(const char s[]);
  
 
-#endif // !1
+#endif 

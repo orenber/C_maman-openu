@@ -63,7 +63,7 @@ BOOL is_legal_symbol(char symbol[]) {
 	is_legal = length - 1 <= NAME; /* extra one for ':' chars*/
 	if (!is_legal) {
 		printf("\nError in symbol: %s\n", symbol);
-		printf(" max length must be less than %d chars", symbol, NAME);
+		printf(" max length must be less than %d chars", NAME);
 		return is_legal;
 	}
      

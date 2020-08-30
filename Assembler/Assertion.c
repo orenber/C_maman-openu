@@ -44,7 +44,7 @@ BOOL assert_nargin(char text[], int expected_nargin) {
 Register_type - register name..</summary> */
 BOOL assert_register_type(char Register_type[]) {
 	BOOL is_validate_assertion = True;
-	is_validate_assertion = assert_command(Register_type, register_leagal, LEN_Register, "Undefined register variable\n");
+	is_validate_assertion = assert_command(Register_type, register_leagal, REGISTER_NUM, "Undefined register variable\n");
 	return is_validate_assertion;
 }
 
@@ -212,7 +212,7 @@ BOOL assertIsEmpty(char sentence[]) {
 	BOOL IsEmpty = False;
 
 	strcpy(text, sentence);
-	remove_substring_parts(text, &seperator);
+	remove_substring_parts(text,  seperator);
 	length = strlen(text);
 
 	(length == 0) ? IsEmpty = True : False;
