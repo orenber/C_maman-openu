@@ -122,7 +122,7 @@ void commands_first_pass(char command_original[]) {
 
 	
 	char *command_section = "", *next_command = "",
-		command[MAX_LINE_WIDTH] = "",
+		command[MAX_LINE_WIDTH],
 		command_left[MAX_LINE_WIDTH];
 	BOOL end_line = False;
 	struct operationFunc opcodeFunc;
@@ -333,7 +333,7 @@ void guidance_sentence(char varType[], char var[]) {
 void flag_manger(char label[], TypeSymbol type) {
 
 	char symbol[NAME + 1];/*  more 1 for extra ':' char*/
-	char sep[] = { ':','\n',' ','\0' };
+	const char sep[] = { ':','\n',' ','\0' };
 
 
 	strcpy(symbol, label);
@@ -372,6 +372,7 @@ void string_sentence(char str[]) {
 	int i = 0,
 		ascii;
 	int *binaryArr;
+	const char quats = '"';
 	char latter[] = { ' ','\0' };
 	
 	/* check if ther is quate in the string */
@@ -382,7 +383,7 @@ void string_sentence(char str[]) {
 	}
 
 
-	str_inside(str, '"');
+	str_inside(str, quats);
 	remove_substring(str, "\"");
 	strtok(str, "\n");
 	length = strlen(str);
@@ -407,11 +408,11 @@ void string_sentence(char str[]) {
 void data_sentence(char var[]) {
 
 
-	int i;
+	int i, length[2];
 	int *binaryArr,
-		*arr, *length[2];
+		*arr;
 	int len = 0;
-	char sep[] = { ' ','\t','\n','\0' };
+	const char sep[] = { ' ','\t','\n','\0' };
 
 	remove_substring_parts(var, sep);
 	if (!is_legal_number(var)) {
@@ -669,6 +670,7 @@ void resetValues(struct setupRegistretion *inputRegistretion,struct operationFun
 
 	int *binaryArr;
  
+
 	/* reset  source*/
 	binaryArr = decimal2binaryArray(0, 2);
 	arrayAssign(opcodeFunc->addressDestination, binaryArr, 0, 1);

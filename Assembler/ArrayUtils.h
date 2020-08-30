@@ -33,11 +33,6 @@ int * decimal2binaryArray(signed int decimalNumber, unsigned int digits);
 
 int binaryArray2decimal(int binaryArray[],  int digits);
 
-char * binaryArray2Hexadecimal(int binaryArray[], unsigned int digits);
-
-char * binaryArray2Hexadecimal(int binaryArray[], unsigned int digits);
-
-char *decimal2Hexadecimal(long int decimalNumber);
 
 
 /* get size*/
@@ -48,17 +43,17 @@ int  array_string_length(char *names[]);
 
 /* string manipulation*/
 
-char* strep(const char* s, const char* oldW, const char* newW);
+char* strep(char* s, const char* oldW, const char* newW);
 
 int inputs_check(char input_str[], char token);
 
-void remove_substring(char *text, const char *sub_string);
+void remove_substring(char *text, char *sub_string);
 
 void remove_substring_parts(char *main_string, const char sub_string_parts[]);
 
-int char_apperance(char text[], char token);
+int char_apperance(char text[], const char token);
 
-void str_inside(char* oldW,  char inside);
+void str_inside(char* oldW, const char inside);
 
 BOOL checkString(const char s[]);
  

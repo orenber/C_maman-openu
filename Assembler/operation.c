@@ -229,7 +229,7 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 
 		inputRegistretion.firstOperand.Type = getAddresingType(inputs);
 
-		binaryArr = decimal2binaryArray((int)inputRegistretion.firstOperand.Type, 2);
+		binaryArr = decimal2binaryArray( inputRegistretion.firstOperand.Type, 2);
 		arrayAssign(opcodeFunc->addressSource, binaryArr, 0, 1);
 		switch (inputRegistretion.firstOperand.Type) {
 
@@ -291,7 +291,7 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 
 		inputRegistretion.secondOperand.Type = getAddresingType(inputs);
 
-		binaryArr = decimal2binaryArray((int)inputRegistretion.secondOperand.Type, 2);
+		binaryArr = decimal2binaryArray(inputRegistretion.secondOperand.Type, 2);
 		arrayAssign(opcodeFunc->addressDestination, binaryArr, 0, 1);
 		switch (inputRegistretion.secondOperand.Type) {
 

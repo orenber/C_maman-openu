@@ -275,7 +275,7 @@ void remove_substring(char *text, char *sub_string) {
 
 }
 
-char* strep(const char* s, const char* oldW, const char* newW)
+char* strep(char* s, const char* oldW, const char* newW)
 {
 	char* result;
 	int i, cnt = 0;
@@ -334,7 +334,7 @@ void remove_substring_parts(char *main_string, const char sub_string_parts[]) {
 /* <summary> char_apperance -
 chack how many time the token (char) appers in the text.
 token - char..</summary> */
-int char_apperance(char text[], char token) {
+int char_apperance(char text[],const char token) {
 
 	int apperance = 0,              /* char apperance*/
 		i,
@@ -349,7 +349,7 @@ int char_apperance(char text[], char token) {
 	return apperance;
 }
 
-void str_inside(char* oldW,  char inside) {
+void str_inside(char* oldW, const char inside) {
 
 	int i = 0;
 	BOOL del = True;

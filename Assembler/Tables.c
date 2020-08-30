@@ -10,6 +10,7 @@ void table_funct_opcode(char func[], struct operationFunc *opcodeFunc) {
 
 	if (strcmp(func, "mov") == 0) {
 		opcodeFunc->opcode = 0;
+		
 		funcEmpty =True;
 
 	}
@@ -84,7 +85,7 @@ void table_funct_opcode(char func[], struct operationFunc *opcodeFunc) {
 	arrayAssign(opcodeFunc->opcodeBinaryArr, binaryArr, 0, 5);
 
 	if (funcEmpty) {
-
+		opcodeFunc->funct = 0;
 		binaryArr = decimal2binaryArray(opcodeFunc->funct, 5);
 	}
 	else {

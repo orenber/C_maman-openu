@@ -3,6 +3,7 @@
 BOOL is_legal_label(char label[]) {
 
 	BOOL is_legal;
+	const char towpoints = ':';
 	int length = strlen(label);
 
 	/* must start with latter  */
@@ -20,14 +21,14 @@ BOOL is_legal_label(char label[]) {
 		 return is_legal;
 	 }
 	/* end with : only once*/
-	 is_legal = label[length-1] == ':';
+	 is_legal = label[length-1] == towpoints;
 	 if (!is_legal) {
 		 printf("\nError in label: %s\n", label);
-		 printf("%s", "latter must end whit ':' ");
+		 printf("latter must end whit %c",towpoints);
 		 return is_legal;
 	 }
 	 /* latter ":" apperc only once*/
-	 is_legal = char_apperance(label, ':') == 1 ;
+	 is_legal = char_apperance(label, towpoints) == 1 ;
 	 if (!is_legal) {
 		 printf("\nError in label: %s\n", label);
 		 printf("%s", "latter ':' must appers only once ");
@@ -36,7 +37,7 @@ BOOL is_legal_label(char label[]) {
 
 
     /* not allow abuilt in label as add ,sub etc*/
-	 is_legal = !assert_command(label, &instructionType, INSTRUCTION_NUM, "");
+	 is_legal = !assert_command(label, instructionType, INSTRUCTION_NUM, "");
 	 if (!is_legal) {
 		 printf("\nError in label: %s\n", label);
 		 printf("/n%s", "not allow build in instruction command");
