@@ -230,14 +230,14 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 		inputRegistretion.firstOperand.Type = getAddresingType(inputs);
 
 		binaryArr = decimal2binaryArray( inputRegistretion.firstOperand.Type, 2);
-		arrayAssign((int)opcodeFunc->addressSource,(int)binaryArr, 0, 1);
+		arrayAssign((int)opcodeFunc->addressSource, binaryArr, 0, 1);
 		switch (inputRegistretion.firstOperand.Type) {
 
 		case Immediate:
 
 			/*ARE*/
 			binaryArr = decimal2binaryArray(4, 3);
-			arrayAssign((int)opcodeFunc->ARE.x, (int)binaryArr, 0, 2);
+			arrayAssign((int)opcodeFunc->ARE.x,  binaryArr, 0, 2);
 			
 			/*label*/
 			strcpy(inputRegistretion.firstOperand.label, inputs);
@@ -252,7 +252,7 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 
 			/*ARE*/
 			binaryArr = decimal2binaryArray(4, 3);
-			arrayAssign((int)opcodeFunc->ARE.x,(int)binaryArr, 0, 2);
+			arrayAssign((int)opcodeFunc->ARE.x, binaryArr, 0, 2);
 			/*label*/
 			strcpy(inputRegistretion.firstOperand.label, inputs);
 
@@ -262,13 +262,13 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 
 			/*ARE*/
 			binaryArr = decimal2binaryArray(4, 3);
-			arrayAssign((int)opcodeFunc->ARE.x,(int)binaryArr, 0, 2);
+			arrayAssign((int)opcodeFunc->ARE.x, binaryArr, 0, 2);
 			break;
 
 		case Register_Direct:
 			/*ARE*/
 			binaryArr = decimal2binaryArray(4, 3);
-			arrayAssign((int)opcodeFunc->ARE.x,(int)binaryArr, 0, 2);
+			arrayAssign((int)opcodeFunc->ARE.x, binaryArr, 0, 2);
 
 			regi = getRegisterVar(inputs);
 			/*Register*/
@@ -278,7 +278,7 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 			/*label*/
 			strcpy(inputRegistretion.firstOperand.label, inputs);
 			binaryArr = decimal2binaryArray(inputRegistretion.firstOperand.value, 3);
-			arrayAssign((int)opcodeFunc->registerSource,(int)binaryArr, 0, 2);
+			arrayAssign((int)opcodeFunc->registerSource, binaryArr, 0, 2);
 			break;
 		}
 
@@ -292,14 +292,14 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 		inputRegistretion.secondOperand.Type = getAddresingType(inputs);
 
 		binaryArr = decimal2binaryArray(inputRegistretion.secondOperand.Type, 2);
-		arrayAssign((int)opcodeFunc->addressDestination,(int) binaryArr, 0, 1);
+		arrayAssign((int)opcodeFunc->addressDestination,  binaryArr, 0, 1);
 		switch (inputRegistretion.secondOperand.Type) {
 
 		case Immediate:
 
 			/*ARE*/
 			binaryArr = decimal2binaryArray(4, 3);
-			arrayAssign((int)opcodeFunc->ARE.x,(int)binaryArr, 0, 2);
+			arrayAssign((int)opcodeFunc->ARE.x, binaryArr, 0, 2);
 			strcpy(inputRegistretion.secondOperand.label, inputs);
 			/* value*/
 			remove_substring(inputs, "#");
@@ -310,7 +310,7 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 		case Direct:
 
 			binaryArr = decimal2binaryArray(4, 3);
-			arrayAssign((int)opcodeFunc->ARE.x,(int)binaryArr, 0, 2);
+			arrayAssign((int)opcodeFunc->ARE.x, binaryArr, 0, 2);
 
 			/* copy label*/
 			strcpy(inputRegistretion.secondOperand.label, inputs);
@@ -320,18 +320,18 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 		case Relative:
 			/*ARE*/
 			binaryArr = decimal2binaryArray(4, 3);
-			arrayAssign((int)opcodeFunc->ARE.x, (int)binaryArr, 0, 2);
+			arrayAssign((int)opcodeFunc->ARE.x,  binaryArr, 0, 2);
 			strcpy(inputRegistretion.secondOperand.label, inputs);
 			break;
 
 		case Register_Direct:
 			/*ARE*/
 			binaryArr = decimal2binaryArray(4, 3);
-			arrayAssign((int)opcodeFunc->ARE.x, (int)binaryArr, 0, 2);
+			arrayAssign((int)opcodeFunc->ARE.x,  binaryArr, 0, 2);
 
 			regi = getRegisterVar(inputs);
 			inputRegistretion.secondOperand.Register = regi[0];
-			binaryArr = decimal2binaryArray((int)inputRegistretion.secondOperand.Register, 3);
+			binaryArr = decimal2binaryArray( inputRegistretion.secondOperand.Register, 3);
 			arrayAssign((int)opcodeFunc->registerDestination, (int)binaryArr, 0, 2);
 		}
  
@@ -340,7 +340,7 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 		/* ther is no operands*/
 		/*ARE*/
 		binaryArr = decimal2binaryArray(4, 3);
-		arrayAssign((int)opcodeFunc->ARE.x, (int)binaryArr, 0, 2);
+		arrayAssign((int)opcodeFunc->ARE.x,  binaryArr, 0, 2);
 	}
 	return inputRegistretion;
 
