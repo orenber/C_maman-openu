@@ -1,4 +1,4 @@
-; All rights reserved to the open university of israel. (c)
+; 
 MAIN: add r3,LIST
 LOOP: prn #48
 lea W,r6

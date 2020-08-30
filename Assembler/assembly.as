@@ -1,5 +1,4 @@
-; All the valid commands/instruction:
-; Some data at start..
+
 X: .string "Hello, World! *()"
 label00: .data -1, 1, -2, 78, 90, 45328, -95743
 label89: .string "StrCatChrTokLen.h"
