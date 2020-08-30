@@ -3,6 +3,7 @@
 #define FILEHANDLER
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "Data_structures.h"
 #include "linkList.h"
 

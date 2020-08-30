@@ -8,8 +8,8 @@
 #define MAX_LINE_WIDTH 81
 #define BITARRAY 24
 #define INITIAL_ADDRESS  100
-
 #define REGISTER_NUM 8
+#define INSTRUCTION_NUM 16
 /* macro*/
 #define LENGTH(x)  (sizeof(x) / sizeof((x)[0]))
 #define INDEX(x)   ((BITARRAY-1)-x)

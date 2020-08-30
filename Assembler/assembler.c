@@ -152,7 +152,7 @@ void commands_first_pass(char command_original[]) {
 		}
 
 
-		else if (assert_command(command_section, instructionType, 16, ""))
+		else if (assert_command(command_section, instructionType, INSTRUCTION_NUM, ""))
 		{
 			/*Instructional sentence*/
 			remove_substring(command_left, command_section);
@@ -179,7 +179,7 @@ void commands_first_pass(char command_original[]) {
 
 			next_command = strtok(NULL, seperator);
 
-			if (assert_command(next_command, instructionType, 16, "")) {
+			if (assert_command(next_command, instructionType, INSTRUCTION_NUM, "")) {
 				type_symbol = code;
 			}
 			else if (assert_command(next_command, guidanceType, 4, "")) {
@@ -268,7 +268,7 @@ void commands_second_pass(char command_original[]) {
 			/* comment sentence */
 			end_line = True;
 		}
-		else if (assert_command(command_section, instructionType, 16, ""))
+		else if (assert_command(command_section, instructionType, INSTRUCTION_NUM, ""))
 		{
 			/*Instructional sentence*/
 			remove_substring(command_left, command_section);
@@ -516,10 +516,10 @@ void update_or_insert_machine_code(struct setupRegistretion register_setup, stru
 
 		switch (valid.pass_num) {
 		case 1:
-			create_space_binary_machine_code(register_setup, opcodeFunc);
+			create_space_binary_machine_code(register_setup, opcodeFunc->name);
 			break;
 		case 2:
-			set_binary_machine_code(register_setup, opcodeFunc);
+			set_binary_machine_code(register_setup,opcodeFunc);
 			break;
 		}
 	}

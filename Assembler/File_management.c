@@ -104,9 +104,9 @@ void write_ob_file(char fileName[], struct memoryTable* addresstable,struct data
 		guidlines, address;
 	struct addressData address_data;
 	unsigned int decimal;
-	char *straddress = " ";
+	char straddress[10];
 	char snum[10];
-	char text[15] = "";
+	char text[MAX_LINE_WIDTH] = "";
 	
 	/* get number of command*/
 	  data_size = state.ICF + state.DCF;

@@ -2,7 +2,7 @@
 
 #ifndef PARSER
 #define PARSER
-#include<string.h>
+#include "Libraries.h"
 #include "Data_structures.h"
 #include "Assertion.h"
 #include "Errors.h"

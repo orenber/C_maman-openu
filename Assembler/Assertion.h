@@ -1,14 +1,11 @@
 #pragma once
-#include<stdio.h> 
-#include<stdlib.h>
-#include<string.h>
-#include<ctype.h>
-#include <math.h>
-#include "Data_structures.h"
-#include "ArrayUtils.h"
+
+ 
 #ifndef ASSERTION
 #define ASSERTION
-
+#include "Libraries.h" 
+#include "Data_structures.h"
+#include "ArrayUtils.h"
 
 /* Assertion -----------------------------------*/
 /* <summary> assert_nargin - check the number of argument input

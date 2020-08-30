@@ -36,7 +36,7 @@ BOOL is_legal_label(char label[]) {
 
 
     /* not allow abuilt in label as add ,sub etc*/
-	 is_legal = !assert_command(label, &instructionType, 16, "");
+	 is_legal = !assert_command(label, &instructionType, INSTRUCTION_NUM, "");
 	 if (!is_legal) {
 		 printf("\nError in label: %s\n", label);
 		 printf("/n%s", "not allow build in instruction command");
@@ -75,7 +75,7 @@ BOOL is_legal_symbol(char symbol[]) {
 	}
  
 	/* not allow abuilt in label as add ,sub etc*/
-	is_legal = !assert_command(symbol, &instructionType, 16, "");
+	is_legal = !assert_command(symbol,  instructionType, INSTRUCTION_NUM, "");
 	if (!is_legal) { 
 		printf("\nError in symbol: %s\n", symbol);
 		printf("/nnot allow build in instruction command");
@@ -109,7 +109,7 @@ BOOL is_undefine_label(char label[]) {
 	}
 
 	/* not allow abuilt in label as add ,sub etc*/
-	is_legal = !assert_command(label, &instructionType, 16, "");
+	is_legal = !assert_command(label,  instructionType, INSTRUCTION_NUM, "");
 	if (!is_legal) {
 
 		printf("\nError in label: %s\n", label);

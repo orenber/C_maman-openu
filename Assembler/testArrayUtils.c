@@ -82,7 +82,7 @@ void test_assertIsEmpty() {
 void test_binaryArray2Hexadecimal( ) {
 	
 	int binaryArray[] = { 0,0,0,0,1,0,1,1,0,1,1,0,1,0,0,0,0,0,0,1,1,0,0,1 };
-	char *result="" ,test[] = "0b6819";
+	char  result[8],test[] = "0b6819";
 	BOOL test_pass;
 
 	sprintf(result,"%06x",binaryArray2decimal(binaryArray,24));
@@ -95,7 +95,7 @@ void test_num2string() {
 
 	BOOL test_pass;
 	int number = 123;
-	char * result ="";
+	char result[10] =" ";
 	char test[] = "0000123";
 
 	sprintf(result,"%07d", number);
