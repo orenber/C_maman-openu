@@ -360,6 +360,10 @@ void flag_manger(char label[], TypeSymbol type) {
 	case external:
 		push_symbol_table(&symbol_table, 0, symbol, type, False);
 		break;
+	case entry:
+		/* will be handel in the second pass*/
+		break;
+
 	}
 
 
@@ -388,7 +392,7 @@ void string_sentence(char str[]) {
 	strtok(str, "\n");
 	length = strlen(str);
 
-	for (i; i <= length; ++i) {
+	for ( ; i <= length; ++i) {
 		 
 		/* convert to Ascii number*/
 		ascii = (int)str[i];

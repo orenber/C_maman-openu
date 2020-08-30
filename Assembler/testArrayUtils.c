@@ -58,12 +58,12 @@ void test_binaryArray2decimal() {
 
 void test_arrayAssign() {
 
-	int arr_assign[] = { 0,0,0,0,0,0,0,0,0,0,0 },
+	unsigned int arr_assign[] = { 0,0,0,0,0,0,0,0,0,0,0 },
 		arr_sub[] =  { 1,2,3,4 },
 		arr_test[] = { 0,0,0,0,1,2,3,4,0,0,0};
 	BOOL test_pass;
 
-	arrayAssign(arr_assign, arr_sub, 4, 7);
+	arrayAssign( arr_assign, arr_sub, 4, 7);
 	printArray(arr_assign,10);
 	test_pass = assertArrayIsEqual(arr_test, arr_assign,10);
 	print_test_result(test_pass);

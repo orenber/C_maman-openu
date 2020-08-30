@@ -81,21 +81,21 @@ struct symbolTable {
 struct memoryTable {
 	int address;
 	char name[NAME];
-	int binaryMachineCode[24];
+	unsigned int binaryMachineCode[BITARRAY];
 	struct memoryTable *next;
 }*top_node;
 
 struct dataTable {
 	int address;
 	char name[NAME];
-	int binaryMachineCode[24];
+	unsigned int binaryMachineCode[BITARRAY];
 	struct dataTable *next;
 
 }*head;
 
 struct addressData {
 	int address;
-	int binaryMachineCode[24];
+	unsigned int binaryMachineCode[BITARRAY];
 
 };
 

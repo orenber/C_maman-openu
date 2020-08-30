@@ -36,11 +36,12 @@ void array2string(int arrayNumber[], char* stringArray) {
 
 	/*detect the size of the array*/
 	int index = 0, length = LENGTH(arrayNumber);
+	int n;
 
 	strcpy(stringArray, "");
 
 	/* loop over to create string */
-	for (int n = 0; n <= length; ++n) {
+	for (n = 0; n <= length; ++n) {
 		index += sprintf(&stringArray[index], "%d", arrayNumber[n]);
 	}
 	/* */
