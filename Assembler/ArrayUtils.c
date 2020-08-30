@@ -380,3 +380,4 @@ BOOL checkString(const char s[])
 
 	return *s == '\0';
 }
+
