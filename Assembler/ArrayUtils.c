@@ -32,22 +32,6 @@ void zeros(unsigned int *arr, int numberZeros) {
 	}
 } 
 
-void array2string(int arrayNumber[], char* stringArray) {
-
-	/*detect the size of the array*/
-	int index = 0, length = LENGTH(arrayNumber);
-	int n;
-
-	strcpy(stringArray, "");
-
-	/* loop over to create string */
-	for (n = 0; n <= length; ++n) {
-		index += sprintf(&stringArray[index], "%d", arrayNumber[n]);
-	}
-	/* */
-	return;
-
-} 
 
 int * string2array(char stringArray[],int *length) {
 
@@ -89,7 +73,7 @@ unsigned int * decimal2binaryArray(signed int decimalNumber,unsigned int digits)
 
 	int number;
 	int n;
-	unsigned int* arr = (int*)calloc(digits, sizeof(int));
+	unsigned int* arr = calloc(digits, sizeof(*arr));
 
 	number = decimalNumber;
 	if (number >= 0) {
