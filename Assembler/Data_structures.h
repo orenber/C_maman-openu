@@ -10,13 +10,13 @@
 #define INITIAL_ADDRESS  100
 #define REGISTER_NUM 8
 #define INSTRUCTION_NUM 16
+#define GUIDANCE_NUM 4
 /* macro*/
-#define LENGTH(x)  (sizeof(x) / sizeof((x)[0]))
+#define LENGTH(x)   sizeof(x) / sizeof((x)[0]) 
 #define INDEX(x)   ((BITARRAY-1)-x)
 
 const char *register_leagal[];
 const char *instructionType[];
-const char *flag_legal[];
 const char *guidanceType[];
 const char  seperator[5];
 

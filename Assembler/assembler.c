@@ -164,7 +164,7 @@ void commands_first_pass(char command_original[]) {
 
 		}
 
-		else if (assert_command(command_section, guidanceType, 4, ""))
+		else if (assert_command(command_section, guidanceType, GUIDANCE_NUM, ""))
 		{
 			/* Guidance sentence */
 			remove_substring(command_left, command_section);
@@ -182,7 +182,7 @@ void commands_first_pass(char command_original[]) {
 			if (assert_command(next_command, instructionType, INSTRUCTION_NUM, "")) {
 				type_symbol = code;
 			}
-			else if (assert_command(next_command, guidanceType, 4, "")) {
+			else if (assert_command(next_command, guidanceType, GUIDANCE_NUM, "")) {
 				type_symbol = data;
 
 			}
@@ -278,7 +278,7 @@ void commands_second_pass(char command_original[]) {
 			end_line = True;
 
 		}
-		else if (assert_command(command_section, guidanceType, 4, ""))
+		else if (assert_command(command_section, guidanceType, GUIDANCE_NUM, ""))
 		{
 			/* Guidance sentence */
 			remove_substring(command_left, command_section);
@@ -722,7 +722,7 @@ AdressType getAddresingType(char inputString[]) {
 			addresingType = Relative;
 		}
 	}
-	else if (assert_command(str, register_leagal, 8, "")) {
+	else if (assert_command(str, register_leagal, REGISTER_NUM, "")) {
 
 		addresingType = Register_Direct;
 	}
