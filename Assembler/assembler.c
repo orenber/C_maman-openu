@@ -70,7 +70,8 @@ void analize_files(FILE *filePointer,char filename[]) {
 	second_pass(filePointer);
 
 	create_files_output(filename, memory_table, data_table, symbol_table);
-	 
+	
+	free_memory();
 
 }
 
@@ -476,12 +477,12 @@ void entry_sentence(char symbol[]) {
 
 void free_memory() {
 
-	free_symbol_table(symbol_table);
-
-	free_data_table_table(data_table);
-
-	free_memory_table(memory_table);
-
+	free_symbol_table(&symbol_table);
+	free_data_table_table(&data_table);
+	
+	free_memory_table(&memory_table);
+	
+	
 }
 
 

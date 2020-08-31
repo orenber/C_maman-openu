@@ -340,43 +340,61 @@ BOOL is_symbol_exist(struct symbolTable  *link_list, char symbol[]) {
 
 /* free memory*/
 
-void free_symbol_table(struct symbolTable* head)
+void free_symbol_table(struct symbolTable** head)
 {
-	struct symbolTable* tmp;
+	struct symbolTable* current = *head;
+	struct symbolTable* next;
 
-	while (head != NULL)
+	while (current != NULL)
 	{
-		tmp = head;
-		head = head->next;
-		free(tmp);
+		next = current->next;
+		free(current);
+		current = next;
 	}
+
+	/* deref head_ref to affect the real head back
+	in the caller. */
+	*head = NULL;
 
 }
 
-void free_memory_table(struct memoryTable* head)
+void free_memory_table(struct memoryTable** head)
 {
-	struct memoryTable* tmp;
+	/* deref head_ref to get the real head */
+	struct memoryTable* current = *head;
+	struct memoryTable* next;
 
-	while (head != NULL)
+	while (current != NULL)
 	{
-		tmp = head;
-		head = head->next;
-		free(tmp);
+		next = current->next;
+		free(current);
+		current = next;
 	}
+
+	/* deref head_ref to affect the real head back
+	in the caller. */
+	*head = NULL;
 
 }
 
-void free_data_table_table(struct dataTable* head)
+void free_data_table_table(struct dataTable** head)
 {
-	struct dataTable* tmp;
 
-	while (head != NULL)
+	/* deref head_ref to get the real head */
+	struct dataTable* current = *head;
+	struct dataTable* next;
+
+	while (current != NULL)
 	{
-		tmp = head;
-		head = head->next;
-		free(tmp);
+		next = current->next;
+		free(current);
+		current = next;
 	}
 
+	/* deref head_ref to affect the real head back
+	in the caller. */
+	*head = NULL;
+	
 }
 
 
