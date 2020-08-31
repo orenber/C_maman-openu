@@ -65,7 +65,7 @@ void analize_files(FILE *filePointer,char filename[]) {
 		return;
 	}
 	 
-	print_memory_table(memory_table);
+	/*print_memory_table(memory_table);*/
 
 	second_pass(filePointer);
 
@@ -92,7 +92,7 @@ void first_pass(FILE* filePointer) {
 	 
 	/* first pass*/
 	do {
-		printf("%d %s\n ", valid.line_num, line_read );
+		/*printf("%d %s\n ", valid.line_num, line_read );*/
 		/* get the input from the file - read line by line*/
 		output = fgets(line_read, MAX_LINE_WIDTH, filePointer);
 		if (output != NULL) {
@@ -432,7 +432,7 @@ void data_sentence(char var[]) {
 	
 		/* convert to binary array*/
 		binaryArr = decimal2binaryArray(arr[i], BITARRAY);
-		printArray(binaryArr, BITARRAY);
+	
 		sprintf(var, "%d", arr[i]);
 		/* push data to the table  */
 
@@ -660,7 +660,7 @@ void set_binary_machine_code(struct setupRegistretion setup, struct operationFun
 	};
 
 	update_memory_table(memory_table, ++state.IC, binary_machine_code);
-	printArray(binary_machine_code,24);
+	/*printArray(binary_machine_code,24);*/
 	if (assertIsMember(setup.firstOperand.Type,  adress_take_more_space, 3) == True) {
 		update_binary_machine_code(setup.firstOperand.Type, setup.firstOperand, opcodeFunc->ARE);
 	}
