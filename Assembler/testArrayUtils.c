@@ -21,7 +21,7 @@ void test_printArrayReverse() {
 
 void test_decimal2binaryArray() {
 
-	int *arr;
+	unsigned int *arr;
 	int arr_test[] = {0,0,1,0,1};
 	BOOL test_pass;
 
@@ -33,7 +33,7 @@ void test_decimal2binaryArray() {
 
 void test_decimal2binaryArray_negative() {
 
-	int *arr;
+	unsigned int *arr;
 	int arr_test[] = { 1,0,1,1,1 };
 	BOOL test_pass;
 

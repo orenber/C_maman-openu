@@ -16,7 +16,7 @@ void printArrayReverse(int arr[], int length);
 
 /* array manipulation*/
 
-void zeros(int *arr, int numberZeros);
+void zeros(unsigned int *arr, int numberZeros);
 
 void array2string(int arrayNumber[], char *stringArray);
 
@@ -31,7 +31,7 @@ void arrayAssign(unsigned int *arrtoChange, unsigned int subArray[], int initial
 
 unsigned int * decimal2binaryArray(signed int decimalNumber, unsigned int digits);
 
-int binaryArray2decimal(int binaryArray[],  int digits);
+int binaryArray2decimal(unsigned int binaryArray[],  int digits);
 
 
 

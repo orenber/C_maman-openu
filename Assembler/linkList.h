@@ -36,7 +36,7 @@ void push_and_update_data_table(struct dataTable ** link_list, int *memory, char
 
 void update_memory_table_from_data_table(struct memoryTable ** memory_table, struct dataTable * data_table, int ICF);
 
-void update_memory_table(struct memoryTable * link_list, int memory, int binaryArray[]);
+void update_memory_table(struct memoryTable * link_list, int memory, unsigned int binaryArray[]);
 
 void update_symbol_table(struct symbolTable * link_list, char symbol[], TypeSymbol type, BOOL isInternal);
 

@@ -375,7 +375,7 @@ void string_sentence(char str[]) {
 	int length;
 	int i = 0,
 		ascii;
-	int *binaryArr;
+	unsigned int *binaryArr;
 	const char quats = '"';
 	char latter[] = { ' ','\0' };
 	
@@ -413,7 +413,7 @@ void data_sentence(char var[]) {
 
 
 	int i, length[2];
-	int *binaryArr,
+	unsigned int *binaryArr,
 		*arr;
 	int len = 0;
 	const char sep[] = { ' ','\t','\n','\0' };

@@ -3,7 +3,7 @@
 
 
 void table_funct_opcode(char func[], struct operationFunc *opcodeFunc) {
-	int *binaryArr;
+	unsigned int *binaryArr;
 	BOOL funcEmpty = False;
 
 	strcpy(opcodeFunc->name, func);

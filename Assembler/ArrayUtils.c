@@ -25,7 +25,7 @@ void printArrayReverse(int arr[], int length)
 	printf("\n");
 }
 
-void zeros(int *arr, int numberZeros) {
+void zeros(unsigned int *arr, int numberZeros) {
 	int i;
 	for (i = 0; numberZeros > i; ++i ) {
 		arr[i] = 0;

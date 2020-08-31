@@ -126,7 +126,7 @@ void update_memory_table_from_data_table(struct memoryTable ** memory_table, str
 
 }
 
-void update_memory_table(struct memoryTable * link_list, int address, int binaryArray[]) {
+void update_memory_table(struct memoryTable * link_list, int address,unsigned int binaryArray[]) {
 
 	while (link_list != NULL) {
 
@@ -403,7 +403,7 @@ void print_memory_table(struct memoryTable* link_list) {
 		
 	
 		printf("%-10s", "");
-		printArray(link_list->binaryMachineCode,24);
+		printArray((int)link_list->binaryMachineCode,BITARRAY);
  
 		link_list = link_list->next;
 	}
@@ -416,7 +416,7 @@ void print_data_table(struct dataTable* link_list) {
 
 		printf("\naddress: %d:\t", link_list->address);
 		printf("name: %s:\t", link_list->name);
-		printArray(link_list->binaryMachineCode,24);
+		printArray((int)link_list->binaryMachineCode,BITARRAY);
 
 		link_list = link_list->next;
 	}
