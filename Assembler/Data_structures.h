@@ -18,7 +18,7 @@
 const char *register_leagal[REGISTER_NUM];
 const char *instructionType[INSTRUCTION_NUM];
 const char *guidanceType[GUIDANCE_NUM];
-const char  seperator[5];
+const char seperator[5] ;
 
 /* new type */
 typedef enum {
@@ -125,3 +125,4 @@ struct STATE {
 
 
 #endif  
+

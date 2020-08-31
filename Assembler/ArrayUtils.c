@@ -58,7 +58,7 @@ int * string2array(char stringArray[],int *length) {
 
 	inputNum = char_apperance(stringArray, seperetor[0]);
 	length[0] = inputNum + 1;
-	arrayNumber = (int*)calloc(length, sizeof(int));
+	arrayNumber = calloc(length, sizeof(*arrayNumber));
 
 	strcpy(strArray, stringArray);
 	str = strtok(strArray, seperetor);
@@ -380,4 +380,3 @@ BOOL checkString(const char s[])
 
 	return *s == '\0';
 }
-

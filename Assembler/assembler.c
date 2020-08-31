@@ -488,7 +488,7 @@ void free_memory() {
 
 unsigned int * createBinaryArray(struct operationFunc *opcodeFunc) {
 
-	unsigned int binaryArray[BITARRAY];
+	unsigned int *binaryArray = calloc(BITARRAY,sizeof(*binaryArray));
 	zeros(binaryArray, BITARRAY);
 	/*ARE*/
 	arrayAssign(binaryArray,  opcodeFunc->ARE.x, INDEX(2), INDEX(0));
@@ -514,6 +514,7 @@ unsigned int * createBinaryArray(struct operationFunc *opcodeFunc) {
 	return  binaryArray;
 
 }
+
 
 void update_or_insert_machine_code(struct setupRegistretion register_setup, struct operationFunc *opcodeFunc) {
 

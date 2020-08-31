@@ -1,4 +1,4 @@
-#pragma once
+
 #ifndef LIB
 #define LIB
 
@@ -10,3 +10,4 @@
 
 
 #endif
+
