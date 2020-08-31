@@ -1,9 +1,9 @@
 /* ***********************************************************************
 Assembly         :
 Author           : Oren Berkovitch
-Created          : 22-08-2020
+Created          : 22-07-2020
 Last Modified By : Oren Berkovitch
-Last Modified On : 23-08-2020
+Last Modified On : 31-08-2020
 ***********************************************************************
 <summary>
  
@@ -432,7 +432,7 @@ void data_sentence(char var[]) {
 	
 		/* convert to binary array*/
 		binaryArr = decimal2binaryArray(arr[i], BITARRAY);
-		 
+		printArray(binaryArr, BITARRAY);
 		sprintf(var, "%d", arr[i]);
 		/* push data to the table  */
 
@@ -660,7 +660,7 @@ void set_binary_machine_code(struct setupRegistretion setup, struct operationFun
 	};
 
 	update_memory_table(memory_table, ++state.IC, binary_machine_code);
-
+	printArray(binary_machine_code,24);
 	if (assertIsMember(setup.firstOperand.Type,  adress_take_more_space, 3) == True) {
 		update_binary_machine_code(setup.firstOperand.Type, setup.firstOperand, opcodeFunc->ARE);
 	}

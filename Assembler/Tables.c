@@ -86,13 +86,10 @@ void table_funct_opcode(char func[], struct operationFunc *opcodeFunc) {
 
 	if (funcEmpty) {
 		opcodeFunc->funct = 0;
-		binaryArr = decimal2binaryArray(opcodeFunc->funct, 5);
-	}
-	else {
-
-		binaryArr = decimal2binaryArray(0, 5);
+		
 	}
 
+	binaryArr = decimal2binaryArray(opcodeFunc->funct, 5);
 	arrayAssign( opcodeFunc->functBinaryArr, binaryArr, 0, 4);
 	
 }
