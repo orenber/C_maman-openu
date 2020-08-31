@@ -416,7 +416,7 @@ void print_data_table(struct dataTable* link_list) {
 
 		printf("\naddress: %d:\t", link_list->address);
 		printf("name: %s:\t", link_list->name);
-		printArray((int)link_list->binaryMachineCode,BITARRAY);
+		printArray((int*)link_list->binaryMachineCode,BITARRAY);
 
 		link_list = link_list->next;
 	}
