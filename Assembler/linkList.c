@@ -177,6 +177,7 @@ void reverse(struct dataTable**  head)
  
 void reverseUtil(struct dataTable* curr, struct dataTable* prev, struct dataTable** head)
 {
+	struct dataTable *next;
 	/* If last node mark it head*/
 	if (!curr->next) {
 		*head = curr;
@@ -187,7 +188,7 @@ void reverseUtil(struct dataTable* curr, struct dataTable* prev, struct dataTabl
 	}
 
 	/* Save curr->next node for recursive call */
-	struct dataTable *next  = curr->next;
+	 next  = curr->next;
 
 	/* and update next ..*/
 	curr->next = prev;
