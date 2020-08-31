@@ -643,8 +643,8 @@ void set_space_binary_machine_code(AdressType type, char lableName[]) {
 void set_binary_machine_code(struct setupRegistretion setup, struct operationFunc *opcodeFunc) {
 
 
-	int *binaryArray;
-	int  binary_machine_code[BITARRAY];
+	unsigned int *binaryArray;
+	unsigned int  binary_machine_code[BITARRAY];
 	int i = 0, j = 0;
 	int adress_take_more_space[] = { Immediate, Direct, Relative };
 

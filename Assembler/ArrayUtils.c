@@ -126,7 +126,7 @@ unsigned int * decimal2binaryArray(signed int decimalNumber,unsigned int digits)
 
 }
 
-int binaryArray2decimal(int binaryArray[],  int digits){
+int binaryArray2decimal(unsigned int binaryArray[],  int digits){
 
 	int decimal , result = 0;
 	int i = digits - 1,j =0;

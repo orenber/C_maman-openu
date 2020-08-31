@@ -27,9 +27,9 @@ void push_symbol_table(struct symbolTable ** link_list, int memory, char symbol[
 
 /* push and update*/
 
-void push_and_update_memory_table(struct memoryTable** link_list, int *memory, char label[], int binaryArray[]);
+void push_and_update_memory_table(struct memoryTable** link_list, int *memory, char label[],unsigned int binaryArray[]);
 
-void push_and_update_data_table(struct dataTable ** link_list, int *memory, char label[], int binaryArray[]);
+void push_and_update_data_table(struct dataTable ** link_list, int *memory, char label[], unsigned int binaryArray[]);
 
 
 /* update */

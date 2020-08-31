@@ -70,7 +70,7 @@ void push_symbol_table(struct symbolTable ** link_list, int address, char symbol
 }
 
 /* push and update*/
-void push_and_update_memory_table(struct memoryTable** link_list, int *address,char sorceCode[], int binaryArray[])
+void push_and_update_memory_table(struct memoryTable** link_list, int *address,char sorceCode[],unsigned  int binaryArray[])
 {
 
 	/* Create a new node and push to stack */
@@ -90,7 +90,7 @@ void push_and_update_memory_table(struct memoryTable** link_list, int *address,c
 	(*address)++;
 }
 
-void push_and_update_data_table(struct dataTable ** link_list, int *address, char name[], int binaryArray[]) {
+void push_and_update_data_table(struct dataTable ** link_list, int *address, char name[],unsigned int binaryArray[]) {
 
 
 	/* Create a new node and push to stack */
