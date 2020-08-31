@@ -131,7 +131,7 @@ int binaryArray2decimal(unsigned int binaryArray[],  int digits){
 	int decimal , result = 0;
 	int i = digits - 1,j =0;
 
-	for ( ; i >=0, j<digits ; --i,++j) {
+	for ( ; i >=0 && j<digits ; --i,++j) {
 
 		decimal = binaryArray[i] * (int)pow(2, j);
 		result = result + decimal;

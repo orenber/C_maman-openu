@@ -52,7 +52,7 @@ void entry_sentence(char var[]);
 void free_memory();
 
 
-int * createBinaryArray(struct operationFunc *opcodeFunc);
+unsigned int * createBinaryArray(struct operationFunc *opcodeFunc);
 
 void update_or_insert_machine_code(struct setupRegistretion register_setup, struct operationFunc *opcodeFunc);
 

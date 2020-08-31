@@ -105,16 +105,16 @@ void first_pass(FILE* filePointer) {
 	state.ICF = state.IC;
 	state.DCF = state.DC;
 
-	/*print_symbol_table(symbol_table);
-	print_data_table(data_table);
+	/*print_symbol_table(symbol_table);*/
+	/*print_data_table(data_table);*/
 	/*print_memory_table(memory_table);*/
 	if (valid.pass_successful) {
 		update_symbol_table_address(symbol_table, data, state.ICF);
 		/*print_symbol_table(symbol_table);*/
 		update_memory_table_from_data_table(&memory_table, data_table, state.ICF);
 	}
-	/*print_data_table(data_table);
-	print_memory_table(memory_table);*/
+	/*print_data_table(data_table);*/
+	/*print_memory_table(memory_table);*/
 
 }
 
@@ -413,8 +413,8 @@ void data_sentence(char var[]) {
 
 
 	int i, length[2];
-	unsigned int *binaryArr,
-		*arr;
+	unsigned int *binaryArr;
+	int *arr;
 	int len = 0;
 	const char sep[] = { ' ','\t','\n','\0' };
 
@@ -486,7 +486,7 @@ void free_memory() {
 
 
 
-int * createBinaryArray(struct operationFunc *opcodeFunc) {
+unsigned int * createBinaryArray(struct operationFunc *opcodeFunc) {
 
 	unsigned int binaryArray[BITARRAY];
 	zeros(binaryArray, BITARRAY);

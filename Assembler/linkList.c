@@ -403,7 +403,7 @@ void print_memory_table(struct memoryTable* link_list) {
 		
 	
 		printf("%-10s", "");
-		printArray((int)link_list->binaryMachineCode,BITARRAY);
+		printArray((int*)link_list->binaryMachineCode,BITARRAY);
  
 		link_list = link_list->next;
 	}
