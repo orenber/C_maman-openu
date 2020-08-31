@@ -1,4 +1,4 @@
-#include "Errors.h";
+#include "Errors.h"
 
 /* Global method which receive errorCode and lineIndex if exists and print error according to error type*/
 void printError(ERROR_TYPE errorCode) {

@@ -84,12 +84,12 @@ void arrayAssign(unsigned int *arrtoChange, unsigned int subArray[], int initial
 
 }
 
-int * decimal2binaryArray(signed int decimalNumber,unsigned int digits) {
+unsigned int * decimal2binaryArray(signed int decimalNumber,unsigned int digits) {
 
 
 	int number;
 	int n;
-	int* arr = (int*)calloc(digits, sizeof(int));
+	unsigned int* arr = (int*)calloc(digits, sizeof(int));
 
 	number = decimalNumber;
 	if (number >= 0) {

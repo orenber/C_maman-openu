@@ -192,7 +192,7 @@ BOOL assertIsMember(int num1, int arr[],int length) {
 
 	BOOL ismember = False;
 	int i = 0;
-	for (i; i < length; ++i) {
+	for ( ; i < length; ++i) {
 
 		ismember = assertIsEqual(num1, arr[i]);
 		if (ismember) {

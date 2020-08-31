@@ -29,7 +29,7 @@ void arrayAssign(unsigned int *arrtoChange, unsigned int subArray[], int initial
 
 /* convertion*/
 
-int * decimal2binaryArray(signed int decimalNumber, unsigned int digits);
+unsigned int * decimal2binaryArray(signed int decimalNumber, unsigned int digits);
 
 int binaryArray2decimal(int binaryArray[],  int digits);
 
