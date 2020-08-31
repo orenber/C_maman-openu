@@ -489,7 +489,7 @@ void free_memory() {
 int * createBinaryArray(struct operationFunc *opcodeFunc) {
 
 	unsigned int binaryArray[BITARRAY];
-	zeros((int)binaryArray, BITARRAY);
+	zeros(binaryArray, BITARRAY);
 	/*ARE*/
 	arrayAssign(binaryArray,  opcodeFunc->ARE.x, INDEX(2), INDEX(0));
 

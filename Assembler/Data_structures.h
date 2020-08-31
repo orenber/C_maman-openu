@@ -15,9 +15,9 @@
 #define LENGTH(x)   sizeof(x) / sizeof((x)[0]) 
 #define INDEX(x)   ((BITARRAY-1)-x)
 
-const char *register_leagal[];
-const char *instructionType[];
-const char *guidanceType[];
+const char *register_leagal[REGISTER_NUM];
+const char *instructionType[INSTRUCTION_NUM];
+const char *guidanceType[GUIDANCE_NUM];
 const char  seperator[5];
 
 /* new type */
