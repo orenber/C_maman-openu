@@ -226,7 +226,7 @@ void search_symbol_in_memory_table(char fileName[], char symbol[], struct memory
 			strcat(text, " ");
 
 			/* convert address to string*/
-			sprintf(strAaddress, "%07d", memorytable->address);
+			sprintf(strAaddress, "%7d", memorytable->address);
 			strcat(text, strAaddress);
 
 			/* write text file */
