@@ -42,7 +42,7 @@ int * string2array(char stringArray[]) {
 
 	inputNum = char_apperance(stringArray, seperetor[0]);
 	
-	arrayNumber = calloc(inputNum + 1, sizeof(*arrayNumber));
+	arrayNumber = calloc(inputNum + 2, sizeof(*arrayNumber));
 
 	strcpy(strArray, stringArray);
 	str = strtok(strArray, seperetor);

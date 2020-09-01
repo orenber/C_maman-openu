@@ -5,11 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(gdb assembler) Launch",
+            "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/Assembler/assembler.c/a.out",
-            "args": [],
+            "program": "${workspaceFolder}/a.exe",
+            "args": ["openu.as"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

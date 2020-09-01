@@ -65,8 +65,7 @@ void set_space_binary_machine_code(AdressType type, char name[]);
 void set_binary_machine_code(struct setupRegistretion setup, struct operationFunc *opcodeFunc);
 
 
-
-void resetValues(struct setupRegistretion *inputRegistretion, struct operationFunc *opcodeFunc);
+void resetValues( struct operationFunc *opcodeFunc);
 
 struct setupRegistretion get_address_register_setup(char nargin_str[], struct operationFunc *opcodeFunc);
 

@@ -207,7 +207,7 @@ void operand_manager(char nargin_str[],int expected_nargin, struct operationFunc
 
 struct setupRegistretion get_address_register_setup(char nargin_str[], struct operationFunc *opcodeFunc) {
 
-	char *inputs;
+	char *inputs = "";
 	char command_input[MAX_LINE_WIDTH] = "";  /* copy of input string */
 								   /* number of input argument*/
 	unsigned int *binaryArr;
@@ -218,7 +218,7 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 	strcpy(command_input, nargin_str);
 
 	/* set defult values*/
-	resetValues(&inputRegistretion, opcodeFunc);
+	resetValues( opcodeFunc);
 
 	/* check for number of inputs */
 	input_num = inputs_check(nargin_str, ',');
@@ -300,6 +300,7 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 			/*ARE*/
 			binaryArr = decimal2binaryArray(4, 3);
 			arrayAssign( opcodeFunc->ARE.x, binaryArr, 0, 2);
+			/* label */
 			strcpy(inputRegistretion.secondOperand.label, inputs);
 			/* value*/
 			remove_substring(inputs, "#");
@@ -328,9 +329,14 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 			/*ARE*/
 			binaryArr = decimal2binaryArray(4, 3);
 			arrayAssign(  opcodeFunc->ARE.x,  binaryArr, 0, 2);
-
+			/*label*/
+			strcpy(inputRegistretion.secondOperand.label, inputs);
+			/*Register*/
 			regi = getRegisterVar(inputs);
 			inputRegistretion.secondOperand.Register = regi[0];
+			/*value*/
+			inputRegistretion.secondOperand.value = (int)regi[0];
+			/* binary code */
 			binaryArr = decimal2binaryArray( inputRegistretion.secondOperand.Register, 3);
 			arrayAssign( opcodeFunc->registerDestination,  binaryArr, 0, 2);
 		}
@@ -345,3 +351,8 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 	return inputRegistretion;
 
 }
+
+
+ 
+
+ 

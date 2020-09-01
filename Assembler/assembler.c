@@ -80,7 +80,7 @@ void analize_files(FILE *filePointer,char filename[]) {
 void first_pass(FILE* filePointer) {
 
 	char line_read[MAX_LINE_WIDTH] = "";     /* digit number string*/
-	char *output = ""; /* output from the user */
+	char *output; /* output from the user */
 
 	valid.line_num = 0;
 	valid.pass_num = 1;
@@ -122,7 +122,7 @@ void first_pass(FILE* filePointer) {
 void commands_first_pass(char command_original[]) {
 
 	
-	char *command_section = "", *next_command = "",
+	char *command_section="" , *next_command="",
 		command[MAX_LINE_WIDTH],
 		command_left[MAX_LINE_WIDTH];
 	BOOL end_line = False;
@@ -205,7 +205,7 @@ void second_pass(FILE* filePointer) {
 	
 
 	char line_read[MAX_LINE_WIDTH] = "";     /* digit number string*/
-	char *output = "";                   /* output from the user */
+	char *output ;                   /* output from the user */
 
 	/* second pass*/
 	valid.pass_num = 2;
@@ -416,7 +416,7 @@ void data_sentence(char var[]) {
 	int i;
 	unsigned int *binaryArr;
 	int *arr;
-	int len = 0;
+	int len ;
 	const char comma = ',';
 	const char sep[] = { ' ','\t','\n','\0' };
 
@@ -648,7 +648,7 @@ void set_binary_machine_code(struct setupRegistretion setup, struct operationFun
 
 	unsigned int *binaryArray;
 	unsigned int  binary_machine_code[BITARRAY];
-	int i = 0, j = 0;
+	int i , j ;
 	int adress_take_more_space[] = { Immediate, Direct, Relative };
 
 	zeros(binary_machine_code, BITARRAY);
@@ -658,7 +658,7 @@ void set_binary_machine_code(struct setupRegistretion setup, struct operationFun
 	for (i = 0, j = 0; BITARRAY - 1 >= i; ++i, j++) {
 		binary_machine_code[i] = binaryArray[j];
 
-	};
+	}
 
 	update_memory_table(memory_table, ++state.IC, binary_machine_code);
 	/*printArray(binary_machine_code,24);*/
@@ -673,7 +673,7 @@ void set_binary_machine_code(struct setupRegistretion setup, struct operationFun
 
 }
 
-void resetValues(struct setupRegistretion *inputRegistretion,struct operationFunc *opcodeFunc) {
+void resetValues(struct operationFunc *opcodeFunc) {
 
 	unsigned int *binaryArr;
  
@@ -713,7 +713,7 @@ AdressType getAddresingType(char inputString[]) {
 		if (assert_number(str)) {
 
 			addresingType = Immediate;
-		};
+		}
 	}
 
 	else if (str[0] == andTag[0]) {
