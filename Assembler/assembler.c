@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
 		 
 		filepointer = open_files(argc, argv[filesNumber]);
 		analize_files(filepointer, argv[filesNumber++]);
-		
+		 
 		 
 	}
 
