@@ -540,7 +540,7 @@ void create_space_binary_machine_code(struct setupRegistretion setup, char instr
 
 	push_memory_table(&memory_table, &state.IC, instrction_name);
 
-	if (assertIsMember( setup.firstOperand.Type,  adress_take_more_space, 3)) {
+	if (assertIsMember(setup.firstOperand.Type,  adress_take_more_space, 3)) {
 		set_space_binary_machine_code(setup.firstOperand.Type, setup.firstOperand.label);
 	}
 
@@ -673,11 +673,12 @@ void set_binary_machine_code(struct setupRegistretion setup, struct operationFun
 
 }
 
-void resetValues(struct operationFunc *opcodeFunc) {
+void resetValues(struct setupRegistretion *setup,struct operationFunc *opcodeFunc) {
 
 	unsigned int *binaryArr;
- 
-
+  
+	setup->firstOperand.Type = UNDIFINE;
+	setup->secondOperand.Type = UNDIFINE;
 	/* reset  source*/
 	binaryArr = decimal2binaryArray(0, 2);
 	arrayAssign( opcodeFunc->addressDestination, binaryArr, 0, 1);

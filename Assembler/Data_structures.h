@@ -29,7 +29,8 @@ typedef enum {
 	Immediate = 0,
 	Direct = 1,
 	Relative = 2,
-	Register_Direct = 3
+	Register_Direct = 3,
+	UNDIFINE = 20
 }AdressType;
 
 typedef struct ARE {

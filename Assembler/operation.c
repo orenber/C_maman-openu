@@ -218,7 +218,8 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 	strcpy(command_input, nargin_str);
 
 	/* set defult values*/
-	resetValues( opcodeFunc);
+
+	resetValues(&inputRegistretion, opcodeFunc);
 
 	/* check for number of inputs */
 	input_num = inputs_check(nargin_str, ',');
