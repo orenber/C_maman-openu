@@ -33,7 +33,7 @@ void zeros(unsigned int *arr, int numberZeros) {
 } 
 
 
-int * string2array(char stringArray[],int *length) {
+int * string2array(char stringArray[]) {
 
 	const char seperetor[] = { ',' };
 	char *str = "" ,strArray[MAX_LINE_WIDTH] = "";
@@ -41,8 +41,8 @@ int * string2array(char stringArray[],int *length) {
 	int *arrayNumber;
 
 	inputNum = char_apperance(stringArray, seperetor[0]);
-	length[0] = inputNum + 1;
-	arrayNumber = calloc((unsigned int*)length, sizeof(*arrayNumber));
+	
+	arrayNumber = calloc(inputNum + 1, sizeof(*arrayNumber));
 
 	strcpy(strArray, stringArray);
 	str = strtok(strArray, seperetor);

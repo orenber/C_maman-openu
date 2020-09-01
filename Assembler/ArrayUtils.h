@@ -19,7 +19,7 @@ void printArrayReverse(int arr[], int length);
 void zeros(unsigned int *arr, int numberZeros);
 
 
-int * string2array(char stringArray[], int *length);
+int * string2array(char stringArray[]);
 
 /*char * num2string(int number);*/
 

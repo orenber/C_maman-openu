@@ -413,10 +413,11 @@ void string_sentence(char str[]) {
 void data_sentence(char var[]) {
 
 
-	int i, length[2];
+	int i;
 	unsigned int *binaryArr;
 	int *arr;
 	int len = 0;
+	const char comma = ',';
 	const char sep[] = { ' ','\t','\n','\0' };
 
 	remove_substring_parts(var, sep);
@@ -424,8 +425,8 @@ void data_sentence(char var[]) {
 		printError(CANNOT_PARSE_LINE);
 		return;
 	}
-	arr = string2array(var,length);
-	len = (int)length[0];
+	arr = string2array(var);
+	len = char_apperance(var, comma)+1;
 	 
 	
 	for (i = 0; i<len; ++i) {
