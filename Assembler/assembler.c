@@ -419,7 +419,7 @@ void data_sentence(char var[]) {
 	int len ;
 	const char comma = ',';
 	const char sep[] = { ' ','\t','\n','\0' };
-
+	const char seperetor[] = { ',','\0' };
 	remove_substring_parts(var, sep);
 	if (!is_legal_number(var)) {
 		printError(CANNOT_PARSE_LINE);
@@ -427,19 +427,20 @@ void data_sentence(char var[]) {
 	}
 	arr = string2array(var);
 	len = char_apperance(var, comma)+1;
-	 
+	  strtok(var, seperetor);
 	
 	for (i = 0; i<len; ++i) {
 	
+		 
 		/* convert to binary array*/
-		binaryArr = decimal2binaryArray(arr[i], BITARRAY);
+		binaryArr = decimal2binaryArray(atoi(var), BITARRAY);
 	
-		sprintf(var, "%d", arr[i]);
+		/*sprintf(var, "%d", arr[i]);*/
 		/* push data to the table  */
 
 		/*push_and_update_memory_table(&memory_table, &state.IC, var, binaryArr);*/
 		push_and_update_data_table(&data_table, &state.DC, var, binaryArr);
-	 
+		strtok(NULL, var);
 	}
 
 }
@@ -479,8 +480,7 @@ void entry_sentence(char symbol[]) {
 void free_memory() {
 
 	free_symbol_table(&symbol_table);
-	free_data_table_table(&data_table);
-	
+	free_data_table(&data_table);
 	free_memory_table(&memory_table);
 	
 	

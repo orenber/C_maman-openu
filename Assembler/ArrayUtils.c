@@ -42,13 +42,14 @@ int * string2array(char stringArray[]) {
 
 	inputNum = char_apperance(stringArray, seperetor[0]);
 	
-	arrayNumber = calloc(inputNum + 2, sizeof(*arrayNumber));
+	arrayNumber = calloc(inputNum + 1, sizeof(*arrayNumber));
 
 	strcpy(strArray, stringArray);
 	str = strtok(strArray, seperetor);
 	
 	while (str != NULL) {
-		sscanf(str, "%d", &arrayNumber[i]);
+		arrayNumber[i] = atoi(str);
+		/*sscanf(str, "%d", &arrayNumber[i]);*/
 		str = strtok(NULL, seperetor);
 		i++;
 
@@ -124,63 +125,6 @@ int binaryArray2decimal(unsigned int binaryArray[],  int digits){
 
 	return result;
 }
- /*
-char * binaryArray2Hexadecimal(int binaryArray[], unsigned int digits) {
-
-	int decimal, result = 0;
-	int i = digits - 1, j = 0,n ;
-	char hexadecimal[] = "000000";
-	n= strlen(hexadecimal);
-
-	printArray(binaryArray, digits);
-	for ( ; i >= 0; --i, ++j)
-	{
-
-		decimal = binaryArray[i] * (int)pow(2, j);
-		result = result + decimal;
-		
-		if (( (j+1) % 4 == 0) || (i == 0))
-		{
-			
-			n--;
-			switch (result)
-			{
-
-			case 10:
-				hexadecimal[n] = 'a';
-				break;
-			case 11:
-				hexadecimal[n] = 'b';
-				break;
-			case 12:
-				hexadecimal[n] = 'c';
-				break;
-			case 13:
-				hexadecimal[n] = 'd';
-				break;
-			case 14:
-				hexadecimal[n] = 'e';
-				break;
-			case 15:
-				hexadecimal[n] = 'f';
-				break;
-
-			default:
-				hexadecimal[n] = result + '0';
-				
-				break;
-
-			}
- 
-			result = 0;
-			j = -1;
-		}
-	}
- 
-	return hexadecimal;
-}
-*/
-
 
 char *decimal2Hexadecimal(long int decimalNumber)
 {
@@ -203,21 +147,6 @@ char *decimal2Hexadecimal(long int decimalNumber)
 	return hexDecNum;
 }
 
-/*char * num2string(int number) {
-
-	char * padding = "0000000";
-	char strnum[6];
-	char strC[10];
-	int indx ;
-
-	indx = strlen(padding) - numSize(number);
-	sprintf(strnum ,"%d",number);
-	strncpy(strC, padding, indx);
-	strC[indx] = '\0';
-	strcat(strC, strnum);
-	 
-	return strC;
-}*/
 
 int numSize(int number) {
 
