@@ -173,7 +173,7 @@ void write_ent_file(char fileName[], struct symbolTable *symboltable) {
 			strcat(text, " ");
 			
 			/* convert address to string*/
-			sprintf(snum, "%d", symboltable->address );
+			sprintf(snum, "%07d", symboltable->address );
 			strcat(text, snum);
 			
 			/* write text file */
@@ -226,7 +226,7 @@ void search_symbol_in_memory_table(char fileName[], char symbol[], struct memory
 			strcat(text, " ");
 
 			/* convert address to string*/
-			sprintf(strAaddress, "%7d", memorytable->address);
+			sprintf(strAaddress, "%07d", memorytable->address);
 			strcat(text, strAaddress);
 
 			/* write text file */

@@ -231,9 +231,9 @@ void second_pass(FILE* filePointer) {
 
 	
 
-	print_memory_table(memory_table);
+	/*print_memory_table(memory_table);
 	print_symbol_table(symbol_table);
-
+	*/
 
 
 

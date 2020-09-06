@@ -1,24 +1,21 @@
-; 
-MAIN: add r3,LIST
+.entry LIST
+.extern W
+MAIN: add r3, LIST
 LOOP: prn #48
-lea W,r6
+lea W, r6
 inc r6
-mov r3,K
-sub r1,r4
+mov r3, K
+sub r1, r4
 bne END
 cmp K, #-6
 bne &END
 dec W
-;Comment0
 .entry MAIN
 jmp &LOOP
-add L3,L3
+add L3, L3
 END: stop
-STR: .string "abcd"
-;Comment1
-LIST: .data 6,-9
-.data -100
+STR: .data 97,98,99,100,0
+LIST: .data 6, -9
+.data  -100
 K: .data 31
-.entry LIST
-.extern W
 .extern L3
