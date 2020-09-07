@@ -281,6 +281,8 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 			binaryArr = decimal2binaryArray(inputRegistretion.firstOperand.value, 3);
 			arrayAssign( opcodeFunc->registerSource, binaryArr, 0, 2);
 			break;
+		default:
+			break;
 		}
 
 
@@ -340,6 +342,8 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 			/* binary code */
 			binaryArr = decimal2binaryArray( inputRegistretion.secondOperand.Register, 3);
 			arrayAssign( opcodeFunc->registerDestination,  binaryArr, 0, 2);
+		default:
+			break;
 		}
  
 	}
