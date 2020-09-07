@@ -1,5 +1,5 @@
 # openu 2020
-## course 204665 "Systems programming lab aviv
+## course 204665 "Systems programming lab" 
 
 what can you find here ?
 
