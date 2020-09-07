@@ -231,9 +231,9 @@ void second_pass(FILE* filePointer) {
 
 	
 
-	/*print_memory_table(memory_table);
+	print_memory_table(memory_table);
 	print_symbol_table(symbol_table);
-	*/
+
 
 
 
@@ -415,23 +415,24 @@ void data_sentence(char var[]) {
 
 	int i;
 	unsigned int *binaryArr;
-	int *arr;
+	
 	int len ;
 	const char comma = ',';
 	const char sep[] = { ' ','\t','\n','\0' };
-	const char seperetor[] = { ',','\0' };
+        const char seperator[] = {',','\0' };
+
 	remove_substring_parts(var, sep);
 	if (!is_legal_number(var)) {
 		printError(CANNOT_PARSE_LINE);
 		return;
 	}
-	arr = string2array(var);
+	
 	len = char_apperance(var, comma)+1;
-	  strtok(var, seperetor);
+	 strtok(var,seperator);
+
 	
-	for (i = 0; i<len; ++i) {
+         for(i = 0;i<len;++i){
 	
-		 
 		/* convert to binary array*/
 		binaryArr = decimal2binaryArray(atoi(var), BITARRAY);
 	
@@ -440,7 +441,9 @@ void data_sentence(char var[]) {
 
 		/*push_and_update_memory_table(&memory_table, &state.IC, var, binaryArr);*/
 		push_and_update_data_table(&data_table, &state.DC, var, binaryArr);
-		strtok(NULL, var);
+
+                 var = strtok(NULL,seperator);
+	 
 	}
 
 }
@@ -480,7 +483,8 @@ void entry_sentence(char symbol[]) {
 void free_memory() {
 
 	free_symbol_table(&symbol_table);
-	free_data_table(&data_table);
+	free_data_table_table(&data_table);
+	
 	free_memory_table(&memory_table);
 	
 	

@@ -76,7 +76,7 @@ void free_symbol_table(struct symbolTable** head);
 
 void free_memory_table(struct memoryTable** head);
  
-void free_data_table(struct dataTable** head);
+void free_data_table_table(struct dataTable** head);
  
 
 

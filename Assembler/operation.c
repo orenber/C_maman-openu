@@ -181,13 +181,13 @@ void operand_manager(char nargin_str[],int expected_nargin, struct operationFunc
 
 	/* assert number of inputs */
 	if (assert_nargin(nargin_str, expected_nargin) == False) {
-		fprintf(stderr, "Error in %s\n", opcodeFunc->name);
+		printf("Error in %s\n", opcodeFunc->name);
 		printError(WRONG_NUMBER_OF_OPERATORS);
 		return;
 	}
 	/* assert legal comma */
 	if (!assert_comma(nargin_str, expected_nargin-1)) {
-		fprintf(stderr, "Error in %s", opcodeFunc->name);
+		printf("Error in %s", opcodeFunc->name);
 		printError(COMMAS_FIX_WRONG);
 		return;
 	}
@@ -196,7 +196,7 @@ void operand_manager(char nargin_str[],int expected_nargin, struct operationFunc
 	/* call function that check the operand leagllety */
 	is_leagal_address = cheak_legal_address(opcodeFunc->name, register_setup.firstOperand.Type, register_setup.secondOperand.Type);
 	if (!is_leagal_address) {
-		fprintf(stderr, "Error in %s", opcodeFunc->name);
+		printf("Error in %s", opcodeFunc->name);
 		printError(WRONG_ADDRESSING_MODE);
 		return;
 	}
@@ -281,9 +281,6 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 			binaryArr = decimal2binaryArray(inputRegistretion.firstOperand.value, 3);
 			arrayAssign( opcodeFunc->registerSource, binaryArr, 0, 2);
 			break;
-		 default:
-			break;
-
 		}
 
 
@@ -343,8 +340,6 @@ struct setupRegistretion get_address_register_setup(char nargin_str[], struct op
 			/* binary code */
 			binaryArr = decimal2binaryArray( inputRegistretion.secondOperand.Register, 3);
 			arrayAssign( opcodeFunc->registerDestination,  binaryArr, 0, 2);
-		default:
-			break;
 		}
  
 	}
