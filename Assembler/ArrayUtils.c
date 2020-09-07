@@ -31,7 +31,6 @@ void zeros(unsigned int *arr, int numberZeros) {
 		arr[i] = 0;
 	}
 } 
-
  
 int * string2array(char stringArray[]) {
 
@@ -125,100 +124,7 @@ int binaryArray2decimal(unsigned int binaryArray[],  int digits){
 
 	return result;
 }
- /*
-char * binaryArray2Hexadecimal(int binaryArray[], unsigned int digits) {
-
-	int decimal, result = 0;
-	int i = digits - 1, j = 0,n ;
-	char hexadecimal[] = "000000";
-	n= strlen(hexadecimal);
-
-	printArray(binaryArray, digits);
-	for ( ; i >= 0; --i, ++j)
-	{
-
-		decimal = binaryArray[i] * (int)pow(2, j);
-		result = result + decimal;
-		
-		if (( (j+1) % 4 == 0) || (i == 0))
-		{
-			
-			n--;
-			switch (result)
-			{
-
-			case 10:
-				hexadecimal[n] = 'a';
-				break;
-			case 11:
-				hexadecimal[n] = 'b';
-				break;
-			case 12:
-				hexadecimal[n] = 'c';
-				break;
-			case 13:
-				hexadecimal[n] = 'd';
-				break;
-			case 14:
-				hexadecimal[n] = 'e';
-				break;
-			case 15:
-				hexadecimal[n] = 'f';
-				break;
-
-			default:
-				hexadecimal[n] = result + '0';
-				
-				break;
-
-			}
  
-			result = 0;
-			j = -1;
-		}
-	}
- 
-	return hexadecimal;
-}
-*/
-
-
-char *decimal2Hexadecimal(long int decimalNumber)
-{
-	static char hexDecNum[100];
-	int i;
-	for (i = 0; i < sizeof(decimalNumber) * 2; i++)
-	{
-		int digit = decimalNumber & 0xf;
-
-		if (digit >= 10)
-			digit += 'A' - 10; 
-		else
-			digit += '0';       
-
-		hexDecNum[i] = digit;
-		decimalNumber >>= 4;
-	}
-
-	hexDecNum[i] = 0;
-	return hexDecNum;
-}
-
-/*char * num2string(int number) {
-
-	char * padding = "0000000";
-	char strnum[6];
-	char strC[10];
-	int indx ;
-
-	indx = strlen(padding) - numSize(number);
-	sprintf(strnum ,"%d",number);
-	strncpy(strC, padding, indx);
-	strC[indx] = '\0';
-	strcat(strC, strnum);
-	 
-	return strC;
-}*/
 
 int numSize(int number) {
 
